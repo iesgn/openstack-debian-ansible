@@ -1,0 +1,21 @@
+---
+
+- hosts: all
+  roles:
+    - role: common
+
+- hosts: controller-nodes
+  roles:
+    - role: controller
+
+# - hosts: storage-nodes
+#   roles: 
+#     - role: controller
+
+# - hosts: compute-nodes
+#   roles:
+#     - role: controller
+
+# - hosts: network-nodes
+#   roles:
+#     - role: controller

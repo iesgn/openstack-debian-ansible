@@ -1,0 +1,5 @@
+---
+# handlers for the common tasks
+
+- name: apt update
+  apt: update_cache=yes

@@ -1,0 +1,29 @@
+- name: Ensure ntp is installed and configured
+  copy: >
+    src=etc/ntp.conf
+    dest=/etc/ntp.conf
+    owner=root
+    group=root
+    mode=0644
+  notify: restart ntp
+
+- name: Ensure rabbitmq is installed
+  apt: pkg=rabbitmq-server
+
+- name: Ensure openstack rabbitmq user password is changed
+  rabbitmq_user: >
+    user={{ rabbit_user }}
+    password={{ rabbit_password }}
+    vhost=/
+    configure_priv=.*
+    read_priv=.*
+    write_priv=.*
+    state=present
+    force=yes
+
+# - include: mysql.yml
+# - include: keystone.yml
+# - include: quantum-service.yml
+# - include: nova.yml
+# - include: quantum-agents.yml
+# - include: horizon.yml

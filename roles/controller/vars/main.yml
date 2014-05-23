@@ -1,0 +1,49 @@
+service_users:
+  - name: glance
+    password: $glance_identity_password
+  - name: nova
+    password: $nova_identity_password
+  - name: ec2
+    password: $ec2_identity_password
+  - name: quantum
+    password: $quantum_identity_password
+  - name: cinder
+    password: $cinder_identity_password
+
+services:
+  - name: keystone
+    type: identity
+    description: Identity Service
+    public_url: http://${controller_external_ip}:5000/v2.0
+    internal_url: http://${controller_ip}:5000/v2.0
+    admin_url: http://${controller_external_ip}:35357/v2.0
+  - name: nova
+    type: compute
+    description: Compute Service
+    public_url: http://${controller_external_ip}:8774/v2/%(tenant_id)s
+    internal_url: http://${controller_ip}:8774/v2/%(tenant_id)s
+    admin_url: http://${controller_external_ip}:8774/v2/%(tenant_id)s
+  - name: volume
+    type: volume
+    description: Volume Service
+    public_url: http://${storage_external_ip}:8776/v1/%(tenant_id)s
+    internal_url: http://${storage_ip}:8776/v1/%(tenant_id)s
+    admin_url: http://${storage_external_ip}:8776/v1/%(tenant_id)s
+  - name: glance
+    type: image
+    description: Image Service
+    public_url: http://${storage_external_ip}:9292
+    internal_url: http://${storage_ip}:9292
+    admin_url: http://${storage_external_ip}:9292
+  - name: ec2
+    type: ec2
+    description: EC2 Compatibility Layer
+    public_url: http://${controller_external_ip}:8773/services/Cloud
+    internal_url: http://${controller_ip}:8773/services/Cloud
+    admin_url: http://${controller_external_ip}:8773/services/Admin
+  - name: quantum
+    type: network
+    description: Quantum Network Service
+    public_url: http://${controller_external_ip}:9696
+    internal_url: http://${controller_ip}:9696
+    admin_url: http://${controller_external_ip}:9696

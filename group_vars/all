@@ -1,0 +1,40 @@
+# Rabbit
+rabbit_user: "openstack"
+rabbit_password: "asdasd"
+
+# # IPs
+# controller_ip: 192.168.222.2
+# controller_external_ip: 172.22.222.2
+# storage_ip: 192.168.222.2
+# storage_external_ip: 172.22.222.2
+
+# # MySQL passwords
+# root_db_password: "asdasd" 
+# keystone_db_password: "asdasd"
+# glance_db_password: "asdasd"
+# cinder_db_password: "asdasd"
+# nova_db_password: "asdasd"
+# quantum_db_password: "asdasd"
+
+# # Keystone identity passwords:
+# glance_identity_password: "glance"
+# nova_identity_password: "nova"
+# ec2_identity_password: "ec2"
+# quantum_identity_password: "quantum"
+# cinder_identity_password: "cinder"
+
+# # OpenStack variables
+# admin_token: "012345SECRET99TOKEN012345"
+# region: RegionOne
+# admin_pass: "asdasd"
+
+# # Log verbosity
+# log_debug: True
+# log_verbose: True
+
+# # Neutron
+# ext_net_nic: eth0
+# shared_secret: "asdasd"
+
+# # Cinder
+# physical_device: /dev/md5p2

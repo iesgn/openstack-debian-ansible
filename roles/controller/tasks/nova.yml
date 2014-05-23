@@ -1,0 +1,60 @@
+- name: ensure nova packages are installed
+  apt: pkg=$item
+  with_items:
+    - nova-api
+    - nova-cert
+    - nova-consoleauth
+    - nova-scheduler
+    - nova-conductor
+    - python-nova
+    - python-novaclient
+    - nova-consoleproxy
+
+- name: ensure api-paste.ini is present
+  copy: >
+    src=etc/nova/api-paste.ini 
+    dest=/etc/nova/api-paste.ini 
+    owner=nova 
+    group=nova 
+    mode=0660 
+    backup=yes
+
+- name: ensure nova.conf file is present
+  template: >
+    src=etc/nova/nova.conf
+    dest=/etc/nova/nova.conf
+    owner=nova
+    group=nova
+    mode=0660
+
+- name: ensure services are stopped
+  service: name=$item state=stopped
+  with_items:
+    - nova-api
+    - nova-conductor
+    - nova-scheduler
+    - nova-novncproxy
+    - nova-consoleauth
+    - nova-cert
+    
+- name: ensure database is synced
+  command: /usr/bin/nova-manage db sync
+
+- name: ensure services are started
+  service: name=$item state=started
+  with_items:
+    - nova-api
+    - nova-conductor
+    - nova-scheduler
+    - nova-novncproxy
+    - nova-consoleauth
+    - nova-cert
+    - rabbitmq-server
+
+# - name: ensure rabbitmq starts after virtualbox additions at boot (1/2)
+#   file: dest=/etc/rc2.d/S20rabbitmq-server state=absent
+#   when_string: $ansible_bios_version is 'VirtualBox'
+
+# - name: ensure rabbitmq starts after virtualbox additions at boot (2/2)
+#   file: src=/etc/init.d/rabbitmq-server dest=/etc/rc2.d/S95rabbitmq-server state=link
+#   when_string: $ansible_bios_version is 'VirtualBox'

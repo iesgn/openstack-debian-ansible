@@ -1,0 +1,4 @@
+deb http://http.debian.net/debian jessie main
+deb http://http.debian.net/debian jessie-backports main
+deb http://http.debian.net/debian jessie-updates main
+deb http://security.debian.org/ jessie/updates main

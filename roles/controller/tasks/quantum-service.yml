@@ -1,0 +1,24 @@
+- name: install quantum-server and CLI for accessing the API
+  apt: pkg=quantum-server
+
+- name: install quantum open vswitch plugin and dependencies
+  apt: pkg=$item
+  with_items:
+    - python-sqlalchemy
+    - quantum-plugin-openvswitch
+
+- name: ensure ovs plugin configured to use database quantum
+  template: >
+    src=etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini
+    dest=/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini
+    owner=quantum group=quantum mode=0660
+  notify:
+    - restart quantum-server
+
+- name: ensure quantum.conf is configured
+  template: >
+    src=etc/quantum/quantum.conf
+    dest=/etc/quantum/quantum.conf
+    owner=quantum group=quantum mode=0660
+  notify:
+    - restart quantum-server

@@ -1,0 +1,88 @@
+- name: ensure openvswitch packages are installed
+  apt: pkg=$item
+  with_items:
+    - openvswitch-common
+    - openvswitch-datapath-dkms
+    - openvswitch-datapath-source
+    - openvswitch-switch
+    - kernel-package
+    
+- name: ensure OVS kernel module is loaded
+  command: /sbin/modprobe openvswitch_mod
+  register: modprobe_result
+  ignore_errors: True
+  
+- name: build openvswitch-datapath kernel module - this may take a while
+  command: /usr/bin/module-assistant -i auto-install openvswitch-datapath
+  when: modprobe_result|failed
+  notify: restart openvswitch services
+
+- name: add default ovs bridge br-int for agent
+  command: /usr/bin/ovs-vsctl -- --may-exist add-br br-int
+
+- name: install agent package
+  apt: name=quantum-plugin-openvswitch-agent
+
+- name: ensure ovs plugin agent configured
+  template: >
+    src=etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini
+    dest=/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini
+    owner=quantum group=quantum mode=0660
+  notify: restart ovs-agent
+  
+- name: ensure udev rule to configure br-ex is in place
+  copy: >
+    src=etc/udev/rules.d/configure_br-ex.rules
+    dest=/etc/udev/rules.d/configure_br-ex.rules
+    owner=root group=root mode=0644
+
+- name: ensure udev script for br-ex is present
+  template: >
+    src=etc/udev/configure_br-ex
+    dest=/etc/udev/configure_br-ex
+    owner=root group=root mode=0755
+  notify: restart openvswitch services
+    
+- name: ensure ovs bridge for gateway br-ex present
+  command: /usr/bin/ovs-vsctl -- --may-exist add-br br-ex
+
+- name: ensure br-ex has eth2 enslaved
+  command: /usr/bin/ovs-vsctl -- --may-exist add-port br-ex $ext_net_nic
+
+- name: disable ipv6 on physical interface for br-ex
+  sysctl: name=net.ipv6.conf.${ext_net_nic}.disable_ipv6 value=1
+
+- name: disable ipv6 on br-ex
+  sysctl: name=net.ipv6.conf.br-ex.disable_ipv6 value=1
+
+- name: install quantum agent packages
+  apt: name={{ item }}
+  with_items:
+      - quantum-l3-agent
+      - quantum-dhcp-agent
+      - quantum-lbaas-agent
+      - quantum-metadata-agent
+
+- name: ensure quantum.conf ok
+  template: >
+    src=etc/quantum/quantum.conf
+    dest=/etc/quantum/quantum.conf
+    owner=quantum group=quantum mode=0660 backup=yes
+  notify:
+    - restart quantum agents
+
+# note: default lbaas_agent.ini works
+
+- name: ensure l3 agent is configured
+  template: >
+    src=etc/quantum/l3_agent.ini
+    dest=/etc/quantum/l3_agent.ini
+    owner=quantum group=quantum mode=0660 backup=yes
+  notify: restart quantum agents
+
+- name: ensure metadata agent is configured
+  template: >
+    src=etc/quantum/metadata_agent.ini.j2
+    dest=/etc/quantum/metadata_agent.ini
+    owner=quantum group=quantum mode=0660 backup=yes
+  notify: restart quantum agents
