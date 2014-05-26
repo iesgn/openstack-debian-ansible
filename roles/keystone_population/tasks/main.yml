@@ -1,21 +1,22 @@
 # Tenants, roles and keystone users creation
 
 - name: ensure admin user is created
-  keystone_user: >
+  keystone_user: >-
     token={{ admin_token }}
     user=admin
     password={{ admin_pass }}
-    email="admin@example.com"
 
-- name: ensure admin role is created
-  keystone_user: >
-    token={{ admin_token }}
-    role=admin
+# admin and _member_ roles are automatically created in Debian
+#
+# - name: ensure admin role is created
+#   keystone_user: >
+#     token={{ admin_token }}
+#     role=admin
 
-- name: ensure _member_ role is created
-  keystone_user: >
-    token={{ admin_token }}
-    role=_member_
+# - name: ensure _member_ role is created
+#   keystone_user: >
+#     token={{ admin_token }}
+#     role=_member_
 
 - name: ensure admin tenant is created
   keystone_user: >
@@ -62,7 +63,6 @@
     token={{ admin_token }}
     tenant=service
     tenant_description="Service Tenant"
-
 
 # - name: create users for each of the services
 #   keystone_user: >

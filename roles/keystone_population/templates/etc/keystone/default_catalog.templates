@@ -1,27 +1,38 @@
 # config for templated.Catalog, using camelCase because I don't want to do
 # translations for keystone compat
-catalog.regionOne.identity.publicURL = http://localhost:$(public_port)s/v2.0
-catalog.regionOne.identity.adminURL = http://localhost:$(admin_port)s/v2.0
-catalog.regionOne.identity.internalURL = http://localhost:$(public_port)s/v2.0
-catalog.regionOne.identity.name = Identity Service
+catalog.{{ region }}.identity.publicURL = http://{{ controller_external_ip }}:5000/v2.0
+catalog.{{ region }}.identity.adminURL = http://{{ controller_ip }}:35357/v2.0
+catalog.{{ region }}.identity.internalURL = http://{{ controller_ip }}:5000/v2.0
+catalog.{{ region }}.identity.name = Identity Service
 
 # fake compute service for now to help novaclient tests work
-catalog.regionOne.compute.publicURL = http://localhost:$(compute_port)s/v1.1/$(tenant_id)s
-catalog.regionOne.compute.adminURL = http://localhost:$(compute_port)s/v1.1/$(tenant_id)s
-catalog.regionOne.compute.internalURL = http://localhost:$(compute_port)s/v1.1/$(tenant_id)s
-catalog.regionOne.compute.name = Compute Service
+catalog.{{ region }}.compute.publicURL = http://{{ controller_external_ip }}:8775/v1.1/$(tenant_id)s
+catalog.{{ region }}.compute.adminURL = http://{{ controller_ip }}:8775/v1.1/$(tenant_id)s
+catalog.{{ region }}.compute.internalURL = http://{{ controller_ip }}:8775/v1.1/$(tenant_id)s
+catalog.{{ region }}.compute.name = Compute Service
 
-catalog.regionOne.volume.publicURL = http://localhost:8776/v1/$(tenant_id)s
-catalog.regionOne.volume.adminURL = http://localhost:8776/v1/$(tenant_id)s
-catalog.regionOne.volume.internalURL = http://localhost:8776/v1/$(tenant_id)s
-catalog.regionOne.volume.name = Volume Service
+catalog.{{ region }}.volume.publicURL = http://{{ storage_external_ip }}:8776/v1/$(tenant_id)s
+catalog.{{ region }}.volume.adminURL = http://{{ storage_ip }}:8776/v1/$(tenant_id)s
+catalog.{{ region }}.volume.internalURL = http://{{ storage_ip }}:8776/v1/$(tenant_id)s
+catalog.{{ region }}.volume.name = Volume Service
 
-catalog.regionOne.ec2.publicURL = http://localhost:8773/services/Cloud
-catalog.regionOne.ec2.adminURL = http://localhost:8773/services/Admin
-catalog.regionOne.ec2.internalURL = http://localhost:8773/services/Cloud
-catalog.regionOne.ec2.name = EC2 Service
+catalog.{{ region }}.ec2.publicURL = http://{{ controller_external_ip }}:8773/services/Cloud
+catalog.{{ region }}.ec2.adminURL = http://{{ controller_ip }}:8773/services/Admin
+catalog.{{ region }}.ec2.internalURL = http://{{ controller_ip }}:8773/services/Cloud
+catalog.{{ region }}.ec2.name = EC2 Service
 
-catalog.regionOne.image.publicURL = http://localhost:9292/v1
-catalog.regionOne.image.adminURL = http://localhost:9292/v1
-catalog.regionOne.image.internalURL = http://localhost:9292/v1
-catalog.regionOne.image.name = Image Service
+catalog.{{ region }}.image.publicURL = http://{{ storage_external_ip }}:9292/v1
+catalog.{{ region }}.image.adminURL = http://{{ storage_ip }}:9292/v1
+catalog.{{ region }}.image.internalURL = http://{{ storage_ip }}:9292/v1
+catalog.{{ region }}.image.name = Image Service
+
+catalog.{{ region }}.network.publicURL = http://{{ controller_external_ip }}:9696
+catalog.{{ region }}.network.adminURL = http://{{ controller_ip }}:9696
+catalog.{{ region }}.network.internalURL = http://{{ controller_ip }}:9696
+catalog.{{ region }}.network.name = Network Service
+
+catalog.{{ region }}.orchestration.publicURL = http://{{ controller_external_ip }}:8004
+catalog.{{ region }}.orchestration.adminURL = http://{{ controller_ip }}:8004
+catalog.{{ region }}.orchestration.internalURL = http://{{ controller_ip }}:8004
+catalog.{{ region }}.orchestration.name = Orchestration Service
+

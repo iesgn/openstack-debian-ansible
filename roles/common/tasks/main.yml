@@ -14,3 +14,10 @@
   apt: name=ntp
   notify: restart ntp
 
+- name: Ensure /etc/hosts is properly defined
+  copy: >-
+    src=etc/hosts
+    dest=/etc/hosts
+    owner=root
+    group=root
+    mode=0644
