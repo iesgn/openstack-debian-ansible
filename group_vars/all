@@ -3,18 +3,21 @@ rabbit_user: "openstack"
 rabbit_password: "asdasd"
 
 # # IPs
-# controller_ip: 192.168.222.2
-# controller_external_ip: 172.22.222.2
-# storage_ip: 192.168.222.2
-# storage_external_ip: 172.22.222.2
+controller_ip: 192.168.222.101
+controller_external_ip: 172.22.221.101
+storage_ip: 192.168.222.101
+storage_external_ip: 172.22.221.101
 
 # # MySQL passwords
-# root_db_password: "asdasd" 
-# keystone_db_password: "asdasd"
-# glance_db_password: "asdasd"
-# cinder_db_password: "asdasd"
-# nova_db_password: "asdasd"
-# quantum_db_password: "asdasd"
+root_db_password: "asdasd" 
+keystone_db_password: "asdasd"
+glance_db_password: "asdasd"
+cinder_db_password: "asdasd"
+nova_db_password: "asdasd"
+neutron_db_password: "asdasd"
+heat_db_password: "asdasd"
+trove_db_password: "asdasd"
+
 
 # # Keystone identity passwords:
 # glance_identity_password: "glance"
@@ -24,9 +27,9 @@ rabbit_password: "asdasd"
 # cinder_identity_password: "cinder"
 
 # # OpenStack variables
-# admin_token: "012345SECRET99TOKEN012345"
-# region: RegionOne
-# admin_pass: "asdasd"
+admin_token: "012345SECRET99TOKEN012345"
+region: RegionOne
+admin_pass: "asdasd"
 
 # # Log verbosity
 # log_debug: True

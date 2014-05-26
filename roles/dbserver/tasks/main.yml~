@@ -30,14 +30,14 @@
     host={{ item }}
     password={{ root_db_password }}
   with_items:
-    - {{ controller_ip }}
+    - "{{ controller_ip }}"
     - 127.0.0.1
 
 - name: ensure anonymous users are not in the database
   mysql_user: name='' host={{ item }} state=absent
   with_items:
-    - {{ controller_ip }}
-    - {{ inventory_hostname_short }}
+    - "{{ controller_ip }}"
+    - "{{ inventory_hostname_short }}"
     - 127.0.0.1
     - ::1
 
@@ -50,7 +50,7 @@
     password={{ keystone_db_password }}
     priv=keystone.*:ALL
   with_items:
-    - {{ controller_ip }}
+    - "{{ controller_ip }}"
     - 127.0.0.1
     - localhost
     - ::1
@@ -65,7 +65,7 @@
     password={{ glance_db_password }}
     priv=glance.*:ALL
   with_items:
-    - {{ storage_ip }}
+    - "{{ storage_ip }}"
     - 127.0.0.1
     - localhost
     - ::1
@@ -80,7 +80,7 @@
     password={{ cinder_db_password }}
     priv=cinder.*:ALL
   with_items:
-    - {{ storage_ip }}
+    - "{{ storage_ip }}"
     - 127.0.0.1
     - localhost
     - ::1
@@ -106,9 +106,39 @@
     name=neutron
     host={{ item }}
     password={{ neutron_db_password }}
-    priv=quantum.*:ALL
+    priv=heat.*:ALL
   with_items:
-    - {{ controller_ip }}
+    - "{{ controller_ip }}"
+    - 127.0.0.1
+    - localhost
+    - ::1
+                   
+- name: ensure heat database is present
+  mysql_db: name=heat
+    
+- name: ensure heat database user is present
+  mysql_user: >
+    name=heat
+    host={{ item }}
+    password={{ heat_db_password }}
+    priv=heat.*:ALL
+  with_items:
+    - "{{ controller_ip }}"
+    - 127.0.0.1
+    - localhost
+    - ::1
+                   
+- name: ensure trove database is present
+  mysql_db: name=trove
+    
+- name: ensure trove database user is present
+  mysql_user: >
+    name=trove
+    host={{ item }}
+    password={{ trove_db_password }}
+    priv=trove.*:ALL
+  with_items:
+    - "{{ controller_ip }}"
     - 127.0.0.1
     - localhost
     - ::1

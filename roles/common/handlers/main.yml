@@ -3,3 +3,7 @@
 
 - name: apt update
   apt: update_cache=yes
+
+- name: restart ntp
+  service: name=ntp state=restarted
+

@@ -12,8 +12,3 @@
     state=present
     force=yes
 
-# - include: keystone.yml
-# - include: neutron-service.yml
-# - include: nova.yml
-# - include: neutron-agents.yml
-# - include: horizon.yml

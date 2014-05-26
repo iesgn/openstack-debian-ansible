@@ -6,7 +6,9 @@
 
 - hosts: controller-nodes
   roles:
-    - role: controller
+    - role: dbserver
+    - role: rabbitserver
+    - role: keystoneserver
 
 # - hosts: storage-nodes
 #   roles: 

@@ -1,0 +1,93 @@
+# Tenants, roles and keystone users creation
+
+- name: ensure admin user is created
+  keystone_user: >
+    token={{ admin_token }}
+    user=admin
+    password={{ admin_pass }}
+    email="admin@example.com"
+
+- name: ensure admin role is created
+  keystone_user: >
+    token={{ admin_token }}
+    role=admin
+
+- name: ensure _member_ role is created
+  keystone_user: >
+    token={{ admin_token }}
+    role=_member_
+
+- name: ensure admin tenant is created
+  keystone_user: >
+    token={{ admin_token }}
+    tenant=admin
+    tenant_description="Admin Tenant"
+
+- name: ensure admin user has admin role in admin tenant
+  keystone_user: >
+    token={{ admin_token }}
+    role=admin
+    user=admin
+    tenant=admin
+
+- name: ensure admin user has _member_ role in admin tenant
+  keystone_user: >
+    token={{ admin_token }}
+    role=_member_
+    user=admin
+    tenant=admin
+    
+- name: ensure demo user is created
+  keystone_user: >
+    token={{ admin_token }}
+    user=demo
+    password={{ demo_pass }}
+    email="demo@example.com"
+
+- name: ensure demo tenant is created
+  keystone_user: >
+    token={{ admin_token }}
+    tenant=demo
+    tenant_description="Demo Tenant"
+
+- name: ensure demo user has _member_ role in demo Tenant
+  keystone_user: >
+    token={{ admin_token }}
+    role=_member_
+    user=demo
+    tenant=demo
+
+- name: ensure service tenant is created
+  keystone_user: >
+    token={{ admin_token }}
+    tenant=service
+    tenant_description="Service Tenant"
+
+
+# - name: create users for each of the services
+#   keystone_user: >
+#     token={{ admin_token }}
+#     user={{ item.name }}
+#     tenant=service
+#     password={{ item.password }}
+#   with_items: {{ service_users }}
+
+# - name: add each of the service users to the service tenant with the admin role
+#   keystone_user: token={{ admin_token }} role=admin user=${item.name} tenant=service
+#   with_items: {{ service_users }}
+
+# # keystone-service from openstackansible-modules is still needed
+# # https://github.com/lorin/openstack-ansible-modules
+
+# - name: add services
+#   keystone_service: >
+#     token={{ admin_token }}
+#     name={{ item.name }}
+#     type={{ item.type }}
+#     description="{{ item.description }}"
+#     public_url={{ item.public_url }}
+#     internal_url={{ item.internal_url }}
+#     admin_url={{ item.admin_url }}
+#     region={{ region }}
+#   with_items: {{ services }}
+#   tags: keystone

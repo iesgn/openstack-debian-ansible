@@ -1,0 +1,23 @@
+- name: ensure keystone packages are installed
+  apt: pkg={{ item }}
+  with_items:
+    - keystone
+    - python-keystone
+    - python-keystoneclient
+  notify: start keystone
+  
+- name: ensure sqlite keystone database is deleted
+  file: dest=/var/lib/keystone/keystone.db state=absent
+
+- name: ensure keystone config script is present
+  template: >
+    src=etc/keystone/keystone.conf
+    dest=/etc/keystone/keystone.conf
+    owner=keystone
+    group=keystone
+    mode=0600
+
+- name: DB sync for keystone
+  shell: >
+    /usr/bin/keystone-manage db_sync
+  notify: restart keystone

@@ -1,0 +1,6 @@
+- name: restart keystone
+  service: name=keystone state=restarted
+
+- name: start keystone
+  service: name=keystone state=started
+

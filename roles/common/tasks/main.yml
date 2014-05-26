@@ -1,4 +1,4 @@
-- name: Ensure sources.list are proeprly defined (debian.net)
+- name: Ensure sources.list file is properly defined (http.debian.net)
   copy: >
     src=etc/apt/sources.list
     dest=/etc/apt/sources.list
@@ -10,5 +10,7 @@
 - name: Ensure system is upgraded (It can take a long time)
   apt: upgrade=yes
 
-- name: Ensure proper system variables are setting
-  sysctl: name=net.ipv4.ip_forward value=1 state=present
+- name: Ensure ntp is installed
+  apt: name=ntp
+  notify: restart ntp
+
