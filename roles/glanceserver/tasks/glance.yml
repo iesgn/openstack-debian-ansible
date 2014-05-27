@@ -1,0 +1,46 @@
+- name: ensure glance is installed
+  apt: pkg=$item
+  with_items:
+    - glance
+    - glance-api
+    - glance-registry
+    - python-glanceclient
+    - glance-common
+    - python-mysqldb
+
+- name: ensure glance sqlite is deleted
+  file: dest=/var/lib/glance/glance.sqlite state=absent
+
+- name: ensure glance-api.conf file is up to date
+  template: >
+    src=etc/glance/glance-api.conf
+    dest=/etc/glance/glance-api.conf
+    owner=glance
+    group=glance
+    mode=0600
+  notify:
+  - restart glance-services
+
+- name: ensure glance-registry.conf file is up to date
+  template: >
+    src=etc/glance/glance-registry.conf
+    dest=/etc/glance/glance-registry.conf
+    owner=glance
+    group=glance
+    mode=0600
+  notify:
+  - restart glance-services
+
+- name: initialize the database
+  glance_manage: action=dbsync
+
+# Using glance_image module (ansible >= 1.2)
+- name: add cirros image to glance
+  glance_image: >
+    auth_url=http://{{ controller_ip }}:5000/v2.0/
+    copy_from=$img_url
+    name=$img_name
+    login_username=admin
+    login_tenant_name=demo
+    login_password={{ admin_pass }}
+    region_name={{ region }}

@@ -20,7 +20,7 @@ trove_db_password: "asdasd"
 
 
 # # Keystone identity passwords:
-# glance_identity_password: "glance"
+glance_identity_password: "glance"
 # nova_identity_password: "nova"
 # ec2_identity_password: "ec2"
 # quantum_identity_password: "quantum"
