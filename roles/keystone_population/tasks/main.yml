@@ -1,28 +1,17 @@
 # Tenants, roles and keystone users creation
 
-- name: ensure admin user is created
-  keystone_user: >-
-    token={{ admin_token }}
-    user=admin
-    password={{ admin_pass }}
-
-# admin and _member_ roles are automatically created in Debian
-#
-# - name: ensure admin role is created
-#   keystone_user: >
-#     token={{ admin_token }}
-#     role=admin
-
-# - name: ensure _member_ role is created
-#   keystone_user: >
-#     token={{ admin_token }}
-#     role=_member_
-
 - name: ensure admin tenant is created
   keystone_user: >
     token={{ admin_token }}
     tenant=admin
     tenant_description="Admin Tenant"
+
+- name: ensure admin user is created
+  keystone_user: >
+    token={{ admin_token }}
+    user=admin
+    password={{ admin_pass }}
+    tenant=admin
 
 - name: ensure admin user has admin role in admin tenant
   keystone_user: >
@@ -38,18 +27,18 @@
     user=admin
     tenant=admin
     
-- name: ensure demo user is created
-  keystone_user: >
-    token={{ admin_token }}
-    user=demo
-    password={{ demo_pass }}
-    email="demo@example.com"
-
 - name: ensure demo tenant is created
   keystone_user: >
     token={{ admin_token }}
     tenant=demo
     tenant_description="Demo Tenant"
+
+- name: ensure demo user is created
+  keystone_user: >
+    token={{ admin_token }}
+    user=demo
+    password={{ demo_pass }}
+    tenant=demo
 
 - name: ensure demo user has _member_ role in demo Tenant
   keystone_user: >
@@ -63,6 +52,17 @@
     token={{ admin_token }}
     tenant=service
     tenant_description="Service Tenant"
+
+# Services and endpoints using templated.Catalog
+
+- name: ensure service and endpoints are defined
+  template: >-
+    src=etc/keystone/default_catalog.templates
+    dest=/etc/keystone/default_catalog.templates
+    owner=root
+    group=root
+    mode=0644
+  notify: restart keystone
 
 # - name: create users for each of the services
 #   keystone_user: >

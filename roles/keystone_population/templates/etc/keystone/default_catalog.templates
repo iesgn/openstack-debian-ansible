@@ -1,11 +1,8 @@
-# config for templated.Catalog, using camelCase because I don't want to do
-# translations for keystone compat
 catalog.{{ region }}.identity.publicURL = http://{{ controller_external_ip }}:5000/v2.0
 catalog.{{ region }}.identity.adminURL = http://{{ controller_ip }}:35357/v2.0
 catalog.{{ region }}.identity.internalURL = http://{{ controller_ip }}:5000/v2.0
 catalog.{{ region }}.identity.name = Identity Service
 
-# fake compute service for now to help novaclient tests work
 catalog.{{ region }}.compute.publicURL = http://{{ controller_external_ip }}:8775/v1.1/$(tenant_id)s
 catalog.{{ region }}.compute.adminURL = http://{{ controller_ip }}:8775/v1.1/$(tenant_id)s
 catalog.{{ region }}.compute.internalURL = http://{{ controller_ip }}:8775/v1.1/$(tenant_id)s
@@ -31,8 +28,8 @@ catalog.{{ region }}.network.adminURL = http://{{ controller_ip }}:9696
 catalog.{{ region }}.network.internalURL = http://{{ controller_ip }}:9696
 catalog.{{ region }}.network.name = Network Service
 
-catalog.{{ region }}.orchestration.publicURL = http://{{ controller_external_ip }}:8004
-catalog.{{ region }}.orchestration.adminURL = http://{{ controller_ip }}:8004
-catalog.{{ region }}.orchestration.internalURL = http://{{ controller_ip }}:8004
-catalog.{{ region }}.orchestration.name = Orchestration Service
+# catalog.{{ region }}.orchestration.publicURL = http://{{ controller_external_ip }}:8004
+# catalog.{{ region }}.orchestration.adminURL = http://{{ controller_ip }}:8004
+# catalog.{{ region }}.orchestration.internalURL = http://{{ controller_ip }}:8004
+# catalog.{{ region }}.orchestration.name = Orchestration Service
 
