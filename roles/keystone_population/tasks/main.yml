@@ -64,18 +64,30 @@
     mode=0644
   notify: restart keystone
 
-# - name: create users for each of the services
-#   keystone_user: >
-#     token={{ admin_token }}
-#     user={{ item.name }}
-#     tenant=service
-#     password={{ item.password }}
-#   with_items: {{ service_users }}
+- name: ensure users for each of the services are created and admin role is assigned in tenant service
+  keystone_user: >
+    token={{ admin_token }}
+    role=admin
+    user={{ item.name }}
+    tenant=service
+    password="{{ item.password }}"
+  with_items:
+    - { name: 'glace', password: '{{ glance_identity_password }}' }
+    - { name: 'nova', password: '{{ nova_identity_password }}' }
+    - { name: 'ec2', password: '{{ ec2_identity_password }}' }
+    - { name: 'neutron', password: '{{ neutron_identity_password }}' }
+    - { name: 'cinder', password: '{{ cinder_identity_password }}' }
+    - { name: 'heat', password: '{{ heat_identity_password }}' }
+    - { name: 'trove', password: '{{ trove_identity_password }}' }
 
-# - name: add each of the service users to the service tenant with the admin role
-#   keystone_user: token={{ admin_token }} role=admin user=${item.name} tenant=service
-#   with_items: {{ service_users }}
-
+- name: ensure openrc admin file is created in root home directory
+  template: >-
+    src=root/openrc
+    dest=/root/admin_openrc
+    owner=root
+    group=root
+    mode=600
+    
 # # keystone-service from openstackansible-modules is still needed
 # # https://github.com/lorin/openstack-ansible-modules
 

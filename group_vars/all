@@ -21,10 +21,12 @@ trove_db_password: "asdasd"
 
 # # Keystone identity passwords:
 glance_identity_password: "glance"
-# nova_identity_password: "nova"
-# ec2_identity_password: "ec2"
-# quantum_identity_password: "quantum"
-# cinder_identity_password: "cinder"
+nova_identity_password: "nova"
+ec2_identity_password: "ec2"
+neutron_identity_password: "neutron"
+cinder_identity_password: "cinder"
+heat_identity_password: "heat"
+trove_identity_password: "trove"
 
 # # OpenStack variables
 admin_token: "012345SECRET99TOKEN012345"
