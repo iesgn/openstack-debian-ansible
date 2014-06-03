@@ -64,21 +64,35 @@
     mode=0644
   notify: restart keystone
 
-- name: ensure users for each of the services are created and admin role is assigned in tenant service
+- name: ensure users for each of the services are created in tenant service
   keystone_user: >
     token={{ admin_token }}
-    role=admin
     user={{ item.name }}
     tenant=service
     password="{{ item.password }}"
   with_items:
-    - { name: 'glace', password: '{{ glance_identity_password }}' }
+    - { name: 'glance', password: '{{ glance_identity_password }}' }
     - { name: 'nova', password: '{{ nova_identity_password }}' }
     - { name: 'ec2', password: '{{ ec2_identity_password }}' }
     - { name: 'neutron', password: '{{ neutron_identity_password }}' }
     - { name: 'cinder', password: '{{ cinder_identity_password }}' }
     - { name: 'heat', password: '{{ heat_identity_password }}' }
     - { name: 'trove', password: '{{ trove_identity_password }}' }
+
+- name: ensure admin role is assigned to users for each of the services in tenant service
+  keystone_user: >
+    token={{ admin_token }}
+    role=admin
+    user={{ item.name }}
+    tenant=service
+  with_items:
+    - { name: 'glance' }
+    - { name: 'nova' }
+    - { name: 'ec2' }
+    - { name: 'neutron' }
+    - { name: 'cinder' }
+    - { name: 'heat' }
+    - { name: 'trove' }
 
 - name: ensure openrc admin file is created in root home directory
   template: >-

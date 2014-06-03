@@ -38,8 +38,8 @@
 - name: add cirros image to glance
   glance_image: >
     auth_url=http://{{ controller_ip }}:5000/v2.0/
-    copy_from=$img_url
-    name=$img_name
+    copy_from={{ img_url }}
+    name={{ img_name }}
     login_username=admin
     login_tenant_name=demo
     login_password={{ admin_pass }}
