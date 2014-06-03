@@ -20,7 +20,6 @@
     owner=glance
     group=glance
     mode=0600
-    backup=yes
   notify:
   - restart glance-services
 
@@ -31,7 +30,6 @@
     owner=glance
     group=glance
     mode=0600
-    backup=yes
   notify:
   - restart glance-services
 
