@@ -1,6 +1,8 @@
-- name: ensure migrate_version table is in UTF-8
-  command: mysql -u glance -h {{ controller_ip }} -p{{ root_db_password }} -e 'alter table migrate_version convert to character set utf8 collate utf8_unicode_ci;' glance
-  ignore_errors: yes
+# Not needed if UTF-8 is properly defined
+#
+# - name: ensure migrate_version table is in UTF-8
+#   command: mysql -u glance -h {{ controller_ip }} -p{{ root_db_password }} -e 'alter table migrate_version convert to character set utf8 collate utf8_unicode_ci;' glance
+#   ignore_errors: yes
 
 - name: ensure glance db is initialized
   command: /usr/bin/glance-manage db_sync
