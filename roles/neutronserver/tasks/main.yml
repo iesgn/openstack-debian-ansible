@@ -1,0 +1,19 @@
+- name: obtain service tenant id
+  shell: >-
+    keystone --os-endpoint http://{{ controller_ip }}:35357/v2.0 --os-token \
+    {{ admin_token }} tenant-get service|grep id|awk '{print $4}'
+  register: nova_admin_tenant_id
+    
+- name: ensure neutron server and neutron-plugin-ml2 are installed
+  apt: pkg={{ item }}
+  with_items:
+    - neutron-server
+    - neutron-plugin-ml2
+
+- name: ensure nova.conf is configured
+  template: >
+    src=etc/neutron/neutron.conf
+    dest=/etc/neutron/neutron.conf
+    owner=neutron group=neutron mode=0660
+  notify:
+    - restart neutron-server

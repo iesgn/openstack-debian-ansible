@@ -111,7 +111,7 @@
     name=neutron
     host={{ item }}
     password={{ neutron_db_password }}
-    priv=heat.*:ALL
+    priv=neutron.*:ALL
   with_items:
     - "{{ controller_ip }}"
     - 127.0.0.1
