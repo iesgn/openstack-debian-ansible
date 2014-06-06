@@ -3,9 +3,9 @@ catalog.{{ region }}.identity.adminURL = http://{{ controller_ip }}:35357/v2.0
 catalog.{{ region }}.identity.internalURL = http://{{ controller_ip }}:5000/v2.0
 catalog.{{ region }}.identity.name = Identity Service
 
-catalog.{{ region }}.compute.publicURL = http://{{ controller_external_ip }}:8775/v1.1/$(tenant_id)s
-catalog.{{ region }}.compute.adminURL = http://{{ controller_ip }}:8775/v1.1/$(tenant_id)s
-catalog.{{ region }}.compute.internalURL = http://{{ controller_ip }}:8775/v1.1/$(tenant_id)s
+catalog.{{ region }}.compute.publicURL = http://{{ controller_external_ip }}:8774/v2/$(tenant_id)s
+catalog.{{ region }}.compute.adminURL = http://{{ controller_ip }}:8774/v2/$(tenant_id)s
+catalog.{{ region }}.compute.internalURL = http://{{ controller_ip }}:8774/v2/$(tenant_id)s
 catalog.{{ region }}.compute.name = Compute Service
 
 catalog.{{ region }}.volume.publicURL = http://{{ storage_external_ip }}:8776/v1/$(tenant_id)s

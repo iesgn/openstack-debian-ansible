@@ -1,0 +1,4 @@
+
+- name: ensure nova db is initialized
+  command: /usr/bin/nova-manage db sync
+

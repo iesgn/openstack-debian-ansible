@@ -1,0 +1,10 @@
+- name: restart nova-services
+  service: name={{ item }} state=restarted
+  with_items:
+    - nova-api
+    - nova-cert
+    - nova-consoleauth
+    - nova-scheduler
+    - nova-conductor
+    - nova-novncproxy
+

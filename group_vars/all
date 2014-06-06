@@ -35,12 +35,12 @@ admin_pass: "asdasd"
 demo_pass: "asdasd"
 
 # # Log verbosity
-# log_debug: True
+log_debug: False
 # log_verbose: True
 
 # # Neutron
 # ext_net_nic: eth0
-# shared_secret: "asdasd"
+shared_secret: "asdasd"
 
 # # Cinder
 # physical_device: /dev/md5p2
