@@ -1,4 +1,4 @@
-# Not needed if UTF-8 is properly defined
+# Not needed since UTF-8 is properly defined into database conf file
 #
 # - name: ensure migrate_version table is in UTF-8
 #   command: mysql -u glance -h {{ controller_ip }} -p{{ root_db_password }} -e 'alter table migrate_version convert to character set utf8 collate utf8_unicode_ci;' glance
@@ -8,7 +8,7 @@
   command: /usr/bin/glance-manage db_sync
   
 # Using glance_image module (ansible >= 1.2)
-- name: add cirros image to glance
+- name: ensure cirros image is added to glance
   glance_image: >
     auth_url=http://{{ controller_ip }}:5000/v2.0/
     copy_from={{ img_url }}
