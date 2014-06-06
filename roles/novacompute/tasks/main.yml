@@ -1,0 +1,29 @@
+- name: verify if hypervisor support hw accel is enabled
+  command: egrep '(vmx|svm)' /proc/cpuinfo
+  register: result
+  ignore_errors: True
+
+- name: ensure nova-compute-kvm is installed
+  apt: pkg=nova-compute-kvm
+  when: result|success
+
+- name: ensure nova-compute-qemu is installed
+  apt: pkg=nova-compute-qemu
+  when: result|failed
+
+- name: ensure python-guestfs is installed
+  apt: pkg=python-guestfs
+
+- name: ensure nova sqlite is deleted
+  file: dest=/var/lib/nova/nova.sqlite state=absent
+    
+- name: ensure nova.conf file is present
+  template: >
+    src=../../novaserver/templates/etc/nova/nova.conf
+    dest=/etc/nova/nova.conf
+    owner=nova
+    group=nova
+    mode=0660
+  notify: 
+  - restart nova-compute
+
