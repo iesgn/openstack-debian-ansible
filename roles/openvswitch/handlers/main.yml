@@ -4,3 +4,6 @@
     - neutron-plugin-openvswitch-agent 
     - openvswitch-switch
 
+- name: restart network
+  service: name=networking state=restarted
+
