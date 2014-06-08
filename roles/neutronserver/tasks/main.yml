@@ -17,3 +17,11 @@
     owner=neutron group=neutron mode=0660
   notify:
     - restart neutron-server
+
+- name: ensure ml2 plugin is configured
+  template: >
+    src=etc/neutron/plugins/ml2/ml2_conf.ini
+    dest=/etc/neutron/plugins/ml2/ml2_conf.ini
+    owner=root group=root mode=0644
+  notify:
+    - restart neutron-server

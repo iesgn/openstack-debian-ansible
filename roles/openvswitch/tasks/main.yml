@@ -1,0 +1,12 @@
+- name: ensure br-int switch is created
+- openvswitch_bridge: bridge=br-int state=present
+
+- name: ensure br-ex switch is created
+- openvswitch_bridge: bridge=br-ex state=present
+
+- name: ensure br-ex is configured and external interface added permanently
+  template: >-
+    src=etc/network/interfaces
+    dest=/etc/network/interfaces
+    owner=root group=root mode=0644
+  notify: restart ovs agent

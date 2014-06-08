@@ -7,6 +7,8 @@ controller_ip: 192.168.222.101
 controller_external_ip: 192.168.221.101
 storage_ip: 192.168.222.101
 storage_external_ip: 192.168.221.101
+network_node_ip: 192.168.222.101
+network_node_external_ip: 192.168.221.10
 
 # # MySQL passwords
 root_db_password: "asdasd" 
@@ -39,7 +41,7 @@ log_debug: False
 # log_verbose: True
 
 # # Neutron
-# ext_net_nic: eth0
+ext_net_nic: eth2
 shared_secret: "asdasd"
 
 # # Cinder

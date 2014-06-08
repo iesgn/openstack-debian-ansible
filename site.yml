@@ -16,9 +16,9 @@
 #   roles:
 #     - role: keystoneserver
 
-- hosts: controller-nodes
-  roles:
-    - role: keystone_population
+# - hosts: controller-nodes
+#   roles:
+#     - role: keystone_population
       
 # - hosts: storage-nodes
 #   roles: 
@@ -28,13 +28,29 @@
 #   roles: 
 #     - role: glance_init
 
-- hosts: controller-nodes
-  roles:
-    - role: novaserver
+# - hosts: controller-nodes
+#   roles:
+#     - role: novaserver
 
-- hosts: controller-nodes
+# - hosts: controller-nodes
+#   roles:
+#     - role: nova_init
+
+# - hosts: compute-nodes
+#   roles:
+#     - role: novacompute
+
+# - hosts: controller-nodes
+#   roles:
+#     - role: neutronserver
+
+- hosts: network-nodes
   roles:
-    - role: nova_init
+    - role: networking
+
+- hosts: network-nodes
+  roles:
+    - role: openvswitch
 
 # - hosts: compute-nodes
 #   roles:

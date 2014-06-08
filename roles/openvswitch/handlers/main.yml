@@ -1,0 +1,6 @@
+- name: restart ovs agent
+  service: name={{ item }} state=restarted
+  with_items:
+    - neutron-plugin-openvswitch-agent 
+    - openvswitch-switch
+
