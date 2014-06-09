@@ -52,6 +52,10 @@
   roles:
     - role: openvswitch
 
+- hosts: controller-nodes
+  roles:
+    - role: horizon
+
 # - hosts: compute-nodes
 #   roles:
 #     - role: controller

@@ -1,0 +1,33 @@
+- name: ensure horizon packages are installed
+  apt: pkg={{ item }}
+  with_items:
+    - memcached
+    - apache2
+    - libapache2-mod-wsgi
+    - openstack-dashboard
+
+- name: ensure dashboard is configured
+  template: >
+    src=etc/openstack-dashboard/local_settings.py
+    dest=/etc/openstack-dashboard/local_settings.py
+    owner=root group=root mode=0644
+  notify: restart web services
+
+- name: ensure default virtualhost is disabled
+  command: a2dissite 000-default
+  notify: restart web services
+
+- name: ensure openstack-dashboard-ssl virtualhost is enabled
+  command: a2ensite {{ item }}
+  with_items:
+    - openstack-dashboard-ssl
+    - openstack-dashboard-ssl-redirect
+    
+  notify: restart web services
+  
+- name: ensure ssl and rewrite mod are enabled
+  apache_module: name={{ item }} state=present
+  with_items:
+    - ssl
+    - rewrite
+  notify: restart web services
