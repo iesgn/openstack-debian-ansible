@@ -1,17 +1,11 @@
 - name: ensure IP forward bit is activated
-  sysctl: name=net.ipv4.ip_forward value=1 state=present
-  notify:
-    - reload sysctl
+  sysctl: name=net.ipv4.ip_forward value=1 state=present reload=yes
 
 - name: ensure IPv4 rp filter is deactivated
-  sysctl: name=net.ipv4.conf.all.rp_filter value=0 state=present
-  notify:
-    - reload sysctl
+  sysctl: name=net.ipv4.conf.all.rp_filter value=0 state=present reload=yes
 
 - name: ensure IPv4 default rp filter is deactivated
-  sysctl: name=net.ipv4.conf.default.rp_filter value=0 state=present
-  notify:
-    - reload sysctl
+  sysctl: name=net.ipv4.conf.default.rp_filter value=0 state=present reload=yes
     
 - name: ensure plugins, agents and openvswitch packages are installed
   apt: pkg={{ item }}

@@ -26,7 +26,7 @@
   notify: restart web services
   
 - name: ensure ssl and rewrite mod are enabled
-  apache_module: name={{ item }} state=present
+  apache2_module: name={{ item }} state=present
   with_items:
     - ssl
     - rewrite
