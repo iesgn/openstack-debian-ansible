@@ -8,7 +8,7 @@
   notify: apt update
 
 - name: Ensure system is upgraded (It can take a long time)
-  apt: upgrade=yes
+  apt: upgrade=yes update_cache=yes
 
 - name: Ensure ntp is installed
   apt: name=ntp
