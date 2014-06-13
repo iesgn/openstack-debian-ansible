@@ -5,19 +5,53 @@
 - name: ensure br-ex switch is created
   openvswitch_bridge: bridge=br-ex state=present
   notify: restart ovs agent
-  
-- name: ensure br-ex is configured and external interface added permanently
-  template: >-
-    src=etc/network/interfaces
-    dest=/etc/network/interfaces
-    owner=root group=root mode=0644
-  notify: restart network
 
-- name: ensure br-ex is active after reboot
-  template: >-
-    src=etc/rc.local
-    dest=/etc/rc.local
-    owner=root
-    group=root
-    mode=0600
+- name: ensure external interface is added to br-ex
+  openvswitch_port: bridge=br-ex port={{ ext_net_nic }} state=present
+  notify: restart neutron agents
+
+# From /usr/share/doc/neutron-common:
+
+# Debian packages are set to use OpenVSwitch by default, since that is the most
+# universal option. To have a correct setup, you should do the following on
+# your node:
+
+# ovs-vsctl add-br br-int
+# ovs-vsctl add-br br-ex
+# ovs-vsctl br-set-external-id br-ex bridge-id br-ex
+# ovs-vsctl add-port br-ex eth0
+
+# Then your br-ex IP address is handled by your network config in your
+# /etc/network/interfaces configuration file:
+
+# auto br-ex
+# iface br-ex inet static
+#         address 192.168.1.10
+#         netmask 255.255.255.0
+
+# This will bring up a bridge "br-int" for the internal network, and "br-ex" for
+# the network connected to the public internet. Here, 192.168.1.10 is then of
+# course your public IP address of the router which will deliver network to your
+# virtual machines.
+
+# With this setup, using tenant_network_type = gre and enable_tunneling = True
+# in /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini, which is the
+# default in this package, should work.
+
+#  -- Thomas Goirand <zigo@debian.org>  Sat, 03 Nov 2012 14:01:32 +0000
+
+# - name: ensure br-ex is configured and external interface added permanently
+#   template: >-
+#     src=etc/network/interfaces
+#     dest=/etc/network/interfaces
+#     owner=root group=root mode=0644
+#   notify: restart network
+
+# - name: ensure br-ex is active after reboot
+#   template: >-
+#     src=etc/rc.local
+#     dest=/etc/rc.local
+#     owner=root
+#     group=root
+#     mode=0600
 

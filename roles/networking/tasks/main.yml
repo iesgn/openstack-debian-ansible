@@ -12,22 +12,22 @@
   with_items:
     - neutron-plugin-ml2
     - neutron-plugin-openvswitch-agent
-    - openvswitch-datapath-dkms
-    - openvswitch-datapath-source
+    # - openvswitch-datapath-dkms
+    # - openvswitch-datapath-source
     - neutron-metadata-agent
     - neutron-lbaas-agent
     - neutron-l3-agent
     - neutron-dhcp-agent
 
-- name: ensure OVS kernel module is loaded
-  command: /sbin/modprobe openvswitch_mod
-  register: modprobe_result
-  ignore_errors: True
+# - name: ensure OVS kernel module is loaded
+#   command: /sbin/modprobe openvswitch_mod
+#   register: modprobe_result
+#   ignore_errors: True
 
-- name: build openvswitch-datapath kernel module - this may take a while
-  command: /usr/bin/module-assistant -i auto-install openvswitch-datapath
-  when: modprobe_result|failed
-  notify: restart neutron agents
+# - name: build openvswitch-datapath kernel module - this may take a while
+#   command: /usr/bin/module-assistant -i auto-install openvswitch-datapath
+#   when: modprobe_result|failed
+#   notify: restart neutron agents
   
 - name: obtain service tenant id
   shell: >-

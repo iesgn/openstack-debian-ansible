@@ -6,4 +6,12 @@
 
 - name: restart network
   service: name=networking state=restarted
-
+ 
+- name: restart neutron agents
+  service: name={{ item }} state=restarted
+  with_items:
+    - neutron-l3-agent
+    - neutron-dhcp-agent
+    - neutron-lbaas-agent
+    - neutron-metadata-agent
+    
