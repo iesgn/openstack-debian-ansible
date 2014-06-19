@@ -10,6 +10,15 @@ Vagrant.configure("2") do |config|
     controller.vm.provider "virtualbox" do |vbox|
       vbox.customize ["modifyvm", :id, "--memory", "1024"]
       vbox.customize ["modifyvm", :id, "--nicpromisc3", "allow-all"] # eth2
+      vbox.customize ["createhd",
+                      '--filename', "tmp/disk",
+                      '--size', "2000" ]
+      vbox.customize ['storageattach', :id,
+                     '--storagectl', 'SATA Controller',
+                     '--port', 1,
+                     '--device', 0,
+                     '--type', 'hdd',
+                     '--medium', "tmp/disk.vdi"]
     end
   end
 end

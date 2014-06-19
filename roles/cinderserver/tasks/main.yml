@@ -1,0 +1,17 @@
+- name: ensure cinder packages are installed
+  apt: pkg={{ item }}
+  with_items:
+    - cinder-api 
+    - cinder-scheduler 
+
+- name: ensure cinder sqlite is deleted
+  file: dest=/var/lib/cinder/glance.sqlite state=absent
+          
+- name: ensure cinder.conf is configured
+  template: >
+    src=etc/cinder/cinder.conf
+    dest=/etc/cinder/cinder.conf
+    owner=cinder group=cinder mode=0640
+  notify:
+    - restart cinder services
+

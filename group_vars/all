@@ -47,4 +47,4 @@ ext_net_nic: eth2
 shared_secret: "asdasd"
 
 # # Cinder
-# physical_device: /dev/md5p2
+physical_device: /dev/sdb

@@ -1,0 +1,5 @@
+- name: restart cinder services
+  service: name={{ item }} state=restarted
+  with_items:
+    - cinder-api
+    - cinder-scheduler

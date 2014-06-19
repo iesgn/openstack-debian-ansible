@@ -1,0 +1,17 @@
+- name: ensure cinder-volume and lvm2 packages are installed
+  apt: pkg={{ item }}
+  with_items:
+    - cinder-volume
+    - lvm2
+
+- name: ensure physical and group volume are created
+  lvg: vg=cinder-volumes pvs={{ physical_device }} vg_options=--force
+    
+- name: ensure cinder.conf is configured
+  template: >
+    src=../../cinderserver/templates/etc/cinder/cinder.conf
+    dest=/etc/cinder/cinder.conf
+    owner=cinder group=cinder mode=0640
+  notify:
+    - restart cinder services
+

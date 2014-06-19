@@ -1,0 +1,3 @@
+- name: ensure cinder db is initialized
+  command: /usr/bin/cinder-manage db sync
+  notify: restart cinder services

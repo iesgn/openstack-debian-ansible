@@ -1,56 +1,56 @@
 ---
 
-# - hosts: all
-#   roles:
-#     - role: common
+- hosts: all
+  roles:
+    - role: common
 
-# - hosts: controller-nodes
-#   roles:
-#     - role: dbserver
+- hosts: controller-nodes
+  roles:
+    - role: dbserver
 
-# - hosts: controller-nodes
-#   roles:
-#     - role: dbserver_population
+- hosts: controller-nodes
+  roles:
+    - role: dbserver_population
 
-# - hosts: controller-nodes
-#   roles:
-#     - role: rabbitserver
+- hosts: controller-nodes
+  roles:
+    - role: rabbitserver
 
-# - hosts: controller-nodes
-#   roles:
-#     - role: keystoneserver
+- hosts: controller-nodes
+  roles:
+    - role: keystoneserver
 
-# - hosts: controller-nodes
-#   roles:
-#     - role: keystone_population
+- hosts: controller-nodes
+  roles:
+    - role: keystone_population
       
-# - hosts: storage-nodes
-#   roles: 
-#     - role: glanceserver
+- hosts: storage-nodes
+  roles: 
+    - role: glanceserver
 
-# - hosts: storage-nodes
-#   roles: 
-#     - role: glance_init
+- hosts: storage-nodes
+  roles: 
+    - role: glance_init
 
-# - hosts: controller-nodes
-#   roles:
-#     - role: novaserver
+- hosts: controller-nodes
+  roles:
+    - role: novaserver
 
-# - hosts: controller-nodes
-#   roles:
-#     - role: nova_init
+- hosts: controller-nodes
+  roles:
+    - role: nova_init
 
-# - hosts: compute-nodes
-#   roles:
-#     - role: novacompute
+- hosts: compute-nodes
+  roles:
+    - role: novacompute
 
-# - hosts: controller-nodes
-#   roles:
-#    - role: neutronserver
+- hosts: controller-nodes
+  roles:
+   - role: neutronserver
 
-# - hosts: network-nodes
-#   roles:
-#     - role: neutron-agents
+- hosts: network-nodes
+  roles:
+    - role: neutron-agents
 
 - hosts: network-nodes
   roles:
@@ -60,10 +60,15 @@
   roles:
     - role: horizon
 
-# - hosts: compute-nodes
-#   roles:
-#     - role: controller
+- hosts: controller-nodes
+  roles:
+    - role: cinderserver
 
-# - hosts: network-nodes
-#   roles:
-#     - role: controller
+- hosts: controller-nodes
+  roles:
+    - role: cinder_init
+
+- hosts: storage-nodes
+  roles:
+    - role: cindervolume
+
