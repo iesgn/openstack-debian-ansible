@@ -3,6 +3,8 @@ openstack-ansible
 
 Ansible playbooks for installing "AllinOneNode" OpenStack Icehouse on Debian testing (jessie)
 
+**This is still a work in progress**
+
 ## Software used (specific releases):
 
 - Debian GNU/Linux: testing amd64 (jessie)

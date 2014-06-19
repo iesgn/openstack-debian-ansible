@@ -46,11 +46,11 @@
 
 # - hosts: controller-nodes
 #   roles:
-#     - role: neutronserver
+#    - role: neutronserver
 
-- hosts: network-nodes
-  roles:
-    - role: networking
+# - hosts: network-nodes
+#   roles:
+#     - role: neutron-agents
 
 - hosts: network-nodes
   roles:
