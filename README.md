@@ -8,19 +8,34 @@ Ansible playbooks for installing "AllinOneNode" OpenStack Icehouse on Debian tes
 ## Software used (specific releases):
 
 - Debian GNU/Linux: testing amd64 (jessie)
-- Linux kernel: 3.14-1-amd64
-- Open vSwitch: 1.9.3
+- Linux kernel: 3.14-2-amd64
+- Open vSwitch: 2.1.0
 - OpenStack: Icehouse (2014.1)
-- Ansible: 1.6.1
-- Vagrant: 1.6.2
-- VirtualBox: 4.1.18
+- Ansible: 1.7.1
+- Vagrant: 1.6.5
+- VirtualBox: 4.3.14
 
 ## Deployment schema
 
 Per tenant router with private networks
 
-## Install Debian Jessie Vagrant Box
+## Get a debian jessie vagrant box:
 
 Tested using debian jessie vagrant box available at:
 
-https://downloads.sourceforge.net/project/vagrantboxjessie/debian80.box
+    https://vagrantcloud.com/binarydata/boxes/debian-jessie
+	https://downloads.sourceforge.net/project/vagrantboxjessie/debian80.box
+
+Download and install it locally with:
+
+    vagrant box add --name binarydata/debian-jessie https://vagrantcloud.com/binarydata/boxes/debian-jessie
+
+## Bring up the scenario
+
+    chmod 400 vagrant_private_key
+	vagrant up
+
+## Run ansible plubooks to configure the cloud
+
+    ansible-playbook site.yml --sudo
+   

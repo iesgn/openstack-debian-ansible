@@ -97,7 +97,7 @@
 - name: ensure openrc admin file is created in root home directory
   template: >-
     src=root/openrc
-    dest=/root/admin_openrc
+    dest=/root/admin_openrc.sh
     owner=root
     group=root
     mode=600
