@@ -1,0 +1,6 @@
+#!/bin/sh
+ip addr del {{ network_node_external_ip }} dev {{ ext_net_nic }}
+ip link set {{ ext_net_nic }} up
+ip link set {{ ext_net_nic }} promisc on
+ip addr add {{ network_node_external_ip }} dev br-ex
+ip link set br-ex up

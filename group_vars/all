@@ -10,7 +10,7 @@ storage_external_ip: 192.168.221.101
 network_node_ip: 192.168.222.101
 network_node_external_ip: 192.168.221.101
 network_node_external_netmask: 255.255.255.0
-
+ext_net_nic: eth2
 
 # # MySQL passwords
 root_db_password: "asdasd" 
