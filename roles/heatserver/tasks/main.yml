@@ -1,0 +1,26 @@
+- name: ensure heat packages are installed
+  apt: pkg={{ item }}
+  with_items:
+    - heat-api 
+    - heat-api-cfn 
+    - heat-engine 
+    - python-heatclient
+
+- name: ensure heat sqlite is deleted
+  file: dest=/var/lib/heat/heat.sqlite state=absent
+
+- name: ensure heat.conf file is up to date
+  template: >
+    src=etc/heat/heat.conf
+    dest=/etc/heat/heat.conf
+    owner=heat
+    group=heat
+    mode=0600
+  notify:
+  - restart heat-services
+
+- name: ensure heat db is initialized
+  command: /usr/bin/heat-manage db_sync
+  notify:
+  - restart heat-services
+
