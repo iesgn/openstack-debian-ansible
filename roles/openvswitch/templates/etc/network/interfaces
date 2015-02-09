@@ -5,21 +5,23 @@
 auto lo
 iface lo inet loopback
 
-# The primary network interface
-allow-hotplug eth0
-iface eth0 inet dhcp
-pre-up sleep 2
+auto eth1
+iface eth1 inet static
+        address {{ network_node_ip }}
+        netmask {{ network_node_netmask }}
+
+auto eth2
+iface eth2 inet manual
+        up ifconfig $IFACE 0.0.0.0 up
+	up ip link set $IFACE promisc on
+	down ip link set $IFACE promisc off
+        down ifconfig $IFACE down
 
 auto br-ex
 iface br-ex inet static
-    address {{ network_node_external_ip }}
-    netmask {{ network_node_external_netmask }}
-#     ovs_type OVSBridge
-#     ovs_ports {{ ext_net_nic }}
-
-# allow-br-ex {{ ext_net_nic }}
-# iface {{ ext_net_nic }} inet manual
-#     ovs_bridge br-ex
-#     ovs_type OVSPort
-
+        address {{ network_node_external_ip }}
+        netmask {{ network_node_external_netmask }}
+        gateway {{ external_gateway }}
+        dns-nameservers 8.8.8.8
+        dns-search your.name
 

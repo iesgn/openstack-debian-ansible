@@ -27,12 +27,12 @@
 # course your public IP address of the router which will deliver network to your
 # virtual machines.
 
-# - name: ensure br-ex is configured and external interface added permanently
-#   template: >-
-#     src=etc/network/interfaces
-#     dest=/etc/network/interfaces
-#     owner=root group=root mode=0644
-#   notify: restart network
+- name: ensure br-ex is configured and external interface added permanently
+  template: >-
+    src=etc/network/interfaces
+    dest=/etc/network/interfaces
+    owner=root group=root mode=0644
+  notify: restart network
 
 # External bridge configuration (From https://github.com/openstack-ansible/)
 
