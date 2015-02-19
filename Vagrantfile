@@ -3,7 +3,7 @@
 
 Vagrant.configure("2") do |config|  
   config.vm.define :controller do |controller|
-    controller.vm.box = "binarydata/debian-jessie"
+    controller.vm.box = "debian-jessie-amd64"
     controller.vm.hostname = "controller"
     controller.vm.network :private_network, ip: "192.168.222.101" # eth1 internal
     controller.vm.network :private_network, ip: "192.168.221.101" # eth2 external
