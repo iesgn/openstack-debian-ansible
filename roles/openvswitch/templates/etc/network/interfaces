@@ -5,23 +5,18 @@
 auto lo
 iface lo inet loopback
 
-auto eth1
-iface eth1 inet static
+auto {{ int_net_nic }}
+iface {{ int_net_nic }} inet static
         address {{ network_node_ip }}
         netmask {{ network_node_netmask }}
-
-auto eth2
-iface eth2 inet manual
-        up ifconfig $IFACE 0.0.0.0 up
-	up ip link set $IFACE promisc on
-	down ip link set $IFACE promisc off
-        down ifconfig $IFACE down
 
 auto br-ex
 iface br-ex inet static
         address {{ network_node_external_ip }}
         netmask {{ network_node_external_netmask }}
         gateway {{ external_gateway }}
-        dns-nameservers 8.8.8.8
-        dns-search your.name
+        up ifconfig {{ ext_net_nic }} up
+	up ip link set {{ ext_net_nic }} promisc on
+	down ip link set {{ ext_net_nic }} promisc off
+	down ifconfig {{ ext_net_nic }} down
 

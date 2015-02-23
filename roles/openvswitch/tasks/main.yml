@@ -9,10 +9,20 @@
 # From /usr/share/doc/neutron-common
 - name: ensure br-ex is set as an external bridge
   command: ovs-vsctl br-set-external-id br-ex bridge-id br-ex
-  
+
+- name: ensure default routing rule is deleted
+  command: /sbin/ip route del default via {{ external_gateway }} dev {{ ext_net_nic }}
+  ignore_errors: True
+
+- name: ensure IP address is deleted from external nic
+  command: /sbin/ip addr del {{ controller_external_ip }}/{{ controller_external_CIDR }} dev {{ ext_net_nic }}
+
 - name: ensure external interface is added to br-ex
   openvswitch_port: bridge=br-ex port={{ ext_net_nic }} state=present
   notify: restart neutron agents
+
+- name: ensure IP address is added to external bridge
+  command: /sbin/ip addr add {{ controller_external_ip }}/{{ controller_external_CIDR }} dev br-ex
 
 # Then your br-ex IP address is handled by your network config in your
 # /etc/network/interfaces configuration file:
@@ -34,26 +44,17 @@
     owner=root group=root mode=0644
   notify: restart network
 
-# External bridge configuration (From https://github.com/openstack-ansible/)
+- name: ensure default openvswitch-switch init are deleted
+  command: update-rc.d -f openvswitch-switch remove
 
-- name: ensure script to configure network is in place
+- name: ensure openvswitch-switch is modified
   template: >-
-    src=etc/network/if-pre-up.d/configure_br-ex
-    dest=/etc/network/if-pre-up.d/configure_br-ex
-    owner=root
-    group=root
-    mode=0755
+    src=etc/init.d/openvswitch-switch
+    dest=/etc/init.d/openvswitch-switch
+    owner=root group=root mode=755
 
-- name: ensure configure script is run at least once
-  command: /etc/network/if-pre-up.d/configure_br-ex
-
-# - name: ensure br-ex is active after reboot
-#   template: >-
-#     src=etc/rc.local
-#     dest=/etc/rc.local
-#     owner=root
-#     group=root
-#     mode=0600
+- name: ensure default openvswitch-switch init are created
+  command: /sbin/insserv openvswitch-switch 
 
 - name: ensure neutron database is absent
   mysql_db: name=neutron state=absent
