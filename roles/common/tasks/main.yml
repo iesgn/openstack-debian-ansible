@@ -1,14 +1,14 @@
-# - name: Ensure sources.list file is properly defined (http.debian.net)
-#   copy: >
-#     src=etc/apt/sources.list
-#     dest=/etc/apt/sources.list
-#     owner=root
-#     group=root
-#     mode=0644
-#   notify: apt update
+- name: Ensure sources.list file is properly defined (http.debian.net)
+  copy: >
+    src=etc/apt/sources.list
+    dest=/etc/apt/sources.list
+    owner=root
+    group=root
+    mode=0644
+  notify: apt update
 
-# - name: Ensure system is upgraded (It can take a long time)
-#   apt: upgrade=yes update_cache=yes
+- name: Ensure system is upgraded (It can take a long time)
+  apt: upgrade=yes update_cache=yes
 
 - name: Ensure ntp is installed
   apt: name=ntp

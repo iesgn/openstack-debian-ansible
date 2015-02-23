@@ -44,6 +44,7 @@
     owner=root group=root mode=0644
   notify: restart network
 
+<<<<<<< HEAD
 - name: ensure default openvswitch-switch init are deleted
   command: update-rc.d -f openvswitch-switch remove
 
@@ -55,6 +56,24 @@
 
 - name: ensure default openvswitch-switch init are created
   command: /sbin/insserv openvswitch-switch 
+=======
+- name: ensure openvswitch-switch init is modified
+  template: >-
+    src=etc/init.d/openvswitch-switch
+    dest=/etc/init.d/openvswitch-switch
+    owner=root group=root mode=0755
+
+- name: ensure openvswitch-switch init is executed before network one
+  command: /sbin/insserv openvswitch-switch
+  
+# - name: ensure br-ex is active after reboot
+#   template: >-
+#     src=etc/rc.local
+#     dest=/etc/rc.local
+#     owner=root
+#     group=root
+#     mode=0600
+>>>>>>> 6ee463300a1ff1816cb881ba8b0bf85bbce2c4df
 
 - name: ensure neutron database is absent
   mysql_db: name=neutron state=absent

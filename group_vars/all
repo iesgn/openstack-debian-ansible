@@ -10,10 +10,16 @@ storage_ip: 192.168.220.1
 storage_external_ip: 172.22.220.1
 network_node_ip: 192.168.220.1
 network_node_netmask: 255.255.255.0
+<<<<<<< HEAD
 network_node_external_ip: 172.22.220.1
 network_node_external_netmask: 255.255.0.0
 external_gateway: 172.22.0.1
 ext_net_nic: eth0
+=======
+network_node_external_ip: 192.168.221.101
+network_node_external_netmask: 255.255.255.0
+external_gateway: 192.168.221.1
+>>>>>>> 6ee463300a1ff1816cb881ba8b0bf85bbce2c4df
 int_net_nic: eth1
 
 # # MySQL passwords

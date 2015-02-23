@@ -6,7 +6,11 @@ auto lo
 iface lo inet loopback
 
 auto {{ int_net_nic }}
+<<<<<<< HEAD
 iface {{ int_net_nic }} inet static
+=======
+iface {{ int_net_nic}} inet static
+>>>>>>> 6ee463300a1ff1816cb881ba8b0bf85bbce2c4df
         address {{ network_node_ip }}
         netmask {{ network_node_netmask }}
 
@@ -15,7 +19,11 @@ iface br-ex inet static
         address {{ network_node_external_ip }}
         netmask {{ network_node_external_netmask }}
         gateway {{ external_gateway }}
+<<<<<<< HEAD
         up ifconfig {{ ext_net_nic }} up
+=======
+	up ifconfig {{ ext_net_nic }} up
+>>>>>>> 6ee463300a1ff1816cb881ba8b0bf85bbce2c4df
 	up ip link set {{ ext_net_nic }} promisc on
 	down ip link set {{ ext_net_nic }} promisc off
 	down ifconfig {{ ext_net_nic }} down
