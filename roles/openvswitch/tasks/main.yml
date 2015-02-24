@@ -15,14 +15,14 @@
   ignore_errors: True
 
 - name: ensure IP address is deleted from external nic
-  command: /sbin/ip addr del {{ controller_external_ip }}/{{ controller_external_CIDR }} dev {{ ext_net_nic }}
+  command: /sbin/ip addr del {{ network_node_external_ip }}/{{ network_node_external_CIDR }} dev {{ ext_net_nic }}
 
 - name: ensure external interface is added to br-ex
   openvswitch_port: bridge=br-ex port={{ ext_net_nic }} state=present
   notify: restart neutron agents
 
 - name: ensure IP address is added to external bridge
-  command: /sbin/ip addr add {{ controller_external_ip }}/{{ controller_external_CIDR }} dev br-ex
+  command: /sbin/ip addr add {{ network_node_external_ip }}/{{ network_node_external_CIDR }} dev br-ex
 
 # Then your br-ex IP address is handled by your network config in your
 # /etc/network/interfaces configuration file:
@@ -44,11 +44,10 @@
     owner=root group=root mode=0644
   notify: restart network
 
-<<<<<<< HEAD
 - name: ensure default openvswitch-switch init are deleted
   command: update-rc.d -f openvswitch-switch remove
 
-- name: ensure openvswitch-switch is modified
+- name: ensure openvswitch-switch init file is modified
   template: >-
     src=etc/init.d/openvswitch-switch
     dest=/etc/init.d/openvswitch-switch
@@ -56,24 +55,6 @@
 
 - name: ensure default openvswitch-switch init are created
   command: /sbin/insserv openvswitch-switch 
-=======
-- name: ensure openvswitch-switch init is modified
-  template: >-
-    src=etc/init.d/openvswitch-switch
-    dest=/etc/init.d/openvswitch-switch
-    owner=root group=root mode=0755
-
-- name: ensure openvswitch-switch init is executed before network one
-  command: /sbin/insserv openvswitch-switch
-  
-# - name: ensure br-ex is active after reboot
-#   template: >-
-#     src=etc/rc.local
-#     dest=/etc/rc.local
-#     owner=root
-#     group=root
-#     mode=0600
->>>>>>> 6ee463300a1ff1816cb881ba8b0bf85bbce2c4df
 
 - name: ensure neutron database is absent
   mysql_db: name=neutron state=absent
