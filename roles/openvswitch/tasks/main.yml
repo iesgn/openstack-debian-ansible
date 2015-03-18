@@ -10,12 +10,17 @@
 - name: ensure br-ex is set as an external bridge
   command: ovs-vsctl br-set-external-id br-ex bridge-id br-ex
 
-- name: ensure default routing rule is deleted
-  command: /sbin/ip route del default via {{ external_gateway }} dev {{ ext_net_nic }}
-  ignore_errors: True
+# - name: Find which network interface is what has defined the default route
+#   command: /sbin/ip route |/bin/grep default |/usr/bin/awk '{print $5}'
+#   register: gateway_interface
+#   ignore_errors: True
 
+- name: Ensure default route is deleted
+  command: /sbin/route del default
+  
 - name: ensure IP address is deleted from external nic
   command: /sbin/ip addr del {{ network_node_external_ip }}/{{ network_node_external_CIDR }} dev {{ ext_net_nic }}
+  ignore_errors: True
 
 - name: ensure external interface is added to br-ex
   openvswitch_port: bridge=br-ex port={{ ext_net_nic }} state=present
@@ -24,6 +29,9 @@
 - name: ensure IP address is added to external bridge
   command: /sbin/ip addr add {{ network_node_external_ip }}/{{ network_node_external_CIDR }} dev br-ex
 
+- name: ensure default rule is associated to external bridge
+  command: /sbin/route add -net default gw {{ external_gateway }} dev br-ex
+  
 # Then your br-ex IP address is handled by your network config in your
 # /etc/network/interfaces configuration file:
 

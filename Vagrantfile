@@ -13,6 +13,10 @@ Vagrant.configure("2") do |config|
       vbox.customize ["createhd",
                       '--filename', "tmp/disk",
                       '--size', "3000" ]
+      vbox.customize ["storagectl", :id,
+                      "--name",
+                      "SATA Controller",
+                      "--add", "sata"]
       vbox.customize ['storageattach', :id,
                      '--storagectl', 'SATA Controller',
                      '--port', 1,
