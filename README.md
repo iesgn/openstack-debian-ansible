@@ -1,5 +1,5 @@
-openstack-ansible
-=================
+openstack-debian-ansible
+========================
 
 Ansible playbooks for installing "AllinOneNode" OpenStack Icehouse on Debian testing (jessie)
 
@@ -8,10 +8,10 @@ Ansible playbooks for installing "AllinOneNode" OpenStack Icehouse on Debian tes
 ## Software used (specific releases):
 
 - Debian GNU/Linux: testing amd64 (jessie)
-- Linux kernel: 3.14-2-amd64
-- Open vSwitch: 2.1.0
+- Linux kernel: 3.16.0-4-amd64
+- Open vSwitch: 2.3.0
 - OpenStack: Icehouse (2014.1)
-- Ansible: 1.7.1
+- Ansible: 1.7.2
 - Vagrant: 1.6.5
 - VirtualBox: 4.3.14
 
@@ -35,7 +35,12 @@ Download and install it locally with:
     chmod 400 vagrant_private_key
 	vagrant up
 
-## Run ansible plubooks to configure the cloud
+## Run ansible playbooks to configure the cloud
 
     ansible-playbook site.yml --sudo
    
+
+## References
+
+- [https://github.com/openstack-ansible](https://github.com/openstack-ansible)
+- [https://github.com/djoreilly/quantum-ansible](https://github.com/djoreilly/quantum-ansible)
