@@ -17,6 +17,7 @@
 
 - name: Ensure default route is deleted
   command: /sbin/route del default
+  ignore_errors: True
   
 - name: ensure IP address is deleted from external nic
   command: /sbin/ip addr del {{ network_node_external_ip }}/{{ network_node_external_CIDR }} dev {{ ext_net_nic }}
@@ -26,6 +27,9 @@
   openvswitch_port: bridge=br-ex port={{ ext_net_nic }} state=present
   notify: restart neutron agents
 
+- name: ensure br-ex is up
+  command: /sbin/ip link set br-ex up
+  
 - name: ensure IP address is added to external bridge
   command: /sbin/ip addr add {{ network_node_external_ip }}/{{ network_node_external_CIDR }} dev br-ex
 
