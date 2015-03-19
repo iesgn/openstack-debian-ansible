@@ -4,17 +4,17 @@ rabbit_password: "asdasd"
 
 # # IPs
 controller_ip: 192.168.221.101
-controller_external_ip: 192.168.222.101
+controller_external_ip: 192.168.1.101
 storage_ip: 192.168.221.101
-storage_external_ip: 192.168.222.101
+storage_external_ip: 192.168.1.101
 network_node_ip: 192.168.221.101
 network_node_netmask: 255.255.255.0
-network_node_external_ip: 192.168.222.101
+network_node_external_ip: 192.168.1.101
 network_node_external_netmask: 255.255.255.0
 network_node_external_CIDR: 24
-external_gateway: 192.168.222.1
-int_net_nic: eth2
-ext_net_nic: eth1
+external_gateway: 192.168.1.1
+int_net_nic: eth1
+ext_net_nic: eth2
 
 # # MySQL passwords
 root_db_password: "asdasd" 
@@ -50,4 +50,4 @@ log_debug: False
 shared_secret: "asdasd"
 
 # # Cinder
-physical_device: /dev/sdb
+physical_device: /dev/sda
