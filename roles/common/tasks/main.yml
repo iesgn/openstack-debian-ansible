@@ -1,5 +1,5 @@
-- name: Ensure sources.list file is properly defined (http.debian.net)
-  copy: >
+- name: Ensure sources.list file is properly defined ({{ repo_fqdn }})
+  template: >
     src=etc/apt/sources.list
     dest=/etc/apt/sources.list
     owner=root
