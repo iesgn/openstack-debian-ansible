@@ -15,20 +15,40 @@ Ansible playbooks for installing "AllinOneNode" OpenStack Icehouse on Debian tes
 - Vagrant: 1.6.5
 - VirtualBox: 4.3.14
 
+## OpenStack componens included:
+
+Keystone, Glance, Nova, Neutron and Cinder
+
 ## Deployment schema
 
 Per tenant router with private networks
 
 ## Get a debian jessie vagrant box:
 
-Tested using debian jessie vagrant box available at:
+Tested using the debian jessie vagrant box available at:
 
-    https://vagrantcloud.com/binarydata/boxes/debian-jessie
-	https://downloads.sourceforge.net/project/vagrantboxjessie/debian80.box
+    https://vagrantcloud.com/albertomolina/boxes/debian-jessie-amd64
 
 Download and install it locally with:
 
-    vagrant box add --name binarydata/debian-jessie https://vagrantcloud.com/binarydata/boxes/debian-jessie
+    vagrant box add --name albertomolina/debian-jessie-amd64 https://vagrantcloud.com/albertomolina/boxes/debian-jessie-amd64
+
+## Configuration
+
+The file groups_var/all contains all variables needed by ansible playbooks and they can be customized. It's **mandatory** to define the following variables according your LAN:
+
+    controller_external_ip: 192.168.1.101
+	storage_external_ip: 192.168.1.101
+	network_node_external_ip: 192.168.1.101
+	network_node_external_netmask: 255.255.255.0
+	network_node_external_CIDR: 24
+	external_gateway: 192.168.1.1
+
+In the Vagranfile, the line:
+
+    controller.vm.network :public_network, bridge: "wlan0" ,ip: "192.168.1.101" # eth2 external
+
+must be modified too.
 
 ## Bring up the scenario
 
@@ -38,7 +58,10 @@ Download and install it locally with:
 ## Run ansible playbooks to configure the cloud
 
     ansible-playbook site.yml --sudo
-   
+
+## Using OpenStack
+
+Open your browser and type in the notification bar http://192.168.1.101 or the corresponding external IP choosen.
 
 ## References
 
