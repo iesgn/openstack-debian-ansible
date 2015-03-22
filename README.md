@@ -35,6 +35,8 @@ Download and install it locally with:
 
 ## Configuration
 
+![schema](github.com/iesgn/openstack-debian-ansible/img/openstack-debian-ansible.png)
+
 The file groups_var/all contains all variables needed by ansible playbooks and they can be customized. It's **mandatory** to define the following variables according your LAN:
 
     controller_external_ip: 192.168.1.101
