@@ -73,7 +73,7 @@ The Vagranfile must be modified too:
 
 ## Using OpenStack
 
-Open your browser and type in the notification bar http://192.168.1.101 or the corresponding external IP choosen.
+Open your browser and type in the notification bar http://192.168.1.101 or the corresponding external IP chosen.
 
 ## References
 
