@@ -72,3 +72,6 @@
   roles:
     - role: cindervolume
 
+- hosts: controller-nodes
+  roles:
+    - role: restart-services

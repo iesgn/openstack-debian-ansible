@@ -26,29 +26,19 @@
 - name: ensure external interface is added to br-ex
   openvswitch_port: bridge=br-ex port={{ ext_net_nic }} state=present
   notify: restart neutron agents
+  ignore_errors: True
 
 - name: ensure br-ex is up
   command: /sbin/ip link set br-ex up
   
 - name: ensure IP address is added to external bridge
   command: /sbin/ip addr add {{ network_node_external_ip }}/{{ network_node_external_CIDR }} dev br-ex
+  ignore_errors: True
 
 - name: ensure default rule is associated to external bridge
   command: /sbin/route add -net default gw {{ external_gateway }} dev br-ex
+  ignore_errors: True
   
-# Then your br-ex IP address is handled by your network config in your
-# /etc/network/interfaces configuration file:
-
-# auto br-ex
-# iface br-ex inet static
-#         address 192.168.1.10
-#         netmask 255.255.255.0
-
-# This will bring up a bridge "br-int" for the internal network, and "br-ex" for
-# the network connected to the public internet. Here, 192.168.1.10 is then of
-# course your public IP address of the router which will deliver network to your
-# virtual machines.
-
 - name: ensure br-ex is configured and external interface added permanently
   template: >-
     src=etc/network/interfaces
