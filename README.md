@@ -30,13 +30,13 @@ Keystone, Glance, Nova, Neutron and Cinder
 
 ## Get a debian jessie vagrant box:
 
-Tested using the debian jessie vagrant box available at:
+Tested using the debian "official" jessie vagrant box available at:
 
-    https://vagrantcloud.com/albertomolina/boxes/debian-jessie-amd64
+    https://atlas.hashicorp.com/debian/boxes/jessie64
 
 You can download and install it locally with:
 
-    vagrant box add --name albertomolina/debian-jessie-amd64 https://vagrantcloud.com/albertomolina/boxes/debian-jessie-amd64
+    vagrant box add debian/jessie64
 
 If you are going to use these playbooks with physical serves, ignore the
 Vagranfile and configure ansible.cfg properly.
