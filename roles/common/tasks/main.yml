@@ -1,4 +1,4 @@
-- name: Ensure sources.list file is properly defined ({{ repo_fqdn }})
+- name: Ensure sources.list file is properly defined 
   template: >
     src=etc/apt/sources.list
     dest=/etc/apt/sources.list

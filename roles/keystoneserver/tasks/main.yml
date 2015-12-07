@@ -1,9 +1,13 @@
+- name: ensure python-sqlalchemy < 0.10 is installed
+  apt: name=python-sqlalchemy
+  
 - name: ensure keystone packages are installed
-  apt: pkg={{ item }}
+  apt: name={{ item }} default_release=jessie-backports
   with_items:
     - keystone
     - python-keystone
     - python-keystoneclient
+    - python-oslo.db
   notify: start keystone
   
 - name: ensure sqlite keystone database is deleted

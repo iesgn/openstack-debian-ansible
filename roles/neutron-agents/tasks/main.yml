@@ -8,26 +8,13 @@
   sysctl: name=net.ipv4.conf.default.rp_filter value=0 state=present reload=yes
     
 - name: ensure plugins, agents and openvswitch packages are installed
-  apt: pkg={{ item }}
+  apt: name={{ item }} default_release=jessie-backports
   with_items:
-    - neutron-plugin-ml2
+    - neutron-common
     - neutron-plugin-openvswitch-agent
-    # - openvswitch-datapath-dkms
-    # - openvswitch-datapath-source
     - neutron-metadata-agent
-    - neutron-lbaas-agent
     - neutron-l3-agent
     - neutron-dhcp-agent
-
-# - name: ensure OVS kernel module is loaded
-#   command: /sbin/modprobe openvswitch_mod
-#   register: modprobe_result
-#   ignore_errors: True
-
-# - name: build openvswitch-datapath kernel module - this may take a while
-#   command: /usr/bin/module-assistant -i auto-install openvswitch-datapath
-#   when: modprobe_result|failed
-#   notify: restart neutron agents
   
 - name: obtain service tenant id
   shell: >-
@@ -59,13 +46,19 @@
   notify:
     - restart neutron agents
 
-- name: ensure lbaas agent is configured
+- name: ensure DNSmasq is configured to use MTU=1454
   template: >
-    src=etc/neutron/lbaas_agent.ini
-    dest=/etc/neutron/lbaas_agent.ini
+    src=etc/neutron/dnsmasq-neutron.conf
+    dest=/etc/neutron/dnsmasq-neutron.conf
     owner=root group=root mode=0644
-  notify:
-    - restart neutron agents
+
+# - name: ensure lbaas agent is configured
+#   template: >
+#     src=etc/neutron/lbaas_agent.ini
+#     dest=/etc/neutron/lbaas_agent.ini
+#     owner=root group=root mode=0644
+#   notify:
+#     - restart neutron agents
 
 - name: ensure metadata agent is configured
   template: >

@@ -16,6 +16,10 @@
   roles:
     - role: rabbitserver
 
+- hosts: all
+  roles:
+    - role: openstackclient
+
 - hosts: controller-nodes
   roles:
     - role: keystoneserver
@@ -28,17 +32,13 @@
   roles: 
     - role: glanceserver
 
-- hosts: storage-nodes
-  roles: 
-    - role: glance_init
+# - hosts: storage-nodes
+#   roles: 
+#     - role: glance_population
 
 - hosts: controller-nodes
   roles:
     - role: novaserver
-
-- hosts: controller-nodes
-  roles:
-    - role: nova_init
 
 - hosts: compute-nodes
   roles:
@@ -56,6 +56,10 @@
   roles:
     - role: openvswitch
 
+- hosts: compute-nodes
+  roles:
+    - role: neutron-agents-compute
+
 - hosts: controller-nodes
   roles:
     - role: horizon
@@ -63,10 +67,6 @@
 - hosts: controller-nodes
   roles:
     - role: cinderserver
-
-- hosts: controller-nodes
-  roles:
-    - role: cinder_init
 
 - hosts: storage-nodes
   roles:

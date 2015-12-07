@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from openstack_dashboard import exceptions
 
 DEBUG = False
-#TEMPLATE_DEBUG = FALSE
+#TEMPLATE_DEBUG = DEBUG
 
 # Required for Django 1.5.
 # If horizon is running in production (DEBUG is False), set this
@@ -168,7 +168,7 @@ OPENSTACK_HYPERVISOR_FEATURES = {
 # services provided by neutron. Options currently available are load
 # balancer service, security groups, quotas, VPN service.
 OPENSTACK_NEUTRON_NETWORK = {
-    'enable_lb': True,
+    'enable_lb': False,
     'enable_firewall': False,
     'enable_quotas': True,
     'enable_vpn': False,
@@ -253,7 +253,9 @@ TIME_ZONE = "UTC"
 # Map of local copy of service policy files
 #POLICY_FILES = {
 #    'identity': 'keystone_policy.json',
-#    'compute': 'nova_policy.json'
+#    'compute': 'nova_policy.json',
+#    'volume': 'cinder_policy.json',
+#    'image': 'glance_policy.json',
 #}
 
 # Trove user and database extension support. By default support for

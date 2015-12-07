@@ -2,7 +2,7 @@
   apt: name=sudo state=present
 
 - name: ensure glance is installed
-  apt: pkg={{ item }}
+  apt: name={{ item }} default_release=jessie-backports
   with_items:
     - glance
     - glance-api
@@ -33,3 +33,8 @@
   notify:
   - restart glance-services
 
+- name: ensure glance db is initialized
+  command: /usr/bin/glance-manage db_sync
+  notify:
+  - restart glance-services
+  

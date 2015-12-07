@@ -5,12 +5,13 @@
   register: nova_admin_tenant_id
     
 - name: ensure neutron server and neutron-plugin-ml2 are installed
-  apt: pkg={{ item }}
+  apt: name={{ item }} default_release=jessie-backports
   with_items:
     - neutron-server
-    - neutron-plugin-ml2
+    - neutron-common
+    - python-neutronclient
 
-- name: ensure nova.conf is configured
+- name: ensure neutron.conf is configured
   template: >
     src=etc/neutron/neutron.conf
     dest=/etc/neutron/neutron.conf
@@ -25,3 +26,12 @@
     owner=root group=root mode=0644
   notify:
     - restart neutron-server
+
+- name: ensure neutron db is initialized
+  command: neutron-db-manage --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade head
+  notify:
+    - restart neutron-server
+
+- name: ensure neutron sqlite is deleted
+  file: dest=/var/lib/neutron/neutron.sqlite state=absent
+    

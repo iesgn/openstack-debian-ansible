@@ -101,19 +101,12 @@
     owner=root
     group=root
     mode=600
-    
-# # keystone-service from openstackansible-modules is still needed
-# # https://github.com/lorin/openstack-ansible-modules
 
-# - name: add services
-#   keystone_service: >
-#     token={{ admin_token }}
-#     name={{ item.name }}
-#     type={{ item.type }}
-#     description="{{ item.description }}"
-#     public_url={{ item.public_url }}
-#     internal_url={{ item.internal_url }}
-#     admin_url={{ item.admin_url }}
-#     region={{ region }}
-#   with_items: {{ services }}
-#   tags: keystone
+- name: ensure openrc demo file is created in root home directory
+  template: >-
+    src=root/demo_openrc
+    dest=/root/demo_openrc.sh
+    owner=root
+    group=root
+    mode=600
+    
