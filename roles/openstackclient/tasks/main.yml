@@ -1,0 +1,2 @@
+- name: ensure python-openstackclient is installed
+  apt: name=python-openstackclient default_release=jessie-backports
