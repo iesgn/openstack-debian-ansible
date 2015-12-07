@@ -1,7 +1,7 @@
 openstack-debian-ansible
 ========================
 
-Ansible playbooks for installing OpenStack Icehouse on Debian jessie.
+Ansible playbooks for installing OpenStack Kilo on Debian jessie using Debian backports
 
 These playbooks have been written in the hope of using them in a real deployment
 with physical servers, but thay can be used too to deploy a OpenStack test
@@ -11,11 +11,10 @@ environment with vagrant inside a computer.
 
 ## Software used (specific versions):
 
-- Debian GNU/Linux: jessie (amd64). At this moment jessie is in frozen state and
-  is expected to be released in April 2015
+- Debian GNU/Linux: jessie (amd64). 
 - Linux kernel: 3.16.0-4-amd64
 - Open vSwitch: 2.3.0
-- OpenStack: Icehouse (2014.1)
+- OpenStack: Kilo (2015.1)
 - Ansible: 1.7.2
 - Vagrant: 1.6.5
 - VirtualBox: 4.3.14
