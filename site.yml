@@ -1,6 +1,13 @@
 ---
 
 - hosts: all
+  pre_tasks:
+    - name: ensure aptitude is installed
+      apt: package=aptitude state=present
+
+    - name: ensure bash-completion is installed
+      apt: package=bash-completion state=present
+
   roles:
     - role: common
 
