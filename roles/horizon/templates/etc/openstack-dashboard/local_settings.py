@@ -12,7 +12,9 @@ DEBUG = False
 # with the list of host/domain names that the application can serve.
 # For more information see:
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ['{{ controller_external_ip }}', '{{ controller_ip }}']
+## ALLOWED_HOSTS = ['{{ controller_external_ip }}', '{{ controller_ip }}']
+# Let users connect to any IP/hostname of the server
+ALLOWED_HOSTS = ['*']
 
 # Set SSL proxy settings:
 # For Django 1.4+ pass this header from the proxy after terminating the SSL,
