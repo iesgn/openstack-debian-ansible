@@ -6,7 +6,17 @@
 
 - name: ensure glance db is initialized
   command: /usr/bin/glance-manage db_sync
-  
+
+# Restart glance services after db initialized and before adding CirrOS
+- name: restart glance services
+  service: name={{ item }} state=restarted
+  with_items:
+    - glance-api
+    - glance-registry
+
+- name: Wait 5 seconds for glance services to completely restart...
+  command: sleep 5
+
 # Using glance_image module (ansible >= 1.2)
 - name: ensure cirros image is added to glance
   glance_image: >
