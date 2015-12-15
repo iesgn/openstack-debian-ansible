@@ -46,6 +46,13 @@
     owner=root group=root mode=0644
   notify: restart network
 
+- name: ensure proper dns nameserver is set
+  template: >-
+    src=etc/resolv.conf
+    dest=/etc/resolv.conf
+    owner=root group=root mode=0644
+  notify: restart network
+
 - name: ensure default openvswitch-switch init are deleted
   command: update-rc.d -f openvswitch-switch remove
 
