@@ -1,84 +1,112 @@
 ---
 
 - hosts: all
+  sudo: true
+  sudo_user: root
   pre_tasks:
+    - name: update package list
+      apt: update_cache=yes
+
     - name: ensure aptitude is installed
       apt: package=aptitude state=present
 
     - name: ensure bash-completion is installed
       apt: package=bash-completion state=present
-
   roles:
     - role: common
 
+
+ ### Before DB
+
 - hosts: controller-nodes
+  sudo: true
+  sudo_user: root
   roles:
     - role: dbserver
-
-- hosts: controller-nodes
-  roles:
     - role: dbserver_population
-
-- hosts: controller-nodes
-  roles:
     - role: rabbitserver
 
 - hosts: controller-nodes
+  sudo: true
+  sudo_user: root
+  pre_tasks:
+    - name: Wait 5 seconds for mysql to completely restart...
+      command: sleep 5
   roles:
     - role: keystoneserver
 
 - hosts: controller-nodes
+  sudo: true
+  sudo_user: root
+  pre_tasks:
+    - name: Wait 5 seconds for keystone to completely restart...
+      command: sleep 5
   roles:
     - role: keystone_population
-      
+
+
+ ### Before Glance
+
 - hosts: storage-nodes
+  sudo: true
+  sudo_user: root
   roles: 
     - role: glanceserver
-
-- hosts: storage-nodes
-  roles: 
     - role: glance_init
 
+
 - hosts: controller-nodes
+  sudo: true
+  sudo_user: root
   roles:
     - role: novaserver
-
-- hosts: controller-nodes
-  roles:
     - role: nova_init
 
+
 - hosts: compute-nodes
+  sudo: true
+  sudo_user: root
   roles:
     - role: novacompute
 
+
 - hosts: controller-nodes
+  sudo: true
+  sudo_user: root
   roles:
    - role: neutronserver
 
+
+ ### Before Open vSwitch
+
 - hosts: network-nodes
+  sudo: true
+  sudo_user: root
   roles:
     - role: neutron-agents
-
-- hosts: network-nodes
-  roles:
     - role: openvswitch
 
+
 - hosts: controller-nodes
+  sudo: true
+  sudo_user: root
   roles:
     - role: horizon
-
-- hosts: controller-nodes
-  roles:
     - role: cinderserver
-
-- hosts: controller-nodes
-  roles:
     - role: cinder_init
 
+
 - hosts: storage-nodes
+  sudo: true
+  sudo_user: root
   roles:
     - role: cindervolume
 
+
 - hosts: controller-nodes
+  sudo: true
+  sudo_user: root
   roles:
     - role: restart-services
+
+

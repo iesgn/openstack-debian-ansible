@@ -15,8 +15,9 @@ iface br-ex inet static
         address {{ network_node_external_ip }}
         netmask {{ network_node_external_netmask }}
         gateway {{ external_gateway }}
-        up ifconfig {{ ext_net_nic }} up
-	up ip link set {{ ext_net_nic }} promisc on
-	down ip link set {{ ext_net_nic }} promisc off
-	down ifconfig {{ ext_net_nic }} down
+        #dns-nameservers {{ external_gateway }}
+        up ip link set {{ ext_net_nic }} up
+        up ip link set {{ ext_net_nic }} promisc on
+        down ip link set {{ ext_net_nic }} promisc off
+        down ip link set {{ ext_net_nic }} down
 
