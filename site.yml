@@ -23,7 +23,7 @@
 - hosts: controller-nodes
   roles:
     - role: keystoneserver
-
+      
 - hosts: controller-nodes
   roles:
     - role: keystone_population

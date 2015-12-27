@@ -1,5 +1,8 @@
 # Tenants, roles and keystone users creation
 
+- name: wait until keystone server is available
+  wait_for: port=35357 delay=10
+
 - name: ensure admin tenant is created
   keystone_user: >
     token={{ admin_token }}
