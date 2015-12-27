@@ -6,10 +6,10 @@
     group=root
     mode=0644
 
-- name: Ensure jessie is set as default release
+- name: Ensure apt-pinning is set properly 
   copy: >
-    src=etc/apt/apt.conf
-    dest=/etc/apt/apt.conf
+    src=etc/apt/preferences
+    dest=/etc/apt/preferences
     owner=root
     group=root
     mode=0644
