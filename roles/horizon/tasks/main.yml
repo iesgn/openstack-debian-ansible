@@ -1,9 +1,16 @@
+- name: ensure python-xstatic-magic-search >= 2.5.1 is installed from testing (BUG!)
+  apt: name={{ item }} default_release=testing state=latest
+  with_items:
+    - python-xstatic-magic-search
+    - python-xstatic-angular
+    
 - name: ensure horizon packages are installed
-  apt: pkg={{ item }}
+  apt: pkg={{ item }} default_release=jessie-backports
   with_items:
     - memcached
     - apache2
     - libapache2-mod-wsgi
+    - python-django-horizon
     - openstack-dashboard
 
 - name: ensure dashboard is configured
@@ -14,7 +21,12 @@
   notify: restart web services
 
 - name: ensure default virtualhost is disabled
-  command: a2dissite 000-default
+  command: a2dissite {{ item }}
+  with_items:
+    - 000-default
+    - default-ssl
+    - openstack-dashboard-alias-only
+    
   notify: restart web services
 
 - name: ensure openstack-dashboard-ssl virtualhost is enabled
@@ -25,9 +37,10 @@
     
   notify: restart web services
   
-- name: ensure ssl and rewrite mod are enabled
+- name: ensure ssl, wsgi and rewrite modules are enabled
   apache2_module: name={{ item }} state=present
   with_items:
+    - wsgi
     - ssl
     - rewrite
   notify: restart web services

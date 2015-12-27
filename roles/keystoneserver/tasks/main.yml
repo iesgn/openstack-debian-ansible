@@ -1,5 +1,8 @@
 - name: ensure python-sqlalchemy < 0.10 is installed
-  apt: name=python-sqlalchemy
+  apt: name=python-sqlalchemy default_release=jessie
+
+- name: ensure python-cryptography (>=1.0) is installed (backport BUG)
+  apt: name=python-cryptography default_release=testing state=latest
   
 - name: ensure keystone packages are installed
   apt: name={{ item }} default_release=jessie-backports

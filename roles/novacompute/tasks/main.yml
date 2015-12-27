@@ -12,7 +12,7 @@
   when: result|failed
 
 - name: ensure python-guestfs and sysfsutils are installed
-  apt: name={{item}}
+  apt: name={{item}} default_release=jessie
   with_items:
     - python-guestfs
     - sysfsutils

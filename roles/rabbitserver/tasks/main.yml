@@ -1,5 +1,5 @@
 - name: Ensure rabbitmq is installed
-  apt: pkg=rabbitmq-server
+  apt: pkg=rabbitmq-server default_release=jessie
 
 - name: Ensure openstack rabbitmq user password is changed
   rabbitmq_user: >

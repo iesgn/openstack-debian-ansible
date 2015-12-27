@@ -1,5 +1,5 @@
 - name: ensure sudo is installed
-  apt: name=sudo state=present
+  apt: name=sudo state=present default_release=jessie
 
 - name: ensure glance is installed
   apt: name={{ item }} default_release=jessie-backports

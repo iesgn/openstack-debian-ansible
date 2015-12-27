@@ -12,6 +12,5 @@
   with_items:
     - neutron-l3-agent
     - neutron-dhcp-agent
-    - neutron-lbaas-agent
     - neutron-metadata-agent
     
