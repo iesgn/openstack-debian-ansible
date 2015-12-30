@@ -5,7 +5,6 @@
     owner=root
     group=root
     mode=0644
-
 - name: Ensure apt-pinning is set properly 
   copy: >
     src=etc/apt/preferences
