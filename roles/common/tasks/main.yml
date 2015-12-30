@@ -17,6 +17,8 @@
 - name: Ensure system is upgraded (It can take a long time)
   apt: upgrade=yes update_cache=yes
 
+
+
 - name: Ensure ntp is installed
   apt: name=ntp default_release=jessie
   notify: restart ntp
