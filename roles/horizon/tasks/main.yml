@@ -4,14 +4,19 @@
     - python-xstatic-magic-search
     - python-xstatic-angular
     
-- name: ensure horizon packages are installed
+- name: ensure apache and memcached packages are installed
   apt: pkg={{ item }} default_release=jessie-backports
   with_items:
     - memcached
     - apache2
     - libapache2-mod-wsgi
+    
+- name: ensure horizon packages are installed from testing (BUG!)
+  apt: pkg={{ item }} default_release=testing state=latest
+  with_items:
     - python-django-horizon
     - openstack-dashboard
+    - openstack-dashboard-apache
 
 - name: ensure dashboard is configured
   template: >
