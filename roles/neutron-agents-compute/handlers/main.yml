@@ -4,7 +4,6 @@
 - name: restart neutron agents
   service: name={{ item }} state=restarted
   with_items:
-    - neutron-plugin-ml2
     - neutron-openvswitch-agent
     
 - name: restart openvswitch services
