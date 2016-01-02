@@ -1,0 +1,15 @@
+- name: ensure horizon loop is deleted (BUG!)
+  file: >-
+    path=/usr/share/openstack-dashboard/openstack_dashboard/static/horizon/horizon
+    state=absent
+  notify: restart web services
+
+- name: ensure manage.py compress is executed again
+  command: /usr/share/openstack-dashboard/manage.py compress --force
+  notify: restart web services
+    
+- name: ensure django secret key is deleted
+  file: >-
+    path=/var/lib/openstack-dashboard/secret-key/.secret_key_store
+    state=absent
+    
