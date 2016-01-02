@@ -5,7 +5,6 @@
     owner=root
     group=root
     mode=0644
-
 - name: Ensure apt-pinning is set properly 
   copy: >
     src=etc/apt/preferences
@@ -16,6 +15,8 @@
   
 - name: Ensure system is upgraded (It can take a long time)
   apt: upgrade=yes update_cache=yes
+
+
 
 - name: Ensure ntp is installed
   apt: name=ntp default_release=jessie
