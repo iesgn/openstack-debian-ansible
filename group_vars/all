@@ -1,6 +1,5 @@
 # APT Repository
-#repo_fqdn: soleares.gonzalonazareno.org
-repo_fqdn: http.debian.net
+repo_fqdn: soleares.gonzalonazareno.org
 
 # Rabbit
 rabbit_user: "openstack"
