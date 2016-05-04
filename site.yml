@@ -4,7 +4,7 @@
 #   roles:
 #     - role: common
 
-# - hosts: controller-nodes
+ #- hosts: controller-nodes
 #   roles:
 #     - role: dbserver
 
