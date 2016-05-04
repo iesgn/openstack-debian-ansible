@@ -1,27 +1,35 @@
-- name: Ensure sources.list file is properly defined 
+- name: Ensure sources.list file is properly defined (including non-oficial repo)
   template: >
     src=etc/apt/sources.list
     dest=/etc/apt/sources.list
     owner=root
     group=root
     mode=0644
-- name: Ensure apt-pinning is set properly 
-  copy: >
-    src=etc/apt/preferences
-    dest=/etc/apt/preferences
-    owner=root
-    group=root
-    mode=0644
+
+- name: Ensure mirantis GPG key is added
+  apt_key: url=http://mitaka-jessie.pkgs.mirantis.com/debian/dists/pubkey.gpg state=present
+    
+# - name: Ensure apt-pinning is set properly (stable packages will be installed by default)
+#   copy: >
+#     src=etc/apt/preferences
+#     dest=/etc/apt/preferences
+#     owner=root
+#     group=root
+#     mode=0644
   
 - name: Ensure system is upgraded (It can take a long time)
   apt: upgrade=yes update_cache=yes
-
-
 
 - name: Ensure ntp is installed
   apt: name=ntp default_release=jessie
   notify: restart ntp
 
+- name: Ensure memcached is installed
+  apt: name={{ item }}
+  with_items:
+    - memcached
+    - python-memcache
+    
 # - name: Ensure /etc/hosts is properly defined
 #   copy: >-
 #     src=etc/hosts

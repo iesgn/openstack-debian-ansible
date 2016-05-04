@@ -1,5 +1,5 @@
 # APT Repository
-repo_fqdn: http.debian.net
+repo_fqdn: soleares.gonzalonazareno.org
 
 # Rabbit
 rabbit_user: "openstack"
@@ -10,12 +10,12 @@ controller_ip: 192.168.221.101
 storage_ip: 192.168.221.101
 network_node_ip: 192.168.221.101
 network_node_netmask: 255.255.255.0
-controller_external_ip: 192.168.1.241
-storage_external_ip: 192.168.1.241
-network_node_external_ip: 192.168.1.241
-network_node_external_netmask: 255.255.255.0
-network_node_external_CIDR: 24
-external_gateway: 192.168.1.1
+controller_external_ip: 172.22.50.241
+storage_external_ip: 172.22.50.241
+network_node_external_ip: 172.22.50.241
+network_node_external_netmask: 255.255.0.0
+network_node_external_CIDR: 16
+external_gateway: 172.22.0.1
 int_net_nic: eth1
 ext_net_nic: eth2
 

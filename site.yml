@@ -1,81 +1,81 @@
 ---
 
-- hosts: all
-  roles:
-    - role: common
+# - hosts: all
+#   roles:
+#     - role: common
 
-- hosts: controller-nodes
-  roles:
-    - role: dbserver
+# - hosts: controller-nodes
+#   roles:
+#     - role: dbserver
 
-- hosts: controller-nodes
-  roles:
-    - role: dbserver_population
+# - hosts: controller-nodes
+#   roles:
+#     - role: dbserver_population
 
-- hosts: controller-nodes
-  roles:
-    - role: rabbitserver
+# - hosts: controller-nodes
+#   roles:
+#     - role: rabbitserver
 
-- hosts: all
-  roles:
-    - role: openstackclient
+# - hosts: all
+#   roles:
+#     - role: openstackclient
 
 - hosts: controller-nodes
   roles:
     - role: keystoneserver
       
-- hosts: controller-nodes
-  roles:
-    - role: keystone_population
+# - hosts: controller-nodes
+#   roles:
+#     - role: keystone_population
       
-- hosts: storage-nodes
-  roles: 
-    - role: glanceserver
-
 # - hosts: storage-nodes
 #   roles: 
-#     - role: glance_population
+#     - role: glanceserver
 
-- hosts: controller-nodes
-  roles:
-    - role: novaserver
+# # - hosts: storage-nodes
+# #   roles: 
+# #     - role: glance_population
 
-- hosts: compute-nodes
-  roles:
-    - role: novacompute
+# - hosts: controller-nodes
+#   roles:
+#     - role: novaserver
 
-- hosts: controller-nodes
-  roles:
-   - role: neutronserver
+# - hosts: compute-nodes
+#   roles:
+#     - role: novacompute
 
-- hosts: network-nodes
-  roles:
-    - role: neutron-agents
+# - hosts: controller-nodes
+#   roles:
+#    - role: neutronserver
 
-- hosts: network-nodes
-  roles:
-    - role: openvswitch
+# - hosts: network-nodes
+#   roles:
+#     - role: neutron-agents
 
-- hosts: compute-nodes
-  roles:
-    - role: neutron-agents-compute
+# - hosts: network-nodes
+#   roles:
+#     - role: openvswitch
 
-- hosts: controller-nodes
-  roles:
-    - role: horizon
+# - hosts: compute-nodes
+#   roles:
+#     - role: neutron-agents-compute
 
-- hosts: controller-nodes
-  roles:
-    - role: horizon-temporal
+# - hosts: controller-nodes
+#   roles:
+#     - role: horizon
 
-- hosts: controller-nodes
-  roles:
-    - role: cinderserver
+# - hosts: controller-nodes
+#   roles:
+#     - role: horizon-temporal
 
-- hosts: storage-nodes
-  roles:
-    - role: cindervolume
+# - hosts: controller-nodes
+#   roles:
+#     - role: cinderserver
 
-- hosts: controller-nodes
-  roles:
-    - role: restart-services
+# - hosts: storage-nodes
+#   roles:
+#     - role: cindervolume
+
+# - hosts: controller-nodes
+#   roles:
+#     - role: restart-services

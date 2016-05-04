@@ -1,7 +1,7 @@
 openstack-debian-ansible
 ========================
 
-Ansible playbooks for installing OpenStack Kilo on Debian jessie using Debian backports
+Ansible playbooks for installing OpenStack Mitaka on Debian jessie using Debian backports
 
 These playbooks have been written in the hope of using them in a real deployment
 with physical servers, but thay can be used too to deploy a OpenStack test
@@ -14,7 +14,7 @@ environment with vagrant inside a computer.
 - Debian GNU/Linux: jessie (amd64). 
 - Linux kernel: 3.16.0-4-amd64
 - Open vSwitch: 2.3.0
-- OpenStack: Kilo (2015.1)
+- OpenStack: Mitaka
 - Ansible: 1.7.2
 - Vagrant: 1.6.5
 - VirtualBox: 4.3.14

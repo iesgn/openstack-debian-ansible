@@ -1,5 +1,6 @@
 deb http://{{ repo_fqdn }}/debian jessie main
 deb http://{{ repo_fqdn }}/debian jessie-backports main
 deb http://{{ repo_fqdn }}/debian jessie-updates main
-deb http://{{ repo_fqdn }}/debian testing main
 deb http://security.debian.org/ jessie/updates main
+deb http://mitaka-jessie.pkgs.mirantis.com/debian jessie-mitaka-backports main
+deb http://mitaka-jessie.pkgs.mirantis.com/debian jessie-mitaka-backports-nochange main
