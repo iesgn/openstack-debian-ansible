@@ -1,115 +1,124 @@
 # Tenants, roles and keystone users creation
 
-- name: wait until keystone server is available
-  wait_for: port=35357 delay=10
+# - name: wait until keystone server is available
+#   wait_for: port=35357 delay=10
 
-- name: ensure admin tenant is created
-  keystone_user: >
-    token={{ admin_token }}
-    tenant=admin
-    tenant_description="Admin Tenant"
+# - name: ensure default domain is created
+#   os_keystone_domain:
+#     cloud: testing
+#     state: present
+#     name: demo
+#     description: Demo Domain
 
-- name: ensure admin user is created
-  keystone_user: >
-    token={{ admin_token }}
-    user=admin
-    password={{ admin_pass }}
-    tenant=admin
+# - name: ensure admin tenant is created
+#   keystone_user: >
+#     token={{ admin_token }}
+#     tenant=admin
+#     tenant_description="Admin Tenant"
 
-- name: ensure admin user has admin role in admin tenant
-  keystone_user: >
-    token={{ admin_token }}
-    role=admin
-    user=admin
-    tenant=admin
+# - name: ensure admin user is created
+#   keystone_user: >
+#     token={{ admin_token }}
+#     user=admin
+#     password={{ admin_pass }}
+#     tenant=admin
 
-- name: ensure admin user has _member_ role in admin tenant
-  keystone_user: >
-    token={{ admin_token }}
-    role=_member_
-    user=admin
-    tenant=admin
+# - name: ensure admin user has admin role in admin tenant
+#   keystone_user: >
+#     token={{ admin_token }}
+#     role=admin
+#     user=admin
+#     tenant=admin
+
+# - name: ensure admin user has _member_ role in admin tenant
+#   keystone_user: >
+#     token={{ admin_token }}
+#     role=_member_
+#     user=admin
+#     tenant=admin
     
 - name: ensure demo tenant is created
-  keystone_user: >
-    token={{ admin_token }}
-    tenant=demo
-    tenant_description="Demo Tenant"
+  os_keystone_domain_facts:
+    cloud: testing
+    
+    # token={{ admin_token }}
+    # tenant=demo
+    # tenant_description="Demo Tenant"
 
-- name: ensure demo user is created
-  keystone_user: >
-    token={{ admin_token }}
-    user=demo
-    password={{ demo_pass }}
-    tenant=demo
+# - name: ensure demo user is created
+#   keystone_user: >
+#     token={{ admin_token }}
+#     user=demo
+#     password={{ demo_pass }}
+#     tenant=demo
 
-- name: ensure demo user has _member_ role in demo Tenant
-  keystone_user: >
-    token={{ admin_token }}
-    role=_member_
-    user=demo
-    tenant=demo
+# - name: ensure demo user has _member_ role in demo Tenant
+#   keystone_user: >
+#     token={{ admin_token }}
+#     role=_member_
+#     user=demo
+#     tenant=demo
 
-- name: ensure service tenant is created
-  keystone_user: >
-    token={{ admin_token }}
-    tenant=service
-    tenant_description="Service Tenant"
+# - name: ensure service tenant is created
+#   keystone_user: >
+#     token={{ admin_token }}
+#     tenant=service
+#     tenant_description="Service Tenant"
 
-# Services and endpoints using templated.Catalog
+# # Services and endpoints using templated.Catalog
 
-- name: ensure service and endpoints are defined
-  template: >-
-    src=etc/keystone/default_catalog.templates
-    dest=/etc/keystone/default_catalog.templates
-    owner=root
-    group=root
-    mode=0644
-  notify: restart keystone
+# - name: ensure service and endpoints are defined
+#   template: >-
+#     src=etc/keystone/default_catalog.templates
+#     dest=/etc/keystone/default_catalog.templates
+#     owner=root
+#     group=root
+#     mode=0644
+#   notify: restart keystone
 
-- name: ensure users for each of the services are created in tenant service
-  keystone_user: >
-    token={{ admin_token }}
-    user={{ item.name }}
-    tenant=service
-    password="{{ item.password }}"
-  with_items:
-    - { name: 'glance', password: '{{ glance_identity_password }}' }
-    - { name: 'nova', password: '{{ nova_identity_password }}' }
-    - { name: 'ec2', password: '{{ ec2_identity_password }}' }
-    - { name: 'neutron', password: '{{ neutron_identity_password }}' }
-    - { name: 'cinder', password: '{{ cinder_identity_password }}' }
-    - { name: 'heat', password: '{{ heat_identity_password }}' }
-    - { name: 'trove', password: '{{ trove_identity_password }}' }
+# - name: ensure users for each of the services are created in tenant service
+#   keystone_user: >
+#     token={{ admin_token }}
+#     user={{ item.name }}
+#     tenant=service
+#     password="{{ item.password }}"
+#   with_items:
+#     - { name: 'glance', password: '{{ glance_identity_password }}' }
+#     - { name: 'nova', password: '{{ nova_identity_password }}' }
+#     - { name: 'ec2', password: '{{ ec2_identity_password }}' }
+#     - { name: 'neutron', password: '{{ neutron_identity_password }}' }
+#     - { name: 'cinder', password: '{{ cinder_identity_password }}' }
+#     - { name: 'heat', password: '{{ heat_identity_password }}' }
+#     - { name: 'trove', password: '{{ trove_identity_password }}' }
 
-- name: ensure admin role is assigned to users for each of the services in tenant service
-  keystone_user: >
-    token={{ admin_token }}
-    role=admin
-    user={{ item.name }}
-    tenant=service
-  with_items:
-    - { name: 'glance' }
-    - { name: 'nova' }
-    - { name: 'ec2' }
-    - { name: 'neutron' }
-    - { name: 'cinder' }
-    - { name: 'heat' }
-    - { name: 'trove' }
+# - name: ensure admin role is assigned to users for each of the services in tenant service
+#   keystone_user: >
+#     token={{ admin_token }}
+#     role=admin
+#     user={{ item.name }}
+#     tenant=service
+#   with_items:
+#     - { name: 'glance' }
+#     - { name: 'nova' }
+#     - { name: 'ec2' }
+#     - { name: 'neutron' }
+#     - { name: 'cinder' }
+#     - { name: 'heat' }
+#     - { name: 'trove' }
 
-- name: ensure openrc admin file is created in root home directory
-  template: >-
-    src=root/openrc
-    dest=/root/admin_openrc.sh
-    owner=root
-    group=root
-    mode=600
+# - name: ensure openrc admin file is created in root home directory
+#   template: >-
+#     src=root/openrc
+#     dest=/root/admin_openrc.sh
+#     owner=root
+#     group=root
+#     mode=600
 
-- name: ensure openrc demo file is created in root home directory
-  template: >-
-    src=root/demo_openrc
-    dest=/root/demo_openrc.sh
-    owner=root
-    group=root
-    mode=600
+# - name: ensure openrc demo file is created in root home directory
+#   template: >-
+#     src=root/demo_openrc
+#     dest=/root/demo_openrc.sh
+#     owner=root
+#     group=root
+#     mode=600
     
