@@ -21,7 +21,7 @@
 
 - name: ensure admin project is created
   environment: k3
-  command: /usr/bin/openstack project create --description "Admin Project" admin
+  command: /usr/bin/openstack project create --domain default --description "Admin Project" admin
   when: result|failed
 
 - name: verify if admin user has been created
