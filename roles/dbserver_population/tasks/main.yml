@@ -42,10 +42,13 @@
     - localhost
     - ::1
 
-- name: ensure nova database is present
-  mysql_db: name=nova
+- name: ensure nova and nova_api databases are present
+  mysql_db: name={{ item }}
+  with_items:
+    - nova
+    - nova_api
 
-- name: ensure nova database user is present
+- name: ensure nova database user is present in nova 
   mysql_user: >
     name=nova
     host={{ item }}
@@ -54,7 +57,17 @@
   with_items:
     - '%'
     - localhost
-      
+
+- name: ensure nova database user is present in nova_api
+  mysql_user: >
+    name=nova
+    host={{ item }}
+    password={{ nova_db_password }}
+    priv=nova_api.*:ALL
+  with_items:
+    - '%'
+    - localhost
+
 - name: ensure neutron database is present
   mysql_db: name=neutron
     
