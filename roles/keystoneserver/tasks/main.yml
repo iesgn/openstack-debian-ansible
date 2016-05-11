@@ -3,18 +3,19 @@
   with_items:
     - keystone
     - python-keystone
-    - python-keystoneclient
     - python-oslo.db
 
 - name: ensure keystone service is disabled
-  command: echo "manual" > /etc/init/keystone.override
+  file: >
+    path=/etc/init/keystone.override
+    owner=root
+    group=root
+    mode=0644
+    state=touch
 
 - name: ensure keystone service is stopped
   service: name=keystone state=stopped
   
-- name: ensure sqlite keystone database is deleted
-  file: dest=/var/lib/keystone/keystone.db state=absent
-
 - name: ensure apache2 and apache wsgi module are installed
   apt: name={{ item }}
   with_items:
@@ -30,13 +31,10 @@
     mode=0600
 
 - name: DB sync for keystone
-  shell: >
-    /usr/bin/keystone-manage db_sync
-  notify: restart keystone
+  shell: /usr/bin/keystone-manage db_sync
 
 - name: Fernet keys initialization
-  shell: >
-    /usr/bin/keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone
+  shell: /usr/bin/keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone
 
 - name: ensure apache2 config is present
   template: >
@@ -55,8 +53,7 @@
     mode=0600
 
 - name: ensure virtual host wsgi is enabled
-  shell: >
-    /usr/sbin/a2ensite wsgi-keystone.conf
+  shell: /usr/sbin/a2ensite wsgi-keystone.conf
   notify: restart apache2
 
 - name: ensure sqlite keystone database is deleted
