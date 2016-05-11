@@ -1,13 +1,9 @@
-- name: ensure sudo is installed
-  apt: name=sudo state=present default_release=jessie
-
 - name: ensure glance is installed
-  apt: name={{ item }} default_release=jessie-backports
+  apt: name={{ item }} 
   with_items:
     - glance
     - glance-api
     - glance-registry
-    - python-glanceclient
     - glance-common
 
 - name: ensure glance sqlite is deleted
