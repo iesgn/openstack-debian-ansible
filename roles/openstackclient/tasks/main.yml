@@ -1,28 +1,28 @@
-- name: ensure python-openstackclient dependencies are installed from jessie-backports
-  apt: name={{ item }} default_release=jessie-backports
-  with_items:
-    - python-requests
-    - python-pbr
-    - python-six
+# - name: ensure python-openstackclient dependencies are installed from jessie-backports
+#   apt: name={{ item }} default_release=jessie-backports
+#   with_items:
+#     - python-pbr
+#     - python-six
 
-- name: ensure python-openstackclient dependencies are installed from mirantis nochange
-  apt: name={{ item }} default_release=jessie-mitaka-backports-nochange
-  with_items:
-    - python-keyring
-    - python-requests-kerberos
-    - python-urllib3
+# - name: ensure python-openstackclient dependencies are installed from mirantis nochange
+#   apt: name={{ item }} default_release=jessie-mitaka-backports-nochange
+#   with_items:
+#     - python-requests
+#     - python-keyring
+#     - python-requests-kerberos
+#     - python-urllib3
 
-- name: ensure python-openstackclient dependencies are installed from mirantis
-  apt: name={{ item }} default_release=jessie-mitaka-backports
-  with_items:
-    - python-keystoneauth1
-    - python-os-client-config
-    - python-requestsexceptions
+# - name: ensure python-openstackclient dependencies are installed from mirantis
+#   apt: name={{ item }} default_release=jessie-mitaka-backports
+#   with_items:
+#     - python-keystoneauth1
+#     - python-os-client-config
+#     - python-requestsexceptions
   
 - name: ensure python-openstackclient is installed
   apt: name=python-openstackclient default_release=jessie-mitaka-backports
 
-- name: ensure all openstack clients are installed
+- name: ensure the rest of openstack clients are installed
   apt: name={{ item }} default_release=jessie-mitaka-backports
   with_items:
     - python-swiftclient
