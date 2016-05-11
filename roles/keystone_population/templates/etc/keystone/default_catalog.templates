@@ -3,15 +3,10 @@ catalog.{{ region }}.identity.adminURL = http://{{ controller_ip }}:$(admin_port
 catalog.{{ region }}.identity.internalURL = http://{{ controller_ip }}:$(public_port)s/v3
 catalog.{{ region }}.identity.name = Identity Service
 
-catalog.{{ region }}.compute.publicURL = http://{{ controller_external_ip }}:8774/v2/$(tenant_id)s
-catalog.{{ region }}.compute.adminURL = http://{{ controller_ip }}:8774/v2/$(tenant_id)s
-catalog.{{ region }}.compute.internalURL = http://{{ controller_ip }}:8774/v2/$(tenant_id)s
-catalog.{{ region }}.compute.name = Compute Service
-
-catalog.{{ region }}.computev21.publicURL = http://{{ controller_external_ip }}:8774/v2.1/$(tenant_id)s
-catalog.{{ region }}.computev21.adminURL = http://{{ controller_ip }}:8774/v2.1/$(tenant_id)s
-catalog.{{ region }}.computev21.internalURL = http://{{ controller_ip }}:8774/v2.1/$(tenant_id)s
-catalog.{{ region }}.computev21.name = Compute Service V2.1
+catalog.{{ region }}.compute.publicURL = http://{{ controller_external_ip }}:8774/v2.1/$(tenant_id)s
+catalog.{{ region }}.compute.adminURL = http://{{ controller_ip }}:8774/v2.1/$(tenant_id)s
+catalog.{{ region }}.compute.internalURL = http://{{ controller_ip }}:8774/v2.1/$(tenant_id)s
+catalog.{{ region }}.compute.name = Compute Service 
 
 catalog.{{ region }}.volume.publicURL = http://{{ controller_external_ip }}:8776/v1/$(tenant_id)s
 catalog.{{ region }}.volume.adminURL = http://{{ controller_ip }}:8776/v1/$(tenant_id)s
@@ -38,8 +33,13 @@ catalog.{{ region }}.network.adminURL = http://{{ controller_ip }}:9696
 catalog.{{ region }}.network.internalURL = http://{{ controller_ip }}:9696
 catalog.{{ region }}.network.name = Network Service
 
-# catalog.{{ region }}.orchestration.publicURL = http://{{ controller_external_ip }}:8004
-# catalog.{{ region }}.orchestration.adminURL = http://{{ controller_ip }}:8004
-# catalog.{{ region }}.orchestration.internalURL = http://{{ controller_ip }}:8004
-# catalog.{{ region }}.orchestration.name = Orchestration Service
+catalog.{{ region }}.orchestration.publicURL = http://{{ controller_external_ip }}:8004/v1/%\(tenant_id\)s
+catalog.{{ region }}.orchestration.adminURL = http://{{ controller_ip }}:8004/v1/%\(tenant_id\)s
+catalog.{{ region }}.orchestration.internalURL = http://{{ controller_ip }}:8004/v1/%\(tenant_id\)s
+catalog.{{ region }}.orchestration.name = Orchestration Service
+
+catalog.{{ region }}.cloudformation.publicURL = http://{{ controller_external_ip }}:8000/v1
+catalog.{{ region }}.cloudformation.adminURL = http://{{ controller_ip }}:8000/v1
+catalog.{{ region }}.cloudformation.internalURL = http://{{ controller_ip }}:8000/v1
+catalog.{{ region }}.cloudformation.name = Cloudformation Service
 

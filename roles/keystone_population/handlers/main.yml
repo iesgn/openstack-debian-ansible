@@ -1,5 +1,5 @@
-- name: restart keystone
-  service: name=keystone state=restarted
+- name: restart apache2
+  service: name=apache2 state=restarted
 
 - name: start keystone
   service: name=keystone state=started
