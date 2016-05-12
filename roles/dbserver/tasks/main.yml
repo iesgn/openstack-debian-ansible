@@ -1,5 +1,5 @@
 - name: Ensure mysql server and mysql python client are installed
-  apt: pkg={{ item }} default_release=jessie
+  apt: pkg={{ item }}
   with_items:
     - python-mysqldb
     - mysql-server

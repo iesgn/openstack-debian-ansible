@@ -57,6 +57,8 @@
   with_items:
     - '%'
     - localhost
+    - 127.0.0.1
+    - ::1
 
 - name: ensure nova database user is present in nova_api
   mysql_user: >
@@ -64,9 +66,12 @@
     host={{ item }}
     password={{ nova_db_password }}
     priv=nova_api.*:ALL
+    append_privs=yes
   with_items:
     - '%'
     - localhost
+    - 127.0.0.1
+    - ::1
 
 - name: ensure neutron database is present
   mysql_db: name=neutron
