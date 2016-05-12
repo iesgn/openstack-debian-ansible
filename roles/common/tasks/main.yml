@@ -21,7 +21,7 @@
   apt: upgrade=yes update_cache=yes
 
 - name: Ensure ntp is installed
-  apt: name=ntp default_release=jessie
+  apt: name=ntp 
   notify: restart ntp
 
 - name: Ensure memcached is installed
