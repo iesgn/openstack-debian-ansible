@@ -1,5 +1,5 @@
 - name: ensure nova packages are installed
-  apt: name={{ item }} default_release=jessie-backports
+  apt: name={{ item }} 
   with_items:
     - nova-api
     - nova-cert
@@ -30,6 +30,11 @@
     owner=root
     group=root
     mode=0644
+  notify: 
+  - restart nova-services
+
+- name: ensure nova_api db is initialized
+  command: /usr/bin/nova-manage api_db sync
   notify: 
   - restart nova-services
 
