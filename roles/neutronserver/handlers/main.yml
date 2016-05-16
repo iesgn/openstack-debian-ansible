@@ -5,7 +5,7 @@
   service: name=neutron-plugin-openvswitch-agent state=restarted
   
 - name: restart neutron agents
-  service: name=$item state=restarted
+  service: name={{ item }} state=restarted
   with_items:
     - neutron-l3-agent
     - neutron-dhcp-agent
