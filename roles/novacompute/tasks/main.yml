@@ -4,15 +4,15 @@
   ignore_errors: True
 
 - name: ensure nova-compute-kvm is installed when hw accel is enabled
-  apt: name=nova-compute-kvm default_release=jessie-backports
+  apt: name=nova-compute-kvm 
   when: result|success
 
 - name: ensure nova-compute-qemu is installed when hw accel is not enabled
-  apt: name=nova-compute-qemu default_release=jessie-backports
+  apt: name=nova-compute-qemu 
   when: result|failed
 
 - name: ensure python-guestfs and sysfsutils are installed
-  apt: name={{item}} default_release=jessie
+  apt: name={{item}} 
   with_items:
     - python-guestfs
     - sysfsutils
