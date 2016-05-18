@@ -25,7 +25,7 @@ Keystone, Glance, Nova, Neutron and Cinder
 
 ## Deployment schema
 
-[Per tenant router with private networks](http://docs.openstack.org/havana/install-guide/install/apt/content/section_networking-routers-with-private-networks.html)
+[Classic with Open vSwitch](http://docs.openstack.org/mitaka/networking-guide/scenario-classic-ovs.html)
 
 ## Get a debian jessie vagrant box:
 
