@@ -1,22 +1,9 @@
-- name: ensure IP forward bit is activated
-  sysctl: name=net.ipv4.ip_forward value=1 state=present reload=yes
-
-- name: ensure IPv4 rp filter is deactivated
-  sysctl: name=net.ipv4.conf.all.rp_filter value=0 state=present reload=yes
-
-- name: ensure IPv4 default rp filter is deactivated
-  sysctl: name=net.ipv4.conf.default.rp_filter value=0 state=present reload=yes
-
 - name: ensure neutron server and neutron-plugin-ml2 are installed
   apt: name={{ item }} default_release=jessie-backports
   with_items:
     - neutron-server
     - neutron-common
     - python-neutronclient
-    - neutron-plugin-openvswitch-agent
-    - neutron-metadata-agent
-    - neutron-l3-agent
-    - neutron-dhcp-agent
 
 - name: ensure neutron.conf is configured
   template: >
@@ -41,42 +28,4 @@
 
 - name: ensure neutron sqlite is deleted
   file: dest=/var/lib/neutron/neutron.sqlite state=absent
-
-- name: ensure l3 agent is configured
-  template: >
-    src=etc/neutron/l3_agent.ini
-    dest=/etc/neutron/l3_agent.ini
-    owner=root group=root mode=0644
-  notify:
-    - restart neutron agents
-
-- name: ensure DHCP agent is configured
-  template: >
-    src=etc/neutron/dhcp_agent.ini
-    dest=/etc/neutron/dhcp_agent.ini
-    owner=root group=root mode=0644
-  notify:
-    - restart neutron agents
-
-- name: ensure DNSmasq is configured to use MTU=1454
-  template: >
-    src=etc/neutron/dnsmasq-neutron.conf
-    dest=/etc/neutron/dnsmasq-neutron.conf
-    owner=root group=root mode=0644
-
-# - name: ensure lbaas agent is configured
-#   template: >
-#     src=etc/neutron/lbaas_agent.ini
-#     dest=/etc/neutron/lbaas_agent.ini
-#     owner=root group=root mode=0644
-#   notify:
-#     - restart neutron agents
-
-- name: ensure metadata agent is configured
-  template: >
-    src=etc/neutron/metadata_agent.ini
-    dest=/etc/neutron/metadata_agent.ini
-    owner=root group=root mode=0644
-  notify:
-    - restart neutron agents
 
