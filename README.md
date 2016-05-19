@@ -1,11 +1,13 @@
 openstack-debian-ansible
 ========================
 
-Ansible playbooks for installing OpenStack Mitaka on Debian jessie using Debian backports
+Ansible playbooks for installing OpenStack Mitaka on Debian jessie using non-official Mirantis backports. The steps taken follow a standard OpenStack deployment: [OpenStack Installation Guide for Ubuntu](http://docs.openstack.org/mitaka/install-guide-ubuntu/) with some minors modifications to use with Debian.
 
-These playbooks have been written in the hope of using them in a real deployment
+The deployment schema selected is ["Classic with OpenvSwitch"](http://docs.openstack.org/mitaka/networking-guide/scenario-classic-ovs.html), instead of using linux bridges as explained in OpenStack Installation Guide.
+
+These playbooks have been written with the idea of using them in a real deployment
 with physical servers, but thay can be used too to deploy a OpenStack test
-environment with vagrant inside a computer.
+environment with vagrant.
 
 **This is still a work in progress**
 
@@ -22,10 +24,6 @@ environment with vagrant inside a computer.
 ## OpenStack componens included:
 
 Keystone, Glance, Nova, Neutron and Cinder
-
-## Deployment schema
-
-[Classic with Open vSwitch](http://docs.openstack.org/mitaka/networking-guide/scenario-classic-ovs.html)
 
 ## Get a debian jessie vagrant box:
 
@@ -44,7 +42,7 @@ Vagranfile and configure ansible.cfg properly.
 
 ![schema](https://raw.githubusercontent.com/iesgn/openstack-debian-ansible/master/img/openstack-debian-ansible.png)
 
-**At this moment the playbooks are tested only in an "AllinOneNode" schema.**
+**At this moment only the "AllinOneNode" schema is tested.**
 
 The file *groups_var/all* contains all variables needed by ansible playbooks and
 they can be customized if needed. It's **mandatory** to define the following
