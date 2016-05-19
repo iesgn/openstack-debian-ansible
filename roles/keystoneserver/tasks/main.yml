@@ -5,16 +5,8 @@
     - python-keystone
     - python-oslo.db
 
-- name: ensure keystone service is disabled
-  file: >
-    path=/etc/init/keystone.override
-    owner=root
-    group=root
-    mode=0644
-    state=touch
-
-- name: ensure keystone service is stopped
-  service: name=keystone state=stopped
+- name: ensure keystone service is stopped and disabled
+  service: name=keystone state=stopped enabled=no
   
 - name: ensure apache2 and apache wsgi module are installed
   apt: name={{ item }}
