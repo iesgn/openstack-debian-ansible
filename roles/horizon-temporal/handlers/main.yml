@@ -1,5 +1,0 @@
-- name: restart web services
-  service: name={{ item }} state=restarted
-  with_items:
-    - apache2
-    - memcached
