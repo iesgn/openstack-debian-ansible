@@ -24,6 +24,14 @@
   notify:
     - restart neutron agents
 
+- name: ensure openvswitch agent is configured
+  template: >
+    src=etc/neutron/plugins/ml2/openvswitch_agent.ini
+    dest=/etc/neutron/plugins/ml2/openvswitch_agent.ini
+    owner=root group=root mode=0644
+  notify:
+    - restart neutron agents
+
 - name: ensure l3 agent is configured
   template: >
     src=etc/neutron/l3_agent.ini
