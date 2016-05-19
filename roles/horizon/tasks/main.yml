@@ -1,26 +1,3 @@
-- name: ensure python-xstatic-magic-search >= 2.5.1 is installed from testing (BUG!)
-  apt: name={{ item }} default_release=testing state=latest
-  with_items:
-    - python-xstatic-magic-search
-    - python-xstatic-angular
-
-- name: ensure python-django is installed 
-  apt: name={{ item }} default_release=jessie
-  with_items:
-    - python-django
-    - python-django-appconf           
-    - python-django-babel             
-    - python-django-common            
-    - python-django-compressor        
-    - python-django-pyscss
-    
-- name: ensure apache and memcached packages are installed
-  apt: pkg={{ item }} default_release=jessie
-  with_items:
-    - memcached
-    - apache2
-    - libapache2-mod-wsgi
-    
 - name: ensure horizon packages are installed 
   apt: pkg={{ item }} default_release=jessie-backports 
   with_items:
