@@ -1,5 +1,5 @@
 - name: ensure cinder-volume and lvm2 packages are installed
-  apt: name={{ item }} default_release=jessie-backports
+  apt: name={{ item }} 
   with_items:
     - qemu
     - cinder-volume
