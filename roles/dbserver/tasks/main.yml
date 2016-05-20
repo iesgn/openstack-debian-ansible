@@ -38,11 +38,3 @@
     - "{{ controller_ip }}"
     - 127.0.0.1
 
-- name: ensure anonymous users are not in the database
-  mysql_user: name='' host={{ item }} state=absent
-  with_items:
-    - "{{ controller_ip }}"
-    - "{{ inventory_hostname_short }}"
-    - 127.0.0.1
-    - ::1
-
