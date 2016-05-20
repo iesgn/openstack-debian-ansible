@@ -27,7 +27,7 @@ WEBROOT = '/'
 # with the list of host/domain names that the application can serve.
 # For more information see:
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ['{{ controller_external_ip }}', '{{ controller_ip }}']
+ALLOWED_HOSTS = ['*']
 
 # Set SSL proxy settings:
 # Pass this header from the proxy after terminating the SSL,
@@ -124,7 +124,7 @@ LOCAL_PATH = os.path.dirname(os.path.abspath(__file__))
 SECRET_KEY = secret_key.generate_or_read_from_file(
     os.path.join("/","var","lib","openstack-dashboard","secret-key", '.secret_key_store'))
 
-SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+#SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 
 # We recommend you use memcached for development; otherwise after every reload
 # of the django development server, you will have to login again. To use
