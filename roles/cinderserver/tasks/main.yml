@@ -1,5 +1,5 @@
 - name: ensure cinder packages are installed
-  apt: name={{ item }} default_release=jessie-backports
+  apt: name={{ item }} 
   with_items:
     - cinder-api 
     - cinder-scheduler

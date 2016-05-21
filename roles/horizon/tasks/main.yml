@@ -1,5 +1,5 @@
 - name: ensure horizon packages are installed 
-  apt: pkg={{ item }} default_release=jessie-backports 
+  apt: pkg={{ item }} 
   with_items:
     - python-django-horizon
     - openstack-dashboard
