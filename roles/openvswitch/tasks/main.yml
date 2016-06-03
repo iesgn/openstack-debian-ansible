@@ -1,50 +1,28 @@
 - name: ensure br-int switch is created
   openvswitch_bridge: bridge=br-int state=present
   notify: restart ovs agent
-  
+
 - name: ensure br-ex switch is created
   openvswitch_bridge: bridge=br-ex state=present
   notify: restart ovs agent
 
-# From /usr/share/doc/neutron-common
-- name: ensure br-ex is set as an external bridge
-  command: ovs-vsctl br-set-external-id br-ex bridge-id br-ex
+- name: ensure br-ex_setup.sh script is copied to the network-node
+  template: >-
+    src=root/br-ex_setup.sh
+    dest=/root/br-ex_setup.sh
+    owner=root
+    group=root
+    mode=750
 
-# - name: Find which network interface is what has defined the default route
-#   command: /sbin/ip route |/bin/grep default |/usr/bin/awk '{print $5}'
-#   register: gateway_interface
-#   ignore_errors: True
+- name: ensure external interface is properly configured
+  command: /root/br-ex_setup.sh
 
-- name: Ensure default route is deleted
-  command: /sbin/ip route del default
-  ignore_errors: True
-  
-- name: ensure IP address is deleted from external nic
-  command: /sbin/ip addr del {{ network_node_external_ip }}/{{ network_node_external_CIDR }} dev {{ ext_net_nic }}
-  ignore_errors: True
-
-- name: ensure br-ex is up
-  command: /sbin/ip link set br-ex up
-  
-- name: ensure external interface is added to br-ex
-  openvswitch_port: bridge=br-ex port={{ ext_net_nic }} state=present
-  notify: restart neutron agents
-  ignore_errors: True
-
-- name: ensure IP address is added to external bridge
-  command: /sbin/ip addr add {{ network_node_external_ip }}/{{ network_node_external_CIDR }} dev br-ex
-  ignore_errors: True
-
-- name: ensure default rule is associated to external bridge
-  command: /sbin/ip route add default via {{ external_gateway }}
-  ignore_errors: True
-  
 - name: ensure br-ex is configured and external interface added permanently
   template: >-
     src=etc/network/interfaces
     dest=/etc/network/interfaces
-    owner=root group=root mode=0644
-  notify: restart network
+    owner=root
+    group=root mode=0644
 
 - name: ensure default openvswitch-switch init are deleted
   command: update-rc.d -f openvswitch-switch remove
@@ -54,16 +32,6 @@
     src=etc/init.d/openvswitch-switch
     dest=/etc/init.d/openvswitch-switch
     owner=root group=root mode=755
-
+    
 - name: ensure default openvswitch-switch init are created
   command: /sbin/insserv openvswitch-switch 
-
-# - name: ensure neutron database is absent
-#   mysql_db: name=neutron state=absent
-
-# - name: ensure neutron database is present
-#   mysql_db: name=neutron
-
-# - name: ensure neutron database is reinitialized
-#   command: neutron-db-manage --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade head
-
