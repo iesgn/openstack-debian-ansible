@@ -36,3 +36,15 @@
     - ssl
     - rewrite
   notify: restart web services
+
+# Horizon css isn't loaded but it's going to be updated to django 1.9 so
+# it isn't worth to report a bug, just recreate css with next task:
+
+- name: ensure manage.py compress is executed again
+  command: /usr/share/openstack-dashboard/manage.py collectstatic --noinput --clear && /usr/share/openstack-dashboard/manage.py compress --force
+  notify: restart web services
+
+- name: ensure django secret key is deleted
+  file: >-
+    path=/var/lib/openstack-dashboard/secret-key/.secret_key_store
+    state=absent
