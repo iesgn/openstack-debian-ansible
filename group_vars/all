@@ -30,6 +30,7 @@ root_db_password: "asdasd"
 keystone_db_password: "asdasd"
 glance_db_password: "asdasd"
 cinder_db_password: "asdasd"
+manila_db_password: "asdasd"
 nova_db_password: "asdasd"
 neutron_db_password: "asdasd"
 heat_db_password: "asdasd"
@@ -42,6 +43,7 @@ nova_identity_password: "nova"
 ec2_identity_password: "ec2"
 neutron_identity_password: "neutron"
 cinder_identity_password: "cinder"
+manila_identity_password: "manila"
 heat_identity_password: "heat"
 trove_identity_password: "trove"
 
@@ -58,5 +60,8 @@ log_debug: False
 # # Neutron
 shared_secret: "asdasd"
 
-# # Cinder
-physical_device: /dev/sdb
+# Cinder
+cinder_physical_device: /dev/sdb
+
+# Manila
+manila_physical_device: /dev/sdc

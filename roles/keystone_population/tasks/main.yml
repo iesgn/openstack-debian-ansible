@@ -173,6 +173,22 @@
   environment: k3
   command: openstack role add --project service --user cinder admin
   
+# Manila
+- name: verify if manila user has been created
+  environment: k3
+  command: /usr/bin/openstack user show manila
+  register: result
+  ignore_errors: True
+
+- name: ensure manila user is created
+  environment: k3
+  command: /usr/bin/openstack user create --domain default manila --password {{ manila_identity_password }}
+  when: result|failed
+
+- name: ensure admin role is added to manila user
+  environment: k3
+  command: openstack role add --project service --user manila admin
+  
 # Heat
 - name: verify if heat user has been created
   environment: k3

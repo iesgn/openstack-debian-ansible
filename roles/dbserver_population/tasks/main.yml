@@ -42,6 +42,21 @@
     - localhost
     - ::1
 
+- name: ensure manila database is present
+  mysql_db: name=manila
+
+- name: ensure manila database user is present
+  mysql_user: >
+    name=manila
+    host={{ item }}
+    password={{ manila_db_password }}
+    priv=manila.*:ALL
+  with_items:
+    - "{{ controller_ip }}"
+    - 127.0.0.1
+    - localhost
+    - ::1
+
 - name: ensure nova and nova_api databases are present
   mysql_db: name={{ item }}
   with_items:
