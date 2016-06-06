@@ -68,9 +68,13 @@
 #   roles:
 #     - role: cindervolume
 
-- hosts: controller-nodes
+# - hosts: controller-nodes
+#   roles:
+#     - role: manilaserver
+      
+- hosts: storage-nodes
   roles:
-    - role: manilaserver
+    - role: manilashare
       
 # - hosts: controller-nodes
 #   roles:

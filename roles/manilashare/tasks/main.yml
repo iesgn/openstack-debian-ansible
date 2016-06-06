@@ -1,0 +1,19 @@
+- name: ensure manila packages are installed
+  apt: name={{ item }} 
+  with_items:
+    - manila-share
+    - python-pymysql
+    - lvm2
+    - nfs-kernel-server
+
+- name: ensure physical and group volumes are created
+  lvg: vg=lvm-shares pvs={{ manila_physical_device }} vg_options=--force
+    
+- name: ensure manila.conf is configured
+  template: >
+    src=../../manilaserver/templates/etc/manila/manila.conf
+    dest=/etc/manila/manila.conf
+    owner=manila group=manila mode=0640
+  notify:
+    - restart manila services
+

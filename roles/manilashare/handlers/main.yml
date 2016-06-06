@@ -1,0 +1,4 @@
+- name: restart manila services
+  service: name={{ item }} state=restarted
+  with_items:
+    - manila-share
