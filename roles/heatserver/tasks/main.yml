@@ -19,6 +19,25 @@
   notify:
   - restart heat-services
 
+# - name: ensure heat_init.sh script is transfered
+#   template: >-
+#     src=root/heat_init.sh
+#     dest=/root/heat_init.sh
+#     owner=root
+#     group=root
+#     mode=750
+    
+# - name: ensure heat domain is created
+#   shell: /root/heat_init.sh
+#   register: stack_user_domain_id
+
+# - name: ensure heat domain id is added to heat.conf
+#   ini_file: >-
+#     dest=/etc/heat/heat.conf
+#     section=DEFAULT
+#     option=stack_user_domain_id
+#     value={{ stack_user_domain_id.stdout }}
+    
 - name: ensure heat db is initialized
   command: /usr/bin/heat-manage db_sync
   notify:

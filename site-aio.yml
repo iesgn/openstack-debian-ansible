@@ -24,9 +24,9 @@
 #   roles:
 #     - role: keystoneserver
       
-# - hosts: controller-nodes
-#   roles:
-#     - role: keystone_population
+- hosts: controller-nodes
+  roles:
+    - role: keystone_population
       
 # - hosts: storage-nodes
 #   roles: 
@@ -72,10 +72,14 @@
 #   roles:
 #     - role: manilaserver
       
-- hosts: storage-nodes
+# - hosts: storage-nodes
+#   roles:
+#     - role: manilashare
+
+- hosts: controller-nodes
   roles:
-    - role: manilashare
-      
+    - role: heatserver
+
 # - hosts: controller-nodes
 #   roles:
 #     - role: restart-services

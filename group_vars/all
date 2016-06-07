@@ -45,6 +45,7 @@ neutron_identity_password: "neutron"
 cinder_identity_password: "cinder"
 manila_identity_password: "manila"
 heat_identity_password: "heat"
+heat_domain_admin_identity_password: "heat"
 trove_identity_password: "trove"
 
 # # OpenStack variables
