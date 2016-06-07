@@ -76,9 +76,13 @@
 #   roles:
 #     - role: manilashare
 
+# - hosts: controller-nodes
+#   roles:
+#     - role: heatserver
+
 - hosts: controller-nodes
   roles:
-    - role: heatserver
+    - role: troveserver
 
 # - hosts: controller-nodes
 #   roles:

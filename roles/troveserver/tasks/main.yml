@@ -7,6 +7,7 @@
     - trove-common 
     - trove-api 
     - trove-taskmanager
+    - trove-conductor
 
 - name: ensure trove sqlite is deleted
   file: dest=/var/lib/trove/trove.sqlite state=absent
@@ -35,6 +36,16 @@
   template: >
     src=etc/trove/trove-conductor.conf
     dest=/etc/trove/trove-conductor.conf
+    owner=trove
+    group=trove
+    mode=0600
+  notify:
+  - restart trove-services
+
+- name: ensure trove-guestagent.conf file is up to date
+  template: >
+    src=etc/trove/trove-guestagent.conf
+    dest=/etc/trove/trove-guestagent.conf
     owner=trove
     group=trove
     mode=0600
