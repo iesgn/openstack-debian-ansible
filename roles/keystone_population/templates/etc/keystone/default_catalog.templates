@@ -53,3 +53,8 @@ catalog.{{ region }}.cloudformation.adminURL = http://{{ controller_ip }}:8000/v
 catalog.{{ region }}.cloudformation.internalURL = http://{{ controller_ip }}:8000/v1
 catalog.{{ region }}.cloudformation.name = heat-cfn
 
+catalog.{{ region }}.database.publicURL = http://{{ controller_external_ip }}:8789/v1.0/$(tenant_id)s
+catalog.{{ region }}.database.adminURL = http://{{ controller_ip }}:8789/v1.0/$(tenant_id)s
+catalog.{{ region }}.database.internalURL = http://{{ controller_ip }}:8789/v1.0/$(tenant_id)s
+catalog.{{ region }}.database.name = trove
+
