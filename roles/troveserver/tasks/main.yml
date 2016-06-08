@@ -1,5 +1,5 @@
 - name: ensure trove packages are installed
-  apt: pkg={{ item }}
+  apt: name={{ item }}
   with_items:
     - python-trove 
     - python-troveclient 
@@ -57,5 +57,8 @@
   notify:
   - restart trove-services
 
-
+- name: ensure trove dashboard plugin is installed
+  apt: name=python-trove-dashboard
+  notify:
+    - restart web services
 
