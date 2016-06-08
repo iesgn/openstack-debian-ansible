@@ -1,0 +1,5 @@
+- name: restart magnum-services
+  service: name={{ item }} state=restarted
+  with_items:
+    - magnum-api
+    - magnum-conductor

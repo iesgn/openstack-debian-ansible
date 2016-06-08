@@ -1,0 +1,27 @@
+- name: ensure magnum packages are installed
+  apt: name={{ item }}
+  with_items:
+    - python-magnum
+    - python-magnumclient 
+    - magnum-common 
+    - magnum-api 
+    - magnum-conductor
+
+- name: ensure magnum sqlite is deleted
+  file: dest=/var/lib/magnum/magnum.sqlite state=absent
+
+- name: ensure magnum.conf file is up to date
+  template: >
+    src=etc/magnum/magnum.conf
+    dest=/etc/magnum/magnum.conf
+    owner=magnum
+    group=magnum
+    mode=0600
+  notify:
+  - restart magnum-services
+
+- name: ensure magnum db is initialized
+  command: /usr/bin/magnum-db-manage --config-file /etc/magnum/magnum.conf upgrade
+  notify:
+  - restart magnum-services
+
