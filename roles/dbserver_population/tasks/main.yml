@@ -132,4 +132,19 @@
     - 127.0.0.1
     - localhost
     - ::1
+
+- name: ensure magnum database is present
+  mysql_db: name=magnum
+    
+- name: ensure magnum database user is present
+  mysql_user: >
+    name=magnum
+    host={{ item }}
+    password={{ magnum_db_password }}
+    priv=magnum.*:ALL
+  with_items:
+    - "{{ controller_ip }}"
+    - 127.0.0.1
+    - localhost
+    - ::1
                    
