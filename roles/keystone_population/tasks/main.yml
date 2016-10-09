@@ -246,7 +246,23 @@
 - name: ensure admin role is added to trove user
   environment: k3
   command: openstack role add --project service --user trove admin
-  
+
+# Magnum
+- name: verify is magnum user has been created
+  environment: k3
+  command: /usr/bin/openstack user show magnum
+  register: result
+  ignore_errors: True
+
+- name: ensure magnum user is created
+  environment: k3
+  command: /usr/bin/openstack user create --domain default magnum --password {{ magnum_identity_password }}
+  when: result|failed
+
+- name: ensure admin role is added to magnum user
+  environment: k3
+  command: openstack role add --project service --user magnum admin
+
 - name: ensure openrc admin file is created in root home directory
   template: >-
     src=root/openrc

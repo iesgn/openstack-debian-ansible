@@ -5,9 +5,6 @@
     - python-keystone
     - python-oslo.db
 
-- name: ensure keystone service is stopped and disabled
-  service: name=keystone state=stopped enabled=no
-  
 - name: ensure apache2 and apache wsgi module are installed
   apt: name={{ item }}
   with_items:
@@ -26,7 +23,10 @@
   shell: /usr/bin/keystone-manage db_sync
 
 - name: Fernet keys initialization
-  shell: /usr/bin/keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone
+  shell: /usr/bin/keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone && keystone-manage credential_setup --keystone-user keystone --keystone-group keystone
+
+# - name: bootstrap identity service
+#   shell: keystone-manage bootstrap --bootstrap-password {{ admin_pass }} --bootstrap-admin-url http://{{ controller_ip }}:35357/v3/ --bootstrap-internal-url http://{{ controller_ip }}:35357/v3/ --bootstrap-public-url http://{{ controller_ip }}:5000/v3/ --bootstrap-region-id {{ region }}
 
 - name: ensure apache2 config is present
   template: >

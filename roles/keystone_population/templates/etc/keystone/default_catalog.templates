@@ -58,3 +58,8 @@ catalog.{{ region }}.database.adminURL = http://{{ controller_ip }}:8779/v1.0/$(
 catalog.{{ region }}.database.internalURL = http://{{ controller_ip }}:8779/v1.0/$(tenant_id)s
 catalog.{{ region }}.database.name = trove
 
+catalog.{{ region }}.container.publicURL = http://{{ controller_external_ip }}:9511/v1
+catalog.{{ region }}.container.adminURL = http://{{ controller_ip }}:9511/v1
+catalog.{{ region }}.container.internalURL = http://{{ controller_ip }}:9511/v1
+catalog.{{ region }}.container.name = magnum
+
