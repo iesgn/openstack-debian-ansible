@@ -1,4 +1,7 @@
-- name: Ensure sources.list file is properly defined (including non-oficial repo)
+- name: Ensure system apt is upgraded
+  apt: upgrade=yes update_cache=yes
+  
+- name: Ensure sources.list file is properly defined (including sid)
   template: >
     src=etc/apt/sources.list
     dest=/etc/apt/sources.list
@@ -6,8 +9,8 @@
     group=root
     mode=0644
 
-- name: Ensure mirantis GPG key is added
-  apt_key: url=http://mitaka-jessie.pkgs.mirantis.com/debian/dists/pubkey.gpg state=present
+# - name: Ensure mirantis GPG key is added
+#   apt_key: url=http://mitaka-jessie.pkgs.mirantis.com/debian/dists/pubkey.gpg state=present
     
 # - name: Ensure apt-pinning is set properly (stable packages will be installed by default)
 #   copy: >
@@ -17,8 +20,8 @@
 #     group=root
 #     mode=0644
   
-- name: Ensure system is upgraded (It can take a long time)
-  apt: upgrade=yes update_cache=yes
+- name: Ensure system is updated (including sid)
+  apt: update_cache=yes
 
 - name: Ensure ntp is installed
   apt: name=ntp 
