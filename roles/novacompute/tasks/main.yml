@@ -11,11 +11,11 @@
   apt: name=nova-compute-qemu 
   when: result|failed
 
-- name: ensure python-guestfs and sysfsutils are installed
-  apt: name={{item}} 
-  with_items:
-    - python-guestfs
-    - sysfsutils
+# - name: ensure python-guestfs and sysfsutils are installed
+#   apt: name={{item}}  
+#   with_items:
+#     - python-guestfs
+#     - sysfsutils
   
 - name: ensure nova sqlite is deleted
   file: dest=/var/lib/nova/nova.sqlite state=absent
