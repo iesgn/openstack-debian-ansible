@@ -1,5 +1,5 @@
 - name: ensure nova packages are installed
-  apt: name={{ item }} 
+  apt: name={{ item }}
   with_items:
     - nova-api
     - nova-cert
