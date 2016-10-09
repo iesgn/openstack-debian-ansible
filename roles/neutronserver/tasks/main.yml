@@ -1,5 +1,5 @@
 - name: ensure neutron server and neutron-plugin-ml2 are installed
-  apt: name={{ item }} 
+  apt: name={{ item }}
   with_items:
     - neutron-server
     - neutron-common

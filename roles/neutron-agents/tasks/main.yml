@@ -8,7 +8,7 @@
   sysctl: name=net.ipv4.conf.default.rp_filter value=0 state=present reload=yes
     
 - name: ensure plugins, agents and openvswitch packages are installed
-  apt: name={{ item }} 
+  apt: name={{ item }}
   with_items:
     - neutron-common
     - neutron-openvswitch-agent

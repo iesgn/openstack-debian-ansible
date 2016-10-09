@@ -24,14 +24,14 @@
     owner=root
     group=root mode=0644
 
-- name: ensure default openvswitch-switch init are deleted
-  command: update-rc.d -f openvswitch-switch remove
+# - name: ensure default openvswitch-switch init are deleted
+#   command: update-rc.d -f openvswitch-switch remove
 
-- name: ensure openvswitch-switch init file is modified
-  template: >-
-    src=etc/init.d/openvswitch-switch
-    dest=/etc/init.d/openvswitch-switch
-    owner=root group=root mode=755
+# - name: ensure openvswitch-switch init file is modified
+#   template: >-
+#     src=etc/init.d/openvswitch-switch
+#     dest=/etc/init.d/openvswitch-switch
+#     owner=root group=root mode=755
     
-- name: ensure default openvswitch-switch init are created
-  command: /sbin/insserv openvswitch-switch 
+# - name: ensure default openvswitch-switch init are created
+#   command: /sbin/insserv openvswitch-switch 
