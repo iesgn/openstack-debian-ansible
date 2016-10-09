@@ -1,10 +1,7 @@
 - name: ensure glance is installed
-  apt: name={{ item }} 
+  apt: name={{ item }}
   with_items:
     - glance
-    - glance-api
-    - glance-registry
-    - glance-common
 
 - name: ensure glance sqlite is deleted
   file: dest=/var/lib/glance/glance.sqlite state=absent
