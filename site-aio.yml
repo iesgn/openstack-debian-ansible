@@ -24,9 +24,9 @@
 #   roles:
 #     - role: keystoneserver
       
-- hosts: controller-nodes
-  roles:
-    - role: keystone_population
+# - hosts: controller-nodes
+#   roles:
+#     - role: keystone_population
       
 # - hosts: storage-nodes
 #   roles: 
@@ -56,9 +56,9 @@
 #   roles:
 #     - role: openvswitch
 
-# - hosts: controller-nodes
-#   roles:
-#     - role: horizon
+- hosts: controller-nodes
+  roles:
+    - role: horizon
 
 # - hosts: controller-nodes
 #   roles:
@@ -80,9 +80,13 @@
 #   roles:
 #     - role: heatserver
 
-- hosts: controller-nodes
-  roles:
-    - role: troveserver
+# - hosts: controller-nodes
+#   roles:
+#     - role: troveserver
+
+# - hosts: controller-nodes
+#   roles:
+#     - role: magnumserver
 
 # - hosts: controller-nodes
 #   roles:

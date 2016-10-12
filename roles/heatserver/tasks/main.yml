@@ -1,5 +1,5 @@
 - name: ensure heat packages are installed
-  apt: pkg={{ item }}
+  apt: name={{ item }}
   with_items:
     - heat-api 
     - heat-api-cfn 
