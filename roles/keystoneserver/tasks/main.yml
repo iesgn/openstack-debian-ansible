@@ -5,12 +5,6 @@
     - python-keystone
     - python-oslo.db
 
-- name: ensure apache2 and apache wsgi module are installed
-  apt: name={{ item }}
-  with_items:
-    - apache2
-    - libapache2-mod-wsgi
-  
 - name: ensure keystone config file is present
   template: >
     src=etc/keystone/keystone.conf
@@ -27,26 +21,6 @@
 
 # - name: bootstrap identity service
 #   shell: keystone-manage bootstrap --bootstrap-password {{ admin_pass }} --bootstrap-admin-url http://{{ controller_ip }}:35357/v3/ --bootstrap-internal-url http://{{ controller_ip }}:35357/v3/ --bootstrap-public-url http://{{ controller_ip }}:5000/v3/ --bootstrap-region-id {{ region }}
-
-- name: ensure apache2 config is present
-  template: >
-    src=etc/apache2/apache2.conf
-    dest=/etc/apache2/apache2.conf
-    owner=root
-    group=root
-    mode=0600
-
-- name: ensure virtual host wsgi config is present
-  template: >
-    src=etc/apache2/sites-available/wsgi-keystone.conf
-    dest=/etc/apache2/sites-available/wsgi-keystone.conf
-    owner=root
-    group=root
-    mode=0600
-
-- name: ensure virtual host wsgi is enabled
-  shell: /usr/sbin/a2ensite wsgi-keystone.conf
-  notify: restart apache2
 
 - name: ensure sqlite keystone database is deleted
   file: dest=/var/lib/keystone/keystone.db state=absent
