@@ -16,6 +16,14 @@
 - name: DB sync for keystone
   shell: /usr/bin/keystone-manage db_sync
 
+- name: Change owner /var/log/keystone/ directory
+  file: >
+    dest=/var/log/keystone/
+    owner=keystone
+    group=keystone
+    recurse=yes
+  notify: restart apache2
+  
 - name: Fernet keys initialization
   shell: /usr/bin/keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone && keystone-manage credential_setup --keystone-user keystone --keystone-group keystone
 
