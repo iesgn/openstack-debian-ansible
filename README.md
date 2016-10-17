@@ -1,7 +1,7 @@
 openstack-debian-ansible
 ========================
 
-Ansible playbooks for installing OpenStack Newton on Debian stretch using non-official Mirantis backports. The steps taken follow a standard OpenStack deployment: [OpenStack Installation Guide for Ubuntu](http://docs.openstack.org/newton/install-guide-ubuntu/) with some minors modifications to use with Debian.
+Ansible playbooks for installing OpenStack Newton on Debian stretch (testing) using debian official repos. The steps taken follow a standard OpenStack deployment: [OpenStack Installation Guide for Ubuntu](http://docs.openstack.org/newton/install-guide-ubuntu/) with some minors modifications to use with Debian.
 
 The deployment schema selected is ["Classic with OpenvSwitch"](http://docs.openstack.org/mitaka/networking-guide/scenario-classic-ovs.html), instead of using linux bridges as explained in OpenStack Installation Guide.
 
@@ -9,7 +9,7 @@ These playbooks have been written with the idea of using them in a real deployme
 with physical servers, but thay can be used too to deploy a OpenStack test
 environment with vagrant.
 
-**This is still a work in progress**
+**IMPORTANT: This is still a work in progress**
 
 ## Software used (specific versions):
 
