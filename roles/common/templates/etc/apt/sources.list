@@ -1,4 +1,3 @@
-deb http://{{ repo_fqdn }}/debian sid main
 deb http://{{ repo_fqdn }}/debian stretch main
 deb http://{{ repo_fqdn }}/debian stretch-updates main
 deb http://security.debian.org/ stretch/updates main
