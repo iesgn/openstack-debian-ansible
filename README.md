@@ -1,7 +1,7 @@
 openstack-debian-ansible
 ========================
 
-Ansible playbooks for installing OpenStack Mitaka on Debian jessie using non-official Mirantis backports. The steps taken follow a standard OpenStack deployment: [OpenStack Installation Guide for Ubuntu](http://docs.openstack.org/mitaka/install-guide-ubuntu/) with some minors modifications to use with Debian.
+Ansible playbooks for installing OpenStack Newton on Debian stretch using non-official Mirantis backports. The steps taken follow a standard OpenStack deployment: [OpenStack Installation Guide for Ubuntu](http://docs.openstack.org/newton/install-guide-ubuntu/) with some minors modifications to use with Debian.
 
 The deployment schema selected is ["Classic with OpenvSwitch"](http://docs.openstack.org/mitaka/networking-guide/scenario-classic-ovs.html), instead of using linux bridges as explained in OpenStack Installation Guide.
 
@@ -13,27 +13,27 @@ environment with vagrant.
 
 ## Software used (specific versions):
 
-- Debian GNU/Linux: jessie (amd64). 
-- Linux kernel: 3.16.0-4-amd64
+- Debian GNU/Linux: stretch (amd64). 
+- Linux kernel: 4.7.0-1-amd64
 - Open vSwitch: 2.3.0
-- OpenStack: Mitaka
+- OpenStack: Newton
 - Ansible: 1.7.2
-- Vagrant: 1.6.5
-- VirtualBox: 4.3.14
+- Vagrant: 1.8.6
+- VirtualBox: 5.0.24
 
 ## OpenStack componens included:
 
-Keystone, Glance, Nova, Neutron and Cinder
+Keystone, Glance, Nova, Neutron, Horizon and Cinder
 
 ## Get a debian jessie vagrant box:
 
-Tested using the debian "official" jessie vagrant box available at:
+Tested using an unofficial debian stretch vagrant box available at (use it at your own risk or create your own vagrant box):
 
-    https://atlas.hashicorp.com/debian/boxes/jessie64
+    https://atlas.hashicorp.com/remram/boxes/debian-9-amd64
 
 You can download and install it locally with:
 
-    vagrant box add debian/jessie64
+    vagrant box add remram/debian-9-amd64
 
 If you are going to use these playbooks with physical serves, ignore the
 Vagranfile and configure ansible.cfg properly.
@@ -59,14 +59,14 @@ The Vagranfile must be modified too:
 
     controller.vm.network :public_network, bridge: "wlan0" ,ip: "192.168.1.101" # eth2 external
 
-## Bring up the scenario
+## Bring up the scenario (vagrant insecure private key is not used in recent vagrant releases, so the first step is not needed)
 
     chmod 400 vagrant_private_key
 	vagrant up
 
 ## Run ansible playbooks to configure the cloud
 
-    ansible-playbook site.yml --sudo
+    ansible-playbook site.yml -s
 
 ## Using OpenStack
 
