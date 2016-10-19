@@ -1,7 +1,4 @@
-- name: Ensure system apt is upgraded
-  apt: upgrade=yes update_cache=yes
-  
-- name: Ensure sources.list file is properly defined (including sid)
+- name: Ensure sources.list file is properly defined
   template: >
     src=etc/apt/sources.list
     dest=/etc/apt/sources.list
@@ -20,7 +17,7 @@
 #     group=root
 #     mode=0644
   
-- name: Ensure system is updated (including sid)
+- name: Ensure system is updated
   apt: update_cache=yes
 
 - name: Ensure ntp is installed
