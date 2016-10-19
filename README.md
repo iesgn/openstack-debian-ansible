@@ -9,7 +9,7 @@ These playbooks have been written with the idea of using them in a real deployme
 with physical servers, but thay can be used too to deploy a OpenStack test
 environment with vagrant.
 
-**IMPORTANT: This is still a work in progress**
+**IMPORTANT: This is still a work in progress, feel free to open issues on github**
 
 ## Software used (specific versions):
 
@@ -66,11 +66,11 @@ The Vagranfile must be modified too:
 
 ## Run ansible playbooks to configure the cloud
 
-    ansible-playbook site.yml -s
+    ansible-playbook site-aio.yml -s
 
 ## Using OpenStack
 
-Open your browser and type in the notification bar http://192.168.1.101 or the corresponding external IP chosen.
+Open your browser and type in the notification bar http://192.168.1.201 or the corresponding external IP chosen.
 
 ## References
 
