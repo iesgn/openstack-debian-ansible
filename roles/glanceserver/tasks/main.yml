@@ -1,14 +1,7 @@
-- name: ensure sudo is installed
-  apt: name=sudo state=present
-
 - name: ensure glance is installed
-  apt: pkg={{ item }}
+  apt: name={{ item }}
   with_items:
     - glance
-    - glance-api
-    - glance-registry
-    - python-glanceclient
-    - glance-common
 
 - name: ensure glance sqlite is deleted
   file: dest=/var/lib/glance/glance.sqlite state=absent
@@ -33,3 +26,8 @@
   notify:
   - restart glance-services
 
+- name: ensure glance db is initialized
+  command: /usr/bin/glance-manage db_sync
+  notify:
+  - restart glance-services
+  

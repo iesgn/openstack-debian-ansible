@@ -1,15 +1,11 @@
 - name: ensure keystone packages are installed
-  apt: pkg={{ item }}
+  apt: name={{ item }}
   with_items:
     - keystone
     - python-keystone
-    - python-keystoneclient
-  notify: start keystone
-  
-- name: ensure sqlite keystone database is deleted
-  file: dest=/var/lib/keystone/keystone.db state=absent
+    - python-oslo.db
 
-- name: ensure keystone config script is present
+- name: ensure keystone config file is present
   template: >
     src=etc/keystone/keystone.conf
     dest=/etc/keystone/keystone.conf
@@ -18,6 +14,21 @@
     mode=0600
 
 - name: DB sync for keystone
-  shell: >
-    /usr/bin/keystone-manage db_sync
-  notify: restart keystone
+  shell: /usr/bin/keystone-manage db_sync
+
+- name: Change owner /var/log/keystone/ directory
+  file: >
+    dest=/var/log/keystone/
+    owner=keystone
+    group=keystone
+    recurse=yes
+  notify: restart apache2
+  
+- name: Fernet keys initialization
+  shell: /usr/bin/keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone && keystone-manage credential_setup --keystone-user keystone --keystone-group keystone
+
+# - name: bootstrap identity service
+#   shell: keystone-manage bootstrap --bootstrap-password {{ admin_pass }} --bootstrap-admin-url http://{{ controller_ip }}:35357/v3/ --bootstrap-internal-url http://{{ controller_ip }}:35357/v3/ --bootstrap-public-url http://{{ controller_ip }}:5000/v3/ --bootstrap-region-id {{ region }}
+
+- name: ensure sqlite keystone database is deleted
+  file: dest=/var/lib/keystone/keystone.db state=absent

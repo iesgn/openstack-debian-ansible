@@ -1,5 +1,5 @@
 - name: ensure trove packages are installed
-  apt: pkg={{ item }}
+  apt: name={{ item }}
   with_items:
     - python-trove 
     - python-troveclient 
@@ -7,6 +7,7 @@
     - trove-common 
     - trove-api 
     - trove-taskmanager
+    - trove-conductor
 
 - name: ensure trove sqlite is deleted
   file: dest=/var/lib/trove/trove.sqlite state=absent
@@ -41,10 +42,23 @@
   notify:
   - restart trove-services
 
+- name: ensure trove-guestagent.conf file is up to date
+  template: >
+    src=etc/trove/trove-guestagent.conf
+    dest=/etc/trove/trove-guestagent.conf
+    owner=trove
+    group=trove
+    mode=0600
+  notify:
+  - restart trove-services
+
 - name: ensure trove db is initialized
   command: /usr/bin/trove-manage db_sync
   notify:
   - restart trove-services
 
-
+- name: ensure trove dashboard plugin is installed
+  apt: name=python-trove-dashboard 
+  notify:
+    - restart web services
 

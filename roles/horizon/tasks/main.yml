@@ -1,11 +1,32 @@
-- name: ensure horizon packages are installed
-  apt: pkg={{ item }}
-  with_items:
-    - memcached
-    - apache2
-    - libapache2-mod-wsgi
-    - openstack-dashboard
+- name: ensure apache default sites are disabled
+  shell: echo openstack-dashboard-apache horizon/activate_vhost boolean true |debconf-set-selections
+  
+- name: ensure openstack-dashboard-ssl debconf selection is set to true
+  shell: echo openstack-dashboard-apache horizon/use_ssl boolean true |debconf-set-selections
 
+- name: ensure default virtualhost is disabled
+  command: a2dissite {{ item }}
+  with_items:
+    - 000-default
+    - default-ssl
+  notify: restart web services
+  
+- name: ensure horizon packages are installed 
+  apt: name={{ item }}
+  with_items:
+    - python-django-horizon
+    - openstack-dashboard
+    - openstack-dashboard-apache
+
+- name: ensure mod-gnutls is installed
+  apt: name=libapache2-mod-gnutls
+
+- name: ensure openstack-dashboard-ssl is configured to use gnutls instead ssl
+  template: >-
+    src=etc/apache2/sites-enabled/openstack-dashboard-ssl.conf
+    dest=/etc/apache2/sites-enabled/openstack-dashboard-ssl.conf
+  notify: restart web services
+  
 - name: ensure dashboard is configured
   template: >
     src=etc/openstack-dashboard/local_settings.py
@@ -13,21 +34,33 @@
     owner=root group=root mode=0644
   notify: restart web services
 
-- name: ensure default virtualhost is disabled
-  command: a2dissite 000-default
+# - name: ensure openstack-dashboard-ssl virtualhost is enabled
+#   command: a2ensite {{ item }}
+#   with_items:
+#     - openstack-dashboard-ssl
+#     - openstack-dashboard-ssl-redirect
+    
+#   notify: restart web services
+  
+# - name: ensure ssl, wsgi and rewrite modules are enabled
+#   apache2_module: name={{ item }} state=present
+#   with_items:
+#     - wsgi
+#     - ssl
+#     - rewrite
+#   notify: restart web services
+
+# # Horizon css isn't loaded 
+
+- name: ensure manage.py collectstatic is executed again
+  command: /usr/share/openstack-dashboard/manage.py collectstatic --noinput --clear 
   notify: restart web services
 
-- name: ensure openstack-dashboard-ssl virtualhost is enabled
-  command: a2ensite {{ item }}
-  with_items:
-    - openstack-dashboard-ssl
-    - openstack-dashboard-ssl-redirect
-    
+- name: ensure manage.py compress is executed again
+  command: /usr/share/openstack-dashboard/manage.py compress --force
   notify: restart web services
-  
-- name: ensure ssl and rewrite mod are enabled
-  apache2_module: name={{ item }} state=present
-  with_items:
-    - ssl
-    - rewrite
-  notify: restart web services
+
+- name: ensure django secret key is deleted
+  file: >-
+    path=/var/lib/openstack-dashboard/secret-key/.secret_key_store
+    state=absent

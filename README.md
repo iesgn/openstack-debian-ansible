@@ -1,42 +1,39 @@
 openstack-debian-ansible
 ========================
 
-Ansible playbooks for installing OpenStack Icehouse on Debian jessie.
+Ansible playbooks for installing OpenStack Newton on Debian stretch (testing) using debian official repos. The steps taken follow a standard OpenStack deployment: [OpenStack Installation Guide for Ubuntu](http://docs.openstack.org/newton/install-guide-ubuntu/) with some minors modifications to use with Debian.
 
-These playbooks have been written in the hope of using them in a real deployment
+The deployment schema selected is ["Classic with OpenvSwitch"](http://docs.openstack.org/mitaka/networking-guide/scenario-classic-ovs.html), instead of using linux bridges as explained in OpenStack Installation Guide.
+
+These playbooks have been written with the idea of using them in a real deployment
 with physical servers, but thay can be used too to deploy a OpenStack test
-environment with vagrant inside a computer.
+environment with vagrant.
 
-**This is still a work in progress**
+**IMPORTANT: This is still a work in progress, feel free to open issues on github**
 
 ## Software used (specific versions):
 
-- Debian GNU/Linux: jessie (amd64). At this moment jessie is in frozen state and
-  is expected to be released in April 2015
-- Linux kernel: 3.16.0-4-amd64
+- Debian GNU/Linux: stretch (amd64). 
+- Linux kernel: 4.7.0-1-amd64
 - Open vSwitch: 2.3.0
-- OpenStack: Icehouse (2014.1)
+- OpenStack: Newton
 - Ansible: 1.7.2
-- Vagrant: 1.6.5
-- VirtualBox: 4.3.14
+- Vagrant: 1.8.6
+- VirtualBox: 5.0.24
 
 ## OpenStack componens included:
 
-Keystone, Glance, Nova, Neutron and Cinder
-
-## Deployment schema
-
-[Per tenant router with private networks](http://docs.openstack.org/havana/install-guide/install/apt/content/section_networking-routers-with-private-networks.html)
+Keystone, Glance, Nova, Neutron, Horizon and Cinder
 
 ## Get a debian jessie vagrant box:
 
-Tested using the debian "official" jessie vagrant box available at:
+Tested using an unofficial debian stretch vagrant box available at (use it at your own risk or create your own vagrant box):
 
-    https://atlas.hashicorp.com/debian/boxes/jessie64
+    https://atlas.hashicorp.com/remram/boxes/debian-9-amd64
 
 You can download and install it locally with:
 
-    vagrant box add debian/jessie64
+    vagrant box add remram/debian-9-amd64
 
 If you are going to use these playbooks with physical serves, ignore the
 Vagranfile and configure ansible.cfg properly.
@@ -45,7 +42,7 @@ Vagranfile and configure ansible.cfg properly.
 
 ![schema](https://raw.githubusercontent.com/iesgn/openstack-debian-ansible/master/img/openstack-debian-ansible.png)
 
-**At this moment the playbooks are tested only in an "AllinOneNode" schema.**
+**At this moment only the "AllinOneNode" schema is tested.**
 
 The file *groups_var/all* contains all variables needed by ansible playbooks and
 they can be customized if needed. It's **mandatory** to define the following
@@ -62,18 +59,18 @@ The Vagranfile must be modified too:
 
     controller.vm.network :public_network, bridge: "wlan0" ,ip: "192.168.1.101" # eth2 external
 
-## Bring up the scenario
+## Bring up the scenario (vagrant insecure private key is not used in recent vagrant releases, so the first step is not needed)
 
     chmod 400 vagrant_private_key
 	vagrant up
 
 ## Run ansible playbooks to configure the cloud
 
-    ansible-playbook site.yml --sudo
+    ansible-playbook site-aio.yml -s
 
 ## Using OpenStack
 
-Open your browser and type in the notification bar http://192.168.1.101 or the corresponding external IP chosen.
+Open your browser and type in the notification bar http://192.168.1.201 or the corresponding external IP chosen.
 
 ## References
 

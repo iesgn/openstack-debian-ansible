@@ -1,11 +1,12 @@
 [controller-nodes]
-controller ansible_ssh_host=192.168.221.101 ansible_ssh_user=vagrant
+controller ansible_ssh_host=192.168.1.201
 
 [storage-nodes]
-controller ansible_ssh_host=192.168.221.101 ansible_ssh_user=vagrant
+controller ansible_ssh_host=192.168.1.201
 
 [compute-nodes]
-controller ansible_ssh_host=192.168.221.101 ansible_ssh_user=vagrant
+controller ansible_ssh_host=192.168.1.201
 
 [network-nodes]
-controller ansible_ssh_host=192.168.221.101 ansible_ssh_user=vagrant
+controller ansible_ssh_host=192.168.1.201
+

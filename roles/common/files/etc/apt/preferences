@@ -1,0 +1,16 @@
+Package: *
+Pin: release a=stable
+Pin-Priority: 700
+
+Package: *
+Pin: release a=jessie-backports
+Pin-Priority: 650
+
+Package: *
+Pin: release a=jessie-mitaka-backports
+Pin-Priority: 600
+
+Package: *
+Pin: release a=jessie-mitaka-backports-nochange
+Pin-Priority: 600
+

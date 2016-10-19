@@ -1,0 +1,12 @@
+# The below switch enables you to select which type of console proxy daemon y$
+# wish to start at boot time. Possible values are:
+# - spicehtml5
+# - xenvnc
+# - novnc
+
+NOVA_CONSOLE_PROXY_TYPE=novnc
+
+# This switch decides if you want to start or not the serialproxy daemon.
+# Only allowed values are: TRUE or FALSE (case sensitive)
+
+NOVA_SERIAL_PROXY_START=true

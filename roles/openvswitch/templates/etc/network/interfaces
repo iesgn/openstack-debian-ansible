@@ -10,14 +10,18 @@ iface {{ int_net_nic }} inet static
         address {{ network_node_ip }}
         netmask {{ network_node_netmask }}
 
-auto br-ex
+allow-ovs br-ex
 iface br-ex inet static
         address {{ network_node_external_ip }}
         netmask {{ network_node_external_netmask }}
         gateway {{ external_gateway }}
-        #dns-nameservers {{ external_gateway }}
-        up ip link set {{ ext_net_nic }} up
-        up ip link set {{ ext_net_nic }} promisc on
-        down ip link set {{ ext_net_nic }} promisc off
-        down ip link set {{ ext_net_nic }} down
+	ovs_type OVSBridge
+	ovs_ports {{ ext_net_nic }}
 
+allow-br-ex {{ ext_net_nic }}
+iface {{ ext_net_nic }} inet manual
+        ovs_bridge br-ex
+        ovs_type OVSPort
+        up ip link set $IFACE promisc on
+        down ip link set $IFACE promisc off
+				

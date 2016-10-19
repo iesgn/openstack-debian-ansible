@@ -1,5 +1,5 @@
 - name: ensure nova packages are installed
-  apt: pkg={{ item }}
+  apt: name={{ item }}
   with_items:
     - nova-api
     - nova-cert
@@ -8,21 +8,11 @@
     - nova-scheduler
     - python-novaclient
     - nova-consoleproxy
+    - nova-novncproxy
 
 - name: ensure nova sqlite is deleted
   file: dest=/var/lib/nova/nova.sqlite state=absent
     
-# - name: ensure api-paste.ini is present
-#   copy: >
-#     src=etc/nova/api-paste.ini 
-#     dest=/etc/nova/api-paste.ini 
-#     owner=nova 
-#     group=nova 
-#     mode=0660 
-#     backup=yes
-#   notify: 
-#   - restart nova-services
-
 - name: ensure nova.conf file is present
   template: >
     src=etc/nova/nova.conf
@@ -30,6 +20,26 @@
     owner=nova
     group=nova
     mode=0660
+  notify: 
+  - restart nova-services
+
+- name: ensure default nova-consoleproxy file is present
+  template: >
+    src=etc/default/nova-consoleproxy
+    dest=/etc/default/nova-consoleproxy
+    owner=root
+    group=root
+    mode=0644
+  notify: 
+  - restart nova-services
+
+- name: ensure nova_api db is initialized
+  command: /usr/bin/nova-manage api_db sync
+  notify: 
+  - restart nova-services
+
+- name: ensure nova db is initialized
+  command: /usr/bin/nova-manage db sync
   notify: 
   - restart nova-services
 

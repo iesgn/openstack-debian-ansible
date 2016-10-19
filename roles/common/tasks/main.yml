@@ -1,19 +1,35 @@
-- name: Ensure sources.list file is properly defined ({{ repo_fqdn }})
+- name: Ensure sources.list file is properly defined
   template: >
     src=etc/apt/sources.list
     dest=/etc/apt/sources.list
     owner=root
     group=root
     mode=0644
-  notify: apt update
 
-- name: Ensure system is upgraded (It can take a long time)
-  apt: upgrade=yes update_cache=yes
+# - name: Ensure mirantis GPG key is added
+#   apt_key: url=http://mitaka-jessie.pkgs.mirantis.com/debian/dists/pubkey.gpg state=present
+    
+# - name: Ensure apt-pinning is set properly (stable packages will be installed by default)
+#   copy: >
+#     src=etc/apt/preferences
+#     dest=/etc/apt/preferences
+#     owner=root
+#     group=root
+#     mode=0644
+  
+- name: Ensure system is updated
+  apt: update_cache=yes
 
 - name: Ensure ntp is installed
-  apt: name=ntp
+  apt: name=ntp 
   notify: restart ntp
 
+- name: Ensure memcached is installed
+  apt: name={{ item }}
+  with_items:
+    - memcached
+    - python-memcache
+    
 # - name: Ensure /etc/hosts is properly defined
 #   copy: >-
 #     src=etc/hosts

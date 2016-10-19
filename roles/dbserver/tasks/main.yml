@@ -1,9 +1,12 @@
-- name: Ensure mysql server and mysql python client are installed
-  apt: pkg={{ item }}
+- name: Ensure mysql server is installed
+  apt: name=mysql-server
+    
+- name: Ensure python-mysqldb and python-pymysql are installed 
+  apt: name={{ item }}
   with_items:
+    - python-pymysql
     - python-mysqldb
-    - mysql-server
-
+    
 - name: Ensure mysql binds to internal interface
   template: >
     src=etc/my.cnf 
@@ -37,12 +40,4 @@
   with_items:
     - "{{ controller_ip }}"
     - 127.0.0.1
-
-- name: ensure anonymous users are not in the database
-  mysql_user: name='' host={{ item }} state=absent
-  with_items:
-    - "{{ controller_ip }}"
-    - "{{ inventory_hostname_short }}"
-    - 127.0.0.1
-    - ::1
 

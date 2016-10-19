@@ -1,0 +1,10 @@
+- name: ensure python-openstackclient is installed
+  apt: name=python-openstackclient 
+
+- name: ensure the rest of openstack clients are installed
+  apt: name={{ item }}
+  with_items:
+    - python-swiftclient
+    - python-troveclient
+    - python-ironicclient
+    - python-heatclient

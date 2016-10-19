@@ -26,6 +26,10 @@
     - role: dbserver_population
     - role: rabbitserver
 
+- hosts: all
+  roles:
+    - role: openstackclient
+
 - hosts: controller-nodes
   sudo: true
   sudo_user: root
@@ -34,7 +38,7 @@
       command: sleep 5
   roles:
     - role: keystoneserver
-
+      
 - hosts: controller-nodes
   sudo: true
   sudo_user: root
@@ -86,6 +90,13 @@
     - role: neutron-agents
     - role: openvswitch
 
+- hosts: compute-nodes
+  roles:
+    - role: neutron-agents-compute
+
+- hosts: controller-nodes
+  roles:
+    - role: horizon
 
 - hosts: controller-nodes
   sudo: true

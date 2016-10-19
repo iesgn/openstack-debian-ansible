@@ -1,58 +1,103 @@
 # Tenants, roles and keystone users creation
+# - name: wait until keystone server is available
+#   wait_for: port=35357 delay=10
 
-- name: ensure admin tenant is created
-  keystone_user: >
-    token={{ admin_token }}
-    tenant=admin
-    tenant_description="Admin Tenant"
+- name: verify if default domain has been created
+  environment: k3
+  command: /usr/bin/openstack domain show default
+  register: result
+  ignore_errors: True
+
+- name: ensure default domain is created
+  environment: k3
+  command: /usr/bin/openstack domain create --description "Default Domain" default
+  when: result|failed
+
+- name: verify if admin project has been created
+  environment: k3
+  command: /usr/bin/openstack project show admin
+  register: result
+  ignore_errors: True
+
+- name: ensure admin project is created
+  environment: k3
+  command: /usr/bin/openstack project create --domain default --description "Admin Project" admin
+  when: result|failed
+
+- name: verify if admin user has been created
+  environment: k3
+  command: /usr/bin/openstack user show admin
+  register: result
+  ignore_errors: True
 
 - name: ensure admin user is created
-  keystone_user: >
-    token={{ admin_token }}
-    user=admin
-    password={{ admin_pass }}
-    tenant=admin
+  environment: k3
+  command: /usr/bin/openstack user create --domain default admin --password {{ admin_pass }}
+  when: result|failed
 
-- name: ensure admin user has admin role in admin tenant
-  keystone_user: >
-    token={{ admin_token }}
-    role=admin
-    user=admin
-    tenant=admin
+- name: verify if admin role has been created
+  environment: k3
+  command: /usr/bin/openstack role show admin
+  register: result
+  ignore_errors: True
 
-- name: ensure admin user has _member_ role in admin tenant
-  keystone_user: >
-    token={{ admin_token }}
-    role=_member_
-    user=admin
-    tenant=admin
-    
-- name: ensure demo tenant is created
-  keystone_user: >
-    token={{ admin_token }}
-    tenant=demo
-    tenant_description="Demo Tenant"
+- name: ensure admin role is created
+  environment: k3
+  command: /usr/bin/openstack role create admin
+  when: result|failed
+
+- name: ensure admin role is added to admin user
+  environment: k3
+  command: openstack role add --project admin --user admin admin
+  
+- name: verify if service project has been created
+  environment: k3
+  command: /usr/bin/openstack project show service
+  register: result
+  ignore_errors: True
+
+- name: ensure service project is created
+  environment: k3
+  command: /usr/bin/openstack project create --domain default --description "Service Project" service
+  when: result|failed
+
+- name: verify if demo project has been created
+  environment: k3
+  command: /usr/bin/openstack project show demo
+  register: result
+  ignore_errors: True
+
+- name: ensure demo project is created
+  environment: k3
+  command: /usr/bin/openstack project create --domain default --description "Demo Project" demo
+  when: result|failed
+
+- name: verify if demo user has been created
+  environment: k3
+  command: /usr/bin/openstack user show demo
+  register: result
+  ignore_errors: True
 
 - name: ensure demo user is created
-  keystone_user: >
-    token={{ admin_token }}
-    user=demo
-    password={{ demo_pass }}
-    tenant=demo
+  environment: k3
+  command: /usr/bin/openstack user create --domain default demo --password {{ demo_pass }}
+  when: result|failed
 
-- name: ensure demo user has _member_ role in demo Tenant
-  keystone_user: >
-    token={{ admin_token }}
-    role=_member_
-    user=demo
-    tenant=demo
+- name: verify if user role has been created
+  environment: k3
+  command: /usr/bin/openstack role show user
+  register: result
+  ignore_errors: True
 
-- name: ensure service tenant is created
-  keystone_user: >
-    token={{ admin_token }}
-    tenant=service
-    tenant_description="Service Tenant"
+- name: ensure user role is created
+  environment: k3
+  command: /usr/bin/openstack role create user
+  when: result|failed
 
+- name: ensure user role is added to demo user
+  environment: k3
+  command: openstack role add --project demo --user demo user
+  
 # Services and endpoints using templated.Catalog
 
 - name: ensure service and endpoints are defined
@@ -62,37 +107,161 @@
     owner=root
     group=root
     mode=0644
-  notify: restart keystone
+  notify: restart apache2
 
-- name: ensure users for each of the services are created in tenant service
-  keystone_user: >
-    token={{ admin_token }}
-    user={{ item.name }}
-    tenant=service
-    password="{{ item.password }}"
-  with_items:
-    - { name: 'glance', password: '{{ glance_identity_password }}' }
-    - { name: 'nova', password: '{{ nova_identity_password }}' }
-    - { name: 'ec2', password: '{{ ec2_identity_password }}' }
-    - { name: 'neutron', password: '{{ neutron_identity_password }}' }
-    - { name: 'cinder', password: '{{ cinder_identity_password }}' }
-    - { name: 'heat', password: '{{ heat_identity_password }}' }
-    - { name: 'trove', password: '{{ trove_identity_password }}' }
+# Glance
+- name: verify if glance user has been created
+  environment: k3
+  command: /usr/bin/openstack user show glance
+  register: result
+  ignore_errors: True
 
-- name: ensure admin role is assigned to users for each of the services in tenant service
-  keystone_user: >
-    token={{ admin_token }}
-    role=admin
-    user={{ item.name }}
-    tenant=service
-  with_items:
-    - { name: 'glance' }
-    - { name: 'nova' }
-    - { name: 'ec2' }
-    - { name: 'neutron' }
-    - { name: 'cinder' }
-    - { name: 'heat' }
-    - { name: 'trove' }
+- name: ensure glance user is created
+  environment: k3
+  command: /usr/bin/openstack user create --domain default glance --password {{ glance_identity_password }}
+  when: result|failed
+
+- name: ensure admin role is added to glance user
+  environment: k3
+  command: openstack role add --project service --user glance admin
+  
+# Nova
+- name: verify if nova user has been created
+  environment: k3
+  command: /usr/bin/openstack user show nova
+  register: result
+  ignore_errors: True
+
+- name: ensure nova user is created
+  environment: k3
+  command: /usr/bin/openstack user create --domain default nova --password {{ nova_identity_password }}
+  when: result|failed
+
+- name: ensure admin role is added to nova user
+  environment: k3
+  command: openstack role add --project service --user nova admin
+  
+# Neutron
+- name: verify if neutron user has been created
+  environment: k3
+  command: /usr/bin/openstack user show neutron
+  register: result
+  ignore_errors: True
+
+- name: ensure neutron user is created
+  environment: k3
+  command: /usr/bin/openstack user create --domain default neutron --password {{ neutron_identity_password }}
+  when: result|failed
+
+- name: ensure admin role is added to neutron user
+  environment: k3
+  command: openstack role add --project service --user neutron admin
+  
+# Cinder
+- name: verify if cinder user has been created
+  environment: k3
+  command: /usr/bin/openstack user show cinder
+  register: result
+  ignore_errors: True
+
+- name: ensure cinder user is created
+  environment: k3
+  command: /usr/bin/openstack user create --domain default cinder --password {{ cinder_identity_password }}
+  when: result|failed
+
+- name: ensure admin role is added to cinder user
+  environment: k3
+  command: openstack role add --project service --user cinder admin
+  
+# Manila
+- name: verify if manila user has been created
+  environment: k3
+  command: /usr/bin/openstack user show manila
+  register: result
+  ignore_errors: True
+
+- name: ensure manila user is created
+  environment: k3
+  command: /usr/bin/openstack user create --domain default manila --password {{ manila_identity_password }}
+  when: result|failed
+
+- name: ensure admin role is added to manila user
+  environment: k3
+  command: openstack role add --project service --user manila admin
+  
+# Heat
+- name: verify if heat domain has been created
+  environment: k3
+  command: /usr/bin/openstack domain show heat
+  register: result
+  ignore_errors: True
+        
+- name: ensure heat domain is created
+  environment: k3
+  command: /usr/bin/openstack domain create --description "Stack projects and users" heat 
+  when: result|failed
+  
+- name: verify if heat_domain_admin user has been created
+  environment: k3
+  command: /usr/bin/openstack user show heat_domain_admin
+  register: result
+  ignore_errors: True
+
+- name: ensure heat_domain_admin user is created
+  environment: k3
+  command: /usr/bin/openstack user create --domain heat heat_domain_admin --password {{ heat_domain_admin_identity_password }}
+  when: result|failed
+
+- name: ensure admin role is added to heat_domain_admin user
+  environment: k3
+  command: /usr/bin/openstack role add --domain heat --user-domain heat --user heat_domain_admin admin
+
+- name: verify if heat_stack_owner role has been created
+  environment: k3
+  command: /usr/bin/openstack role show heat_stack_owner
+  register: result
+  ignore_errors: True
+
+- name: ensure heat_stack_owner role is created
+  environment: k3
+  command: /usr/bin/openstack role create heat_stack_owner
+  when: result|failed
+
+- name: ensure heat_stack_owner role is added to demo user
+  environment: k3
+  command: /usr/bin/openstack role add --project demo --user demo heat_stack_owner
+  
+# Trove
+- name: verify if trove user has been created
+  environment: k3
+  command: /usr/bin/openstack user show trove
+  register: result
+  ignore_errors: True
+
+- name: ensure trove user is created
+  environment: k3
+  command: /usr/bin/openstack user create --domain default trove --password {{ trove_identity_password }}
+  when: result|failed
+
+- name: ensure admin role is added to trove user
+  environment: k3
+  command: openstack role add --project service --user trove admin
+
+# Magnum
+- name: verify is magnum user has been created
+  environment: k3
+  command: /usr/bin/openstack user show magnum
+  register: result
+  ignore_errors: True
+
+- name: ensure magnum user is created
+  environment: k3
+  command: /usr/bin/openstack user create --domain default magnum --password {{ magnum_identity_password }}
+  when: result|failed
+
+- name: ensure admin role is added to magnum user
+  environment: k3
+  command: openstack role add --project service --user magnum admin
 
 - name: ensure openrc admin file is created in root home directory
   template: >-
@@ -101,19 +270,12 @@
     owner=root
     group=root
     mode=600
-    
-# # keystone-service from openstackansible-modules is still needed
-# # https://github.com/lorin/openstack-ansible-modules
 
-# - name: add services
-#   keystone_service: >
-#     token={{ admin_token }}
-#     name={{ item.name }}
-#     type={{ item.type }}
-#     description="{{ item.description }}"
-#     public_url={{ item.public_url }}
-#     internal_url={{ item.internal_url }}
-#     admin_url={{ item.admin_url }}
-#     region={{ region }}
-#   with_items: {{ services }}
-#   tags: keystone
+- name: ensure openrc demo file is created in root home directory
+  template: >-
+    src=root/demo_openrc
+    dest=/root/demo_openrc.sh
+    owner=root
+    group=root
+    mode=600
+    

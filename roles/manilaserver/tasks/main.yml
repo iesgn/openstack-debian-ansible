@@ -1,0 +1,21 @@
+- name: ensure manila packages are installed
+  apt: name={{ item }}
+  with_items:
+    - manila-api 
+    - manila-scheduler
+    - python-manilaclient
+
+- name: ensure manila sqlite is deleted
+  file: dest=/var/lib/manila/manila.sqlite state=absent
+          
+- name: ensure manila.conf is configured
+  template: >
+    src=etc/manila/manila.conf
+    dest=/etc/manila/manila.conf
+    owner=manila group=manila mode=0640
+  notify:
+    - restart manila services
+
+- name: ensure manila db is initialized
+  command: /usr/bin/manila-manage db sync
+  notify: restart manila services

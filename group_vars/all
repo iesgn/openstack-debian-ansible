@@ -1,5 +1,11 @@
+# KEYSTONE_3
+k3:
+  OS_TOKEN: '012345SECRET99TOKEN012345'
+  OS_URL: 'http://192.168.221.101:35357/v3'
+  OS_IDENTITY_API_VERSION: 3 
+
 # APT Repository
-repo_fqdn: http.debian.net
+repo_fqdn: httpredir.debian.org
 
 # Rabbit
 rabbit_user: "openstack"
@@ -10,24 +16,26 @@ controller_ip: 192.168.221.101
 storage_ip: 192.168.221.101
 network_node_ip: 192.168.221.101
 network_node_netmask: 255.255.255.0
-controller_external_ip: 192.168.1.101
-storage_external_ip: 192.168.1.101
-network_node_external_ip: 192.168.1.101
+controller_external_ip: 192.168.1.201
+storage_external_ip: 192.168.1.201
+network_node_external_ip: 192.168.1.201
 network_node_external_netmask: 255.255.255.0
 network_node_external_CIDR: 24
 external_gateway: 192.168.1.1
-int_net_nic: eth1
-ext_net_nic: eth2
+int_net_nic: enp0s8
+ext_net_nic: enp0s9
 
 # # MySQL passwords
 root_db_password: "asdasd" 
 keystone_db_password: "asdasd"
 glance_db_password: "asdasd"
 cinder_db_password: "asdasd"
+manila_db_password: "asdasd"
 nova_db_password: "asdasd"
 neutron_db_password: "asdasd"
 heat_db_password: "asdasd"
 trove_db_password: "asdasd"
+magnum_db_password: "asdasd"
 
 
 # # Keystone identity passwords:
@@ -36,8 +44,11 @@ nova_identity_password: "nova"
 ec2_identity_password: "ec2"
 neutron_identity_password: "neutron"
 cinder_identity_password: "cinder"
+manila_identity_password: "manila"
 heat_identity_password: "heat"
+heat_domain_admin_identity_password: "heat"
 trove_identity_password: "trove"
+magnum_identity_password: "magnum"
 
 # # OpenStack variables
 admin_token: "012345SECRET99TOKEN012345"
@@ -52,5 +63,8 @@ log_debug: False
 # # Neutron
 shared_secret: "asdasd"
 
-# # Cinder
-physical_device: /dev/sdb
+# Cinder
+cinder_physical_device: /dev/sdb
+
+# Manila
+manila_physical_device: /dev/sdc
