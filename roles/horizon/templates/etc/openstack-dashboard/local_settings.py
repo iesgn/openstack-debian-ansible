@@ -839,4 +839,4 @@ ALLOWED_PRIVATE_SUBNET_CIDR = {'ipv4': [], 'ipv6': []}
 #USER_TABLE_EXTRA_INFO = {
 #   'phone_num': _('Phone Number'),
 #}
-COMPRESS_OFFLINE=True
+#COMPRESS_OFFLINE=True
