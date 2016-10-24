@@ -24,6 +24,10 @@
   notify:
     - restart neutron agents
 
+- name: register internal IP
+  shell: "ip a show dev {{ int_net_nic }}|grep inet|grep -v inet6|awk '{print $2}'|cut -d/ -f1"
+  register: internal_ip_address
+      
 - name: ensure openvswitch agent is configured
   template: >
     src=etc/neutron/plugins/ml2/openvswitch_agent.ini
