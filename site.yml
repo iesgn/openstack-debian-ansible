@@ -1,91 +1,63 @@
 ---
 
-- hosts: all
-  sudo: true
-  sudo_user: root
-  pre_tasks:
-    - name: update package list
-      apt: update_cache=yes
+# - hosts: all
+#   pre_tasks:
+#     - name: update package list
+#       apt: update_cache=yes
 
-    - name: ensure aptitude is installed
-      apt: package=aptitude state=present
+#     - name: ensure aptitude is installed
+#       apt: name=aptitude state=present
 
-    - name: ensure bash-completion is installed
-      apt: package=bash-completion state=present
-  roles:
-    - role: common
+#     - name: ensure bash-completion is installed
+#       apt: name=bash-completion state=present
+#   roles:
+#     - role: common
 
+# ### Before DB
 
- ### Before DB
+# - hosts: controller-nodes
+#   roles:
+#     - role: dbserver
+#     - role: dbserver_population
+#     - role: rabbitserver
 
-- hosts: controller-nodes
-  sudo: true
-  sudo_user: root
-  roles:
-    - role: dbserver
-    - role: dbserver_population
-    - role: rabbitserver
+# - hosts: all
+#   roles:
+#     - role: openstackclient
 
-- hosts: all
-  roles:
-    - role: openstackclient
-
-- hosts: controller-nodes
-  sudo: true
-  sudo_user: root
-  pre_tasks:
-    - name: Wait 5 seconds for mysql to completely restart...
-      command: sleep 5
-  roles:
-    - role: keystoneserver
+# - hosts: controller-nodes
+#   roles:
+#     - role: keystoneserver
       
-- hosts: controller-nodes
-  sudo: true
-  sudo_user: root
-  pre_tasks:
-    - name: Wait 5 seconds for keystone to completely restart...
-      command: sleep 5
-  roles:
-    - role: keystone_population
+# - hosts: controller-nodes
+#   roles:
+#     - role: keystone_population
+
+# ### Before Glance
+
+# - hosts: storage-nodes
+#   roles: 
+#     - role: glanceserver
 
 
- ### Before Glance
-
-- hosts: storage-nodes
-  sudo: true
-  sudo_user: root
-  roles: 
-    - role: glanceserver
-    - role: glance_init
-
-
-- hosts: controller-nodes
-  sudo: true
-  sudo_user: root
-  roles:
-    - role: novaserver
-    - role: nova_init
+# - hosts: controller-nodes
+#   roles:
+#     - role: novaserver
+#     - role: nova_init
 
 
 - hosts: compute-nodes
-  sudo: true
-  sudo_user: root
   roles:
     - role: novacompute
 
 
 - hosts: controller-nodes
-  sudo: true
-  sudo_user: root
   roles:
    - role: neutronserver
 
-
- ### Before Open vSwitch
+### Before Open vSwitch
 
 - hosts: network-nodes
-  sudo: true
-  sudo_user: root
   roles:
     - role: neutron-agents
     - role: openvswitch
@@ -99,24 +71,15 @@
     - role: horizon
 
 - hosts: controller-nodes
-  sudo: true
-  sudo_user: root
   roles:
-    - role: horizon
     - role: cinderserver
-    - role: cinder_init
-
 
 - hosts: storage-nodes
-  sudo: true
-  sudo_user: root
   roles:
     - role: cindervolume
 
 
 - hosts: controller-nodes
-  sudo: true
-  sudo_user: root
   roles:
     - role: restart-services
 
