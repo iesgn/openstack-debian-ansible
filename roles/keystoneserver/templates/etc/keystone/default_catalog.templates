@@ -1,4 +1,4 @@
-catalog.{{ region }}.identity.publicURL = http://{{ controller_external_ip }}:$(public_port)s/v3
+catalog.{{ region }}.identity.publicURL = https://{{ controller_fqdn }}:$(public_port)s/v3
 catalog.{{ region }}.identity.adminURL = http://{{ controller_ip }}:$(admin_port)s/v3
 catalog.{{ region }}.identity.internalURL = http://{{ controller_ip }}:$(public_port)s/v3
 catalog.{{ region }}.identity.name = Identity Service
