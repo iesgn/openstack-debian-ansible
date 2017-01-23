@@ -1,32 +1,88 @@
-- name: ensure apache default sites are disabled
-  shell: echo openstack-dashboard-apache horizon/activate_vhost boolean true |debconf-set-selections
+# - name: ensure apache default sites are disabled
+#   shell: echo openstack-dashboard-apache horizon/activate_vhost boolean true |debconf-set-selections
   
-- name: ensure openstack-dashboard-ssl debconf selection is set to true
-  shell: echo openstack-dashboard-apache horizon/use_ssl boolean true |debconf-set-selections
+# - name: ensure openstack-dashboard-ssl debconf selection is set to true
+#   shell: echo openstack-dashboard-apache horizon/use_ssl boolean true |debconf-set-selections
 
-- name: ensure default virtualhost is disabled
-  command: a2dissite {{ item }}
-  with_items:
-    - 000-default
-    - default-ssl
-  notify: restart web services
+# - name: ensure default virtualhost is disabled
+#   command: a2dissite {{ item }}
+#   with_items:
+#     - 000-default
+#     - default-ssl
+#   notify: restart web services
   
 - name: ensure horizon packages are installed 
   apt: name={{ item }}
   with_items:
     - python-django-horizon
     - openstack-dashboard
-    - openstack-dashboard-apache
 
-- name: ensure mod-gnutls is installed
-  apt: name=libapache2-mod-gnutls
-
-- name: ensure openstack-dashboard-ssl is configured to use gnutls instead ssl
-  template: >-
-    src=etc/apache2/sites-enabled/openstack-dashboard-ssl.conf
-    dest=/etc/apache2/sites-enabled/openstack-dashboard-ssl.conf
-  notify: restart web services
+- name: ensure uwsgi and uwsgi-plugin-python are installed
+  apt: name={{ item }}
+  with_items:
+    - uwsgi
+    - uwsgi-plugin-python
   
+# - name: ensure mod-gnutls is installed
+#   apt: name=libapache2-mod-gnutls
+
+# - name: ensure openstack-dashboard-tls is configured to use gnutls instead ssl
+#   template: >-
+#     src=etc/apache2/sites-available/openstack-dashboard-tls.conf
+#     dest=/etc/apache2/sites-available/openstack-dashboard-tls.conf
+#   notify: restart web services
+
+# - name: ensure apache2 is stoped and disabled
+#   systemd: >-
+#     name=apache2
+#     enabled=no
+#     state=stopped
+
+- name: ensure horizon uwsgi ini file is present
+  template: >-
+    src=etc/uwsgi/apps-available/horizon.ini
+    dest=/etc/uwsgi/apps-available/horizon.ini
+    owner=root
+    group=root
+    mode=0644
+
+- name: ensure horizon uwsgi is enabled
+  file: >-      
+    src=/etc/uwsgi/apps-available/horizon.ini
+    dest=/etc/uwsgi/apps-enabled/horizon.ini
+    state=link
+  notify: restart uwsgi
+                    
+- name: ensure nginx is installed
+  apt: name=nginx
+
+- name: ensure nginx ssl snippet is present
+  template: >-
+    src=../../keystoneserver/templates/etc/nginx/snippets/controller-ssl.conf
+    dest=/etc/nginx/snippets/controller-ssl.conf
+    owner=root
+    group=root
+    mode=0644
+
+- name: ensure horizon site is present
+  template: >-
+    src=etc/nginx/sites-available/horizon
+    dest=/etc/nginx/sites-available/horizon
+    owner=root
+    group=root
+    mode=0644  
+
+- name: ensure horizon site is enabled
+  file: >-
+    src=/etc/nginx/sites-available/horizon
+    dest=/etc/nginx/sites-enabled/horizon
+    state=link
+  notify: restart web services
+                    
+# - name: ensure openstack-dashboard-tls is enabled
+#   command: a2ensite openstack-dashboard-tls
+#   notify: restart web services
+
 - name: ensure dashboard is configured
   template: >
     src=etc/openstack-dashboard/local_settings.py
