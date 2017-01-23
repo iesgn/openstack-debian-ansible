@@ -179,6 +179,15 @@
   command: openstack role add --project service --user manila admin
   
 # Heat
+- name: ensure heat user is created
+  environment: '{{k3}}'
+  command: /usr/bin/openstack user create --domain default heat --password {{ heat_identity_password }}
+  when: result|failed
+
+- name: ensure admin role is added to heat user
+  environment: '{{k3}}'
+  command: openstack role add --project service --user heat admin
+  
 - name: verify if heat domain has been created
   environment: '{{k3}}'
   command: /usr/bin/openstack domain show heat
@@ -220,6 +229,17 @@
   environment: '{{k3}}'
   command: /usr/bin/openstack role add --project demo --user demo heat_stack_owner
   
+- name: verify if heat_stack_user role has been created
+  environment: '{{k3}}'
+  command: /usr/bin/openstack role show heat_stack_user
+  register: result
+  ignore_errors: True
+
+- name: ensure heat_stack_user role is created
+  environment: '{{k3}}'
+  command: /usr/bin/openstack role create heat_stack_user
+  when: result|failed
+
 # Trove
 - name: verify if trove user has been created
   environment: '{{k3}}'
