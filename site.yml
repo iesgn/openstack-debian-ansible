@@ -1,49 +1,38 @@
 ---
 
-# - hosts: all
-#   pre_tasks:
-#     - name: update package list
-#       apt: update_cache=yes
+- hosts: all
+  roles:
+    - role: common
 
-#     - name: ensure aptitude is installed
-#       apt: name=aptitude state=present
+- hosts: controller-nodes
+  roles:
+    - role: dbserver
+    - role: dbserver_population
+    - role: rabbitserver
 
-#     - name: ensure bash-completion is installed
-#       apt: name=bash-completion state=present
-#   roles:
-#     - role: common
+- hosts: all
+  roles:
+    - role: openstackclient
 
-# ### Before DB
-
-# - hosts: controller-nodes
-#   roles:
-#     - role: dbserver
-#     - role: dbserver_population
-#     - role: rabbitserver
-
-# - hosts: all
-#   roles:
-#     - role: openstackclient
-
-# - hosts: controller-nodes
-#   roles:
-#     - role: keystoneserver
+- hosts: controller-nodes
+  roles:
+    - role: keystoneserver
       
-# - hosts: controller-nodes
-#   roles:
-#     - role: keystone_population
+- hosts: controller-nodes
+  roles:
+    - role: keystone_population
 
-# ### Before Glance
+### Before Glance
 
-# - hosts: storage-nodes
-#   roles: 
-#     - role: glanceserver
+- hosts: storage-nodes
+  roles: 
+    - role: glanceserver
 
 
-# - hosts: controller-nodes
-#   roles:
-#     - role: novaserver
-#     - role: nova_init
+- hosts: controller-nodes
+  roles:
+    - role: novaserver
+    - role: nova_init
 
 
 - hosts: compute-nodes
@@ -55,7 +44,7 @@
   roles:
    - role: neutronserver
 
-### Before Open vSwitch
+Before Open vSwitch
 
 - hosts: network-nodes
   roles:
@@ -78,6 +67,9 @@
   roles:
     - role: cindervolume
 
+- hosts: controller-nodes
+  roles:
+    - role: heatserver
 
 - hosts: controller-nodes
   roles:
