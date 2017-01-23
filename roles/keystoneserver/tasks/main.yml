@@ -13,13 +13,13 @@
     group=keystone
     mode=0600
 
-- - name: ensure service and endpoints are defined
-    template: >-
-      src=etc/keystone/default_catalog.templates
-      dest=/etc/keystone/default_catalog.templates
-      owner=root
-      group=root
-      mode=0644
+- name: ensure service and endpoints are defined
+  template: >-
+    src=etc/keystone/default_catalog.templates
+    dest=/etc/keystone/default_catalog.templates
+    owner=root
+    group=root
+    mode=0644
                             
 - name: ensure uwsgi and uswgi-plugin-python are installed
   apt: name={{ item }}
@@ -128,7 +128,7 @@
     owner=keystone
     group=keystone
     recurse=yes
-  notify: restart apache2
+#  notify: restart apache2
   
 - name: Fernet keys initialization
   shell: /usr/bin/keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone && keystone-manage credential_setup --keystone-user keystone --keystone-group keystone
