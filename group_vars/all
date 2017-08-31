@@ -1,7 +1,7 @@
 # KEYSTONE_3
 k3:
   OS_TOKEN: '012345SECRET99TOKEN012345'
-  OS_URL: 'http://192.168.222.22:35357/v3'
+  OS_URL: 'http://192.168.221.101:35357/v3'
   OS_IDENTITY_API_VERSION: 3 
 
 # APT Repository
@@ -12,18 +12,18 @@ rabbit_user: "openstack"
 rabbit_password: "asdasd"
 
 # # IPs
-controller_ip: 192.168.222.22
-storage_ip: 192.168.222.22
-network_node_ip: 192.168.222.22
+controller_ip: 192.168.221.101
+storage_ip: 192.168.221.101
+network_node_ip: 192.168.221.101
 network_node_netmask: 255.255.255.0
-controller_external_ip: 172.22.222.22
-storage_external_ip: 172.22.222.22
-network_node_external_ip: 172.22.222.22
-network_node_external_netmask: 255.255.0.0
-network_node_external_CIDR: 16
-external_gateway: 172.22.0.1
-int_net_nic: eth2
-ext_net_nic: eth1
+controller_external_ip: 192.168.1.201
+storage_external_ip: 192.168.1.201
+network_node_external_ip: 192.168.1.201
+network_node_external_netmask: 255.255.255.0
+network_node_external_CIDR: 24
+external_gateway: 192.168.1.1
+int_net_nic: eth1
+ext_net_nic: eth2
 
 # # MySQL passwords
 root_db_password: "asdasd" 
@@ -64,7 +64,7 @@ log_debug: False
 shared_secret: "asdasd"
 
 # Cinder
-cinder_physical_device: /dev/sda6
+cinder_physical_device: /dev/sdb
 
 # Manila
 manila_physical_device: /dev/sda7

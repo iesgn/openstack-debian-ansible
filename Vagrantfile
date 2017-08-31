@@ -3,7 +3,7 @@
 
 Vagrant.configure("2") do |config|  
   config.vm.define :controller do |controller|
-    controller.vm.box = "remram/debian-9-amd64"
+    controller.vm.box = "debian/stretch64"
     controller.vm.hostname = "controller"
     controller.vm.network :private_network, ip: "192.168.221.101" # eth1 internal
     controller.vm.network :public_network, bridge: "br0" ,ip: "192.168.1.201" # eth2 external
@@ -18,7 +18,7 @@ Vagrant.configure("2") do |config|
       #                 "SATA Controller",
       #                 "--add", "sata"]
       vbox.customize ['storageattach', :id,
-                     '--storagectl', 'SATA',
+                     '--storagectl', 'SATA Controller',
                      '--port', 1,
                      '--device', 0,
                      '--type', 'hdd',
