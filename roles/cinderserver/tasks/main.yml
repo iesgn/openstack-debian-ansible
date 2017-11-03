@@ -8,15 +8,40 @@
 - name: register internal IP
   shell: "ip a show dev {{ int_net_nic }}|grep inet|grep -v inet6|awk '{print $2}'|cut -d/ -f1"
   register: internal_ip_address
-      
+
 - name: ensure cinder sqlite is deleted
   file: dest=/var/lib/cinder/glance.sqlite state=absent
-          
-- name: ensure cinder.conf is configured
-  template: >
-    src=etc/cinder/cinder.conf
-    dest=/etc/cinder/cinder.conf
-    owner=cinder group=cinder mode=0640
+
+- name:  Best ensure cinder.conf is cconfigured
+  ini_file:
+    path: /etc/cinder/cinder.conf
+    section: "{{ item.section }}"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+  - { section: DEFAULT, option: my_ip, value: "{{ internal_ip_address.stdout }}" }
+  - { section: DEFAULT, option: glance_api_servers, value: "http://{{ storage_ip }}:9292" }
+  - { section: DEFAULT, option: auth_strategy, value: keystone }
+  - { section: DEFAULT, option: enabled_backends, value: lvm }
+  - { section: DEFAULT, option: transport_url, value: "rabbit://{{ rabbit_user }}:{{ rabbit_password }}@{{ controller_ip }}:5672/" }
+  - { section: database, option: connection, value:  "mysql+pymysql://cinder:{{ cinder_db_password }}@{{ controller_ip }}/cinder" }
+  - { section: keystone_authtoken, option: auth_uri, value: "http://{{ controller_ip }}:5000" }
+  - { section: keystone_authtoken, option: auth_url, value: "http://{{ controller_ip }}:35357" }
+  - { section: keystone_authtoken, option: memcached_servers, value: "{{ controller_ip }}:11211" }
+  - { section: keystone_authtoken, option: auth_type, value: password }
+  - { section: keystone_authtoken, option: project_domain_name, value: default }
+  - { section: keystone_authtoken, option: user_domain_name, value: default }
+  - { section: keystone_authtoken, option: project_name, value: service }
+  - { section: keystone_authtoken, option: username, value: cinder }
+  - { section: keystone_authtoken, option: password, value: "{{ cinder_identity_password }}" }
+  - { section: oslo_concurrency, option: lock_path, value: "/var/lock/cinder" }
+  - { section: lvm, option: volume_driver, value: "cinder.volume.drivers.lvm.LVMVolumeDriver" }
+  - { section: lvm, option: volume_group, value: "cinder-volumes" }
+  - { section: lvm, option: iscsi_protocol, value: iscsi }
+  - { section: lvm, option: iscsi_helper, value: tgtadm }
   notify:
     - restart cinder services
 
