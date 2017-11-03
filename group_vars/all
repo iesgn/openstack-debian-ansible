@@ -22,8 +22,8 @@ network_node_external_ip: 192.168.1.201
 network_node_external_netmask: 255.255.255.0
 network_node_external_CIDR: 24
 external_gateway: 192.168.1.1
-int_net_nic: enp0s8
-ext_net_nic: enp0s9
+int_net_nic: eth1
+ext_net_nic: eth2
 
 # # MySQL passwords
 root_db_password: "asdasd" 
