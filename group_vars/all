@@ -67,4 +67,4 @@ shared_secret: "asdasd"
 cinder_physical_device: /dev/sdb
 
 # Manila
-manila_physical_device: /dev/sda7
+manila_physical_device: /dev/sdc

@@ -5,6 +5,10 @@
     - cinder-scheduler
     - python-cinderclient
 
+- name: register internal IP
+  shell: "ip a show dev {{ int_net_nic }}|grep inet|grep -v inet6|awk '{print $2}'|cut -d/ -f1"
+  register: internal_ip_address
+      
 - name: ensure cinder sqlite is deleted
   file: dest=/var/lib/cinder/glance.sqlite state=absent
           

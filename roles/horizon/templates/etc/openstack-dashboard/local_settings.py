@@ -11,7 +11,6 @@ from openstack_dashboard.settings import HORIZON_CONFIG
 
 DEBUG = False
 
-
 # WEBROOT is the location relative to Webserver root
 # should end with a slash.
 WEBROOT = '/'
@@ -27,6 +26,7 @@ WEBROOT = '/'
 # with the list of host/domain names that the application can serve.
 # For more information see:
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
+## ALLOWED_HOSTS = ['{{ controller_external_ip }}', '{{ controller_ip }}']
 ALLOWED_HOSTS = ['*', ]
 
 # Set SSL proxy settings:
@@ -839,4 +839,4 @@ ALLOWED_PRIVATE_SUBNET_CIDR = {'ipv4': [], 'ipv6': []}
 #USER_TABLE_EXTRA_INFO = {
 #   'phone_num': _('Phone Number'),
 #}
-COMPRESS_OFFLINE=True
+#COMPRESS_OFFLINE=True

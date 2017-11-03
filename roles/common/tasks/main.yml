@@ -18,7 +18,7 @@
 #     mode=0644
   
 - name: Ensure system is updated
-  apt: update_cache=yes
+  apt: update_cache=yes upgrade=yes
 
 - name: Ensure ntp is installed
   apt: name=ntp 

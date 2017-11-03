@@ -4,7 +4,6 @@
     - heat-api 
     - heat-api-cfn 
     - heat-engine 
-    - python-heatclient
 
 - name: ensure heat sqlite is deleted
   file: dest=/var/lib/heat/heat.sqlite state=absent

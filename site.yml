@@ -7,13 +7,7 @@
 - hosts: controller-nodes
   roles:
     - role: dbserver
-
-- hosts: controller-nodes
-  roles:
     - role: dbserver_population
-
-- hosts: controller-nodes
-  roles:
     - role: rabbitserver
 
 - hosts: all
@@ -27,33 +21,34 @@
 - hosts: controller-nodes
   roles:
     - role: keystone_population
-      
+
+### Before Glance
+
 - hosts: storage-nodes
   roles: 
     - role: glanceserver
 
-# - hosts: storage-nodes
-#   roles: 
-#     - role: glance_population
 
 - hosts: controller-nodes
   roles:
     - role: novaserver
+    - role: nova_init
+
 
 - hosts: compute-nodes
   roles:
     - role: novacompute
 
+
 - hosts: controller-nodes
   roles:
    - role: neutronserver
 
-- hosts: network-nodes
-  roles:
-    - role: neutron-agents
+Before Open vSwitch
 
 - hosts: network-nodes
   roles:
+    - role: neutron-agents
     - role: openvswitch
 
 - hosts: compute-nodes
@@ -66,10 +61,6 @@
 
 - hosts: controller-nodes
   roles:
-    - role: horizon-temporal
-
-- hosts: controller-nodes
-  roles:
     - role: cinderserver
 
 - hosts: storage-nodes
@@ -78,4 +69,10 @@
 
 - hosts: controller-nodes
   roles:
+    - role: heatserver
+
+- hosts: controller-nodes
+  roles:
     - role: restart-services
+
+

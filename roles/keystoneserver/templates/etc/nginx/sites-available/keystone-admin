@@ -1,0 +1,10 @@
+server {
+	listen {{ controller_ip }}:35357;
+	listen 127.0.0.1:35357;
+
+	location / {
+		uwsgi_param     SCRIPT_NAME '';
+	        include uwsgi_params;
+		uwsgi_pass      unix:///run/keystone-admin.sock;
+	}
+}

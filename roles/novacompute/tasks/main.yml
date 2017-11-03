@@ -19,7 +19,11 @@
   
 - name: ensure nova sqlite is deleted
   file: dest=/var/lib/nova/nova.sqlite state=absent
-    
+
+- name: register internal IP
+  shell: "ip a show dev {{ int_net_nic }}|grep inet|grep -v inet6|awk '{print $2}'|cut -d/ -f1"
+  register: internal_ip_address
+      
 - name: ensure nova.conf file is present
   template: >
     src=../../novaserver/templates/etc/nova/nova.conf

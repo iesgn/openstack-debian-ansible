@@ -1,5 +1,8 @@
 - name: restart web services
   service: name={{ item }} state=restarted
   with_items:
-    - apache2
+    - nginx
     - memcached
+
+- name: restart uwsgi
+  service: name=uwsgi state=restarted

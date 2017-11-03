@@ -8,7 +8,11 @@
 
 - name: ensure physical and group volume are created
   lvg: vg=cinder-volumes pvs={{ cinder_physical_device }} vg_options=--force
-    
+
+- name: register internal IP
+  shell: "ip a show dev {{ int_net_nic }}|grep inet|grep -v inet6|awk '{print $2}'|cut -d/ -f1"
+  register: internal_ip_address
+      
 - name: ensure cinder.conf is configured
   template: >
     src=../../cinderserver/templates/etc/cinder/cinder.conf
