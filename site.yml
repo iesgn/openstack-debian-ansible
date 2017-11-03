@@ -44,7 +44,7 @@
   roles:
    - role: neutronserver
 
-Before Open vSwitch
+### Before Open vSwitch
 
 - hosts: network-nodes
   roles:
@@ -71,6 +71,10 @@ Before Open vSwitch
   roles:
     - role: heatserver
 
+- hosts: controller-nodes
+  roles:
+    - role: magnumserver
+    
 - hosts: controller-nodes
   roles:
     - role: restart-services
