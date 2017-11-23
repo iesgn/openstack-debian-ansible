@@ -1,7 +1,7 @@
 openstack-debian-ansible
 ========================
 
-Ansible playbooks for installing OpenStack Newton on Debian stretch (testing) using debian official repos. The steps taken follow a standard OpenStack deployment: [OpenStack Installation Guide for Ubuntu](http://docs.openstack.org/newton/install-guide-ubuntu/) with some minors modifications to use with Debian.
+Ansible playbooks for installing OpenStack Newton on Debian stretch using debian official repos. The steps taken follow a standard OpenStack deployment: [OpenStack Installation Guide for Ubuntu](http://docs.openstack.org/newton/install-guide-ubuntu/) with some minors modifications to use with Debian.
 
 The deployment schema selected is ["Classic with OpenvSwitch"](http://docs.openstack.org/mitaka/networking-guide/scenario-classic-ovs.html), instead of using linux bridges as explained in OpenStack Installation Guide.
 
@@ -14,8 +14,8 @@ environment with vagrant.
 ## Software used (specific versions):
 
 - Debian GNU/Linux: stretch (amd64). 
-- Linux kernel: 4.7.0-1-amd64
-- Open vSwitch: 2.3.0
+- Linux kernel: 4.9.0-4-amd64
+- Open vSwitch: 2.6.2
 - OpenStack: Newton
 - Ansible: 1.7.2
 - Vagrant: 1.8.6
@@ -23,7 +23,7 @@ environment with vagrant.
 
 ## OpenStack componens included:
 
-Keystone, Glance, Nova, Neutron, Horizon and Cinder
+Keystone, Glance, Nova, Neutron, Horizon, Cinder and Heat
 
 ## Get a debian jessie vagrant box:
 
@@ -41,8 +41,6 @@ Vagranfile and configure ansible.cfg properly.
 ## Configuration
 
 ![schema](https://raw.githubusercontent.com/iesgn/openstack-debian-ansible/master/img/openstack-debian-ansible.png)
-
-**At this moment only the "AllinOneNode" schema is tested.**
 
 The file *groups_var/all* contains all variables needed by ansible playbooks and
 they can be customized if needed. It's **mandatory** to define the following
