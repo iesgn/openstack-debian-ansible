@@ -4,6 +4,7 @@
     - neutron-server
     - neutron-common
     - python-neutronclient
+    - neutron-lbaas-common
 
 - name: ensure neutron.conf is configured
   template: >

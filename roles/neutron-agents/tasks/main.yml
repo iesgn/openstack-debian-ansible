@@ -15,6 +15,7 @@
     - neutron-metadata-agent
     - neutron-l3-agent
     - neutron-dhcp-agent
+    - neutron-lbaasv2-agent
   
 - name: ensure neutron.conf is configured
   template: >
@@ -44,6 +45,14 @@
   notify:
     - restart neutron agents
 
+- name: ensure lbaasv2 agent is configured
+  template: >
+    src=etc/neutron/lbaas_agent.ini
+    dest=/etc/neutron/lbaas_agent.ini
+    owner=root group=root mode=0644
+  notify:
+    - restart neutron agents
+
 - name: ensure DHCP agent is configured
   template: >
     src=etc/neutron/dhcp_agent.ini
@@ -52,11 +61,11 @@
   notify:
     - restart neutron agents
 
-- name: ensure DNSmasq is configured to use MTU=1454
-  template: >
-    src=etc/neutron/dnsmasq-neutron.conf
-    dest=/etc/neutron/dnsmasq-neutron.conf
-    owner=root group=root mode=0644
+# - name: ensure DNSmasq is configured to use MTU=1454
+#   template: >
+#     src=etc/neutron/dnsmasq-neutron.conf
+#     dest=/etc/neutron/dnsmasq-neutron.conf
+#     owner=root group=root mode=0644
 
 # - name: ensure lbaas agent is configured
 #   template: >
