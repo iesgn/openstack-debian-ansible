@@ -16,6 +16,22 @@
     mode=0644
   notify: restart mysql
 
+- name: Ensure utf8 is selected instead of utf8m4 as default character set
+  replace:
+    dest: "{{ item }}"
+    regexp: '(\s+)utf8mb4(\_\s+.*)?$'
+    replace: '\1utf8\2'
+  with_items:
+    - /etc/mysql/mariadb.conf.d/50-client.cnf
+    - /etc/mysql/mariadb.conf.d/50-mysql-clients.cnf
+    - /etc/mysql/mariadb.conf.d/50-server.cnf
+    
+- name: Ensure utf8 is selected instead of utf8m4 
+  replace:
+    dest: "/etc/mysql/mariadb.conf.d/50-server.cnf"
+    regexp: '(\s+)utf8mb4_general_ci(\s+.*)?$'
+    replace: '\1utf8_general_ci\2'
+    
 # http://dev.mysql.com/doc/refman/5.6/en/default-privileges.html
 - name: update mysql root password for all root accounts
   mysql_user: >
