@@ -4,75 +4,75 @@
   roles:
     - role: common
 
-- hosts: controller-nodes
-  roles:
-    - role: dbserver
-    - role: dbserver_population
-    - role: rabbitserver
+# - hosts: controller-nodes
+#   roles:
+#     - role: dbserver
+#     - role: dbserver_population
+#     - role: rabbitserver
 
-- hosts: all
-  roles:
-    - role: openstackclient
+# - hosts: all
+#   roles:
+#     - role: openstackclient
 
-- hosts: controller-nodes
-  roles:
-    - role: keystoneserver
+# - hosts: controller-nodes
+#   roles:
+#     - role: keystoneserver
       
-- hosts: controller-nodes
-  roles:
-    - role: keystone_population
+# - hosts: controller-nodes
+#   roles:
+#     - role: keystone_population
 
 ### Before Glance
 
-- hosts: storage-nodes
-  roles: 
-    - role: glanceserver
+# - hosts: storage-nodes
+#   roles: 
+#     - role: glanceserver
 
 
-- hosts: controller-nodes
-  roles:
-    - role: novaserver
-    - role: nova_init
+# - hosts: controller-nodes
+#   roles:
+#     - role: novaserver
+#     - role: nova_init
 
 
-- hosts: compute-nodes
-  roles:
-    - role: novacompute
+# - hosts: compute-nodes
+#   roles:
+#     - role: novacompute
 
 
-- hosts: controller-nodes
-  roles:
-   - role: neutronserver
+# - hosts: controller-nodes
+#   roles:
+#    - role: neutronserver
 
-### Before Open vSwitch
+# ### Before Open vSwitch
 
-- hosts: network-nodes
-  roles:
-    - role: neutron-agents
-    - role: openvswitch
+# - hosts: network-nodes
+#   roles:
+#     - role: neutron-agents
+#     - role: openvswitch
 
-- hosts: compute-nodes
-  roles:
-    - role: neutron-agents-compute
+# - hosts: compute-nodes
+#   roles:
+#     - role: neutron-agents-compute
 
-- hosts: controller-nodes
-  roles:
-    - role: horizon
+# - hosts: controller-nodes
+#   roles:
+#     - role: horizon
 
-- hosts: controller-nodes
-  roles:
-    - role: cinderserver
+# - hosts: controller-nodes
+#   roles:
+#     - role: cinderserver
 
-- hosts: storage-nodes
-  roles:
-    - role: cindervolume
+# - hosts: storage-nodes
+#   roles:
+#     - role: cindervolume
 
-- hosts: controller-nodes
-  roles:
-    - role: heatserver
+# - hosts: controller-nodes
+#   roles:
+#     - role: heatserver
 
-- hosts: controller-nodes
-  roles:
-    - role: restart-services
+# - hosts: controller-nodes
+#   roles:
+#     - role: restart-services
 
 

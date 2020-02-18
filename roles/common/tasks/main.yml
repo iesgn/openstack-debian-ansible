@@ -1,3 +1,8 @@
+- name: Ensure gpg is installed
+  apt:
+    name: gpg
+    state: latest
+    
 - name: Ensure sources.list file is properly defined
   template: >
     src=etc/apt/sources.list
@@ -6,8 +11,8 @@
     group=root
     mode=0644
 
-# - name: Ensure mirantis GPG key is added
-#   apt_key: url=http://mitaka-jessie.pkgs.mirantis.com/debian/dists/pubkey.gpg state=present
+- name: Ensure osbpo GPG key is added
+  apt_key: url=http://osbpo.debian.net/osbpo/dists/pubkey.gpg state=present
     
 # - name: Ensure apt-pinning is set properly (stable packages will be installed by default)
 #   copy: >
@@ -20,15 +25,26 @@
 - name: Ensure system is updated
   apt: update_cache=yes upgrade=yes
 
-- name: Ensure ntp is installed
-  apt: name=ntp 
-  notify: restart ntp
+- name: Ensure timezone is defined
+  when: timezone is defined
+  command: /usr/bin/timedatectl set-timezone {{ timezone }}
+  tags: timezone
 
-- name: Ensure memcached is installed
-  apt: name={{ item }}
-  with_items:
-    - memcached
-    - python-memcache
+- name: Ensure ntp is enabled
+  command: /usr/bin/timedatectl set-ntp true
+  tags: ntp
+
+- name: Ensure timesyncd is enabled
+  service: name=systemd-timesyncd enabled=yes
+  tags: ntp
+  notify:
+  - restart timesyncd
+  
+# - name: Ensure memcached is installed
+#   apt: name={{ item }}
+#   with_items:
+#     - memcached
+#     - python-memcache
     
 # - name: Ensure /etc/hosts is properly defined
 #   copy: >-

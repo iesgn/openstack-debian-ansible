@@ -1,3 +1,5 @@
-deb http://{{ repo_fqdn }}/debian stretch main
-deb http://{{ repo_fqdn }}/debian stretch-updates main
-deb http://security.debian.org/ stretch/updates main
+deb http://deb.debian.org/debian buster main
+deb http://deb.debian.org/debian buster-updates main
+deb http://security.debian.org/ buster/updates main
+deb [trusted=yes] http://osbpo.debian.net/osbpo buster-train-backports main
+#deb http://osbpo.debian.net/osbpo buster-train-backports-nochanges main
