@@ -1,22 +1,27 @@
-catalog.{{ region }}.identity.publicURL = https://{{ controller_fqdn }}:$(public_port)s/v3
-catalog.{{ region }}.identity.adminURL = http://{{ controller_ip }}:$(admin_port)s/v3
-catalog.{{ region }}.identity.internalURL = http://{{ controller_ip }}:$(public_port)s/v3
+catalog.{{ region }}.identity.publicURL = https://{{ controller_fqdn }}:5000/v3
+catalog.{{ region }}.identity.adminURL = http://{{ controller_ip }}:5000/v3
+catalog.{{ region }}.identity.internalURL = http://{{ controller_ip }}:5000/v3
 catalog.{{ region }}.identity.name = Identity Service
 
-catalog.{{ region }}.compute.publicURL = http://{{ controller_external_ip }}:8774/v2.1/$(tenant_id)s
-catalog.{{ region }}.compute.adminURL = http://{{ controller_ip }}:8774/v2.1/$(tenant_id)s
-catalog.{{ region }}.compute.internalURL = http://{{ controller_ip }}:8774/v2.1/$(tenant_id)s
+catalog.{{ region }}.compute.publicURL = http://{{ controller_external_ip }}:8774/v2.1
+catalog.{{ region }}.compute.adminURL = http://{{ controller_ip }}:8774/v2.1
+catalog.{{ region }}.compute.internalURL = http://{{ controller_ip }}:8774/v2.1
 catalog.{{ region }}.compute.name = Compute Service 
 
-catalog.{{ region }}.volume.publicURL = http://{{ controller_external_ip }}:8776/v1/$(tenant_id)s
-catalog.{{ region }}.volume.adminURL = http://{{ controller_ip }}:8776/v1/$(tenant_id)s
-catalog.{{ region }}.volume.internalURL = http://{{ controller_ip }}:8776/v1/$(tenant_id)s
-catalog.{{ region }}.volume.name = cinder
+catalog.{{ region }}.placement.publicURL = http://{{ controller_external_ip }}:8778
+catalog.{{ region }}.placement.adminURL = http://{{ controller_ip }}:8778
+catalog.{{ region }}.placement.internalURL = http://{{ controller_ip }}:8778
+catalog.{{ region }}.placement.name = Placement API
 
-catalog.{{ region }}.volumev2.publicURL = http://{{ controller_external_ip }}:8776/v2/$(tenant_id)s
-catalog.{{ region }}.volumev2.adminURL = http://{{ controller_ip }}:8776/v2/$(tenant_id)s
-catalog.{{ region }}.volumev2.internalURL = http://{{ controller_ip }}:8776/v2/$(tenant_id)s
+catalog.{{ region }}.volumev2.publicURL = http://{{ controller_external_ip }}:8776/v2/$(project_id)s
+catalog.{{ region }}.volumev2.adminURL = http://{{ controller_ip }}:8776/v2/$(project_id)s
+catalog.{{ region }}.volumev2.internalURL = http://{{ controller_ip }}:8776/v2/$(project_id)s
 catalog.{{ region }}.volumev2.name = cinderv2
+
+catalog.{{ region }}.volumev3.publicURL = http://{{ controller_external_ip }}:8776/v3/$(project_id)s
+catalog.{{ region }}.volumev3.adminURL = http://{{ controller_ip }}:8776/v3/$(project_id)s
+catalog.{{ region }}.volumev3.internalURL = http://{{ controller_ip }}:8776/v3/$(project_id)s
+catalog.{{ region }}.volumev3.name = cinderv3
 
 catalog.{{ region }}.ec2.publicURL = http://{{ controller_external_ip }}:8773/services/Cloud
 catalog.{{ region }}.ec2.adminURL = http://{{ controller_ip }}:8773/services/Admin
