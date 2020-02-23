@@ -1,59 +1,57 @@
-- name: Ensure mysql server is installed
-  apt: name=mysql-server
-    
-- name: Ensure python-mysqldb and python-pymysql are installed 
+- name: Ensure mariadb server and python-pymysql are installed
   apt: name={{ item }}
-  with_items:
+  loop:
+    - mariadb-server
     - python-pymysql
-    - python-mysqldb
     
-- name: Ensure mysql binds to internal interface
-  template: >
-    src=etc/my.cnf 
-    dest=/etc/mysql/my.cnf 
-    owner=root 
-    group=root 
-    mode=0644
-  notify: restart mysql
+- name: Ensure mariadb binds to the internal interface
+  ini_file:
+    path: /etc/mysql/mariadb.conf.d/50-server.cnf
+    section: mysqld
+    option: bind-address
+    value: "{{ controller_ip }}"
+  notify: restart mariadb
 
-- name: Ensure utf8 is selected instead of utf8m4 as default character set
-  replace:
-    dest: "{{ item }}"
-    regexp: '(\s+)utf8mb4(\_\s+.*)?$'
-    replace: '\1utf8\2'
-  with_items:
-    - /etc/mysql/mariadb.conf.d/50-client.cnf
-    - /etc/mysql/mariadb.conf.d/50-mysql-clients.cnf
-    - /etc/mysql/mariadb.conf.d/50-server.cnf
+# - name: Ensure utf8 is selected instead of utf8m4 as default character set
+#   replace:
+#     path: "{{ item }}"
+#     regexp: '(\s+)utf8mb4(\_\s+.*)?$'
+#     replace: '\1utf8\2'
+#   loop:
+#     - /etc/mysql/mariadb.conf.d/50-client.cnf
+#     - /etc/mysql/mariadb.conf.d/50-mysql-clients.cnf
+#     - /etc/mysql/mariadb.conf.d/50-server.cnf
     
-- name: Ensure utf8 is selected instead of utf8m4 
-  replace:
-    dest: "/etc/mysql/mariadb.conf.d/50-server.cnf"
-    regexp: '(\s+)utf8mb4_general_ci(\s+.*)?$'
-    replace: '\1utf8_general_ci\2'
+# - name: Ensure utf8 is selected instead of utf8m4 
+#   replace:
+#     path: "/etc/mysql/mariadb.conf.d/50-server.cnf"
+#     regexp: '(\s+)utf8mb4_general_ci(\s+.*)?$'
+#     replace: '\1utf8_general_ci\2'
     
 # http://dev.mysql.com/doc/refman/5.6/en/default-privileges.html
-- name: update mysql root password for all root accounts
-  mysql_user: >
-    name=root
-    host=localhost
-    password={{ root_db_password }}
+- name: set mariadb root password
+  mysql_user: 
+    name: root
+    password: "{{ root_db_password }}"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
 
 # Need to do this for idempotency, see
 # http://ansible.cc/docs/modules.html#mysql-user
 - name: copy .my.cnf file with root password credentials
-  template: >
-    src=root/.my.cnf
-    dest=/root/.my.cnf
-    owner=root
-    mode=0600
+  template:
+    src: "root/.my.cnf"
+    dest: "/root/.my.cnf"
+    owner: root
+    group: root
+    mode: 0600
 
 - name: update mysql root password for all root accounts
-  mysql_user: >
-    name=root
-    host={{ item }}
-    password={{ root_db_password }}
-  with_items:
+  mysql_user:
+    name: root
+    host: "{{ item }}"
+    password: "{{ root_db_password }}"
+  loop:
     - "{{ controller_ip }}"
+    - "localhost"
     - 127.0.0.1
 

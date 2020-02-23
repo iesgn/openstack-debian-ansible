@@ -1,2 +1,2 @@
-- name: restart mysql
-  service: name=mysql state=restarted
+- name: restart mariadb
+  service: name=mariadb state=restarted
