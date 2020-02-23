@@ -1,14 +1,13 @@
 - name: Ensure rabbitmq is installed
-  apt: pkg=rabbitmq-server 
+  apt: name=rabbitmq-server 
 
 - name: Ensure openstack rabbitmq user password is changed
-  rabbitmq_user: >
-    user={{ rabbit_user }}
-    password={{ rabbit_password }}
-    vhost=/
-    configure_priv=.*
-    read_priv=.*
-    write_priv=.*
-    state=present
-    force=yes
-
+  rabbitmq_user:
+    user: "{{ rabbit_user }}"
+    password: "{{ rabbit_password }}"
+    vhost: '/'
+    configure_priv: '.*'
+    read_priv: '.*'
+    write_priv: '.*'
+    state: present
+    force: yes
