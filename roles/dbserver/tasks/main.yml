@@ -4,30 +4,15 @@
     - mariadb-server
     - python-pymysql
     
-- name: Ensure mariadb binds to the internal interface
-  ini_file:
-    path: /etc/mysql/mariadb.conf.d/50-server.cnf
-    section: mysqld
-    option: bind-address
-    value: "{{ controller_ip }}"
+- name: Ensure 99-openstack.cnf is present
+  template:
+    src: etc/mysql/mariadb.conf.d/99-openstack.cnf
+    dest: /etc/mysql/mariadb.conf.d/99-openstack.cnf
+    owner: root
+    group: root
+    mode: 664
   notify: restart mariadb
 
-# - name: Ensure utf8 is selected instead of utf8m4 as default character set
-#   replace:
-#     path: "{{ item }}"
-#     regexp: '(\s+)utf8mb4(\_\s+.*)?$'
-#     replace: '\1utf8\2'
-#   loop:
-#     - /etc/mysql/mariadb.conf.d/50-client.cnf
-#     - /etc/mysql/mariadb.conf.d/50-mysql-clients.cnf
-#     - /etc/mysql/mariadb.conf.d/50-server.cnf
-    
-# - name: Ensure utf8 is selected instead of utf8m4 
-#   replace:
-#     path: "/etc/mysql/mariadb.conf.d/50-server.cnf"
-#     regexp: '(\s+)utf8mb4_general_ci(\s+.*)?$'
-#     replace: '\1utf8_general_ci\2'
-    
 # http://dev.mysql.com/doc/refman/5.6/en/default-privileges.html
 - name: set mariadb root password
   mysql_user: 
