@@ -1,10 +1,9 @@
 - name: ensure python-openstackclient is installed
-  apt: name=python-openstackclient 
+  apt: name=python3-openstackclient 
 
 - name: ensure the rest of openstack clients are installed
   apt: name={{ item }}
-  with_items:
-    - python-swiftclient
-    - python-troveclient
-    - python-ironicclient
-    - python-heatclient
+  loop:
+    - python3-troveclient
+    - python3-manilaclient
+    - python3-heatclient
