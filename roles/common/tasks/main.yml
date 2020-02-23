@@ -35,11 +35,11 @@
   notify:
   - restart timesyncd
   
-# - name: Ensure memcached is installed
-#   apt: name={{ item }}
-#   with_items:
-#     - memcached
-#     - python-memcache
+- name: Ensure memcached is installed
+  apt: name={{ item }}
+  loop:
+    - memcached
+    - python3-memcache
     
 # - name: Ensure /etc/hosts is properly defined
 #   copy: >-
