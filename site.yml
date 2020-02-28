@@ -22,9 +22,10 @@
   roles:
     - role: keystoneserver
       
-# - hosts: controller-nodes
-#   roles:
-#     - role: keystone_population
+- hosts: controller-nodes
+  gather_facts: no
+  roles:
+    - role: keystone_population
 
 ### Before Glance
 
