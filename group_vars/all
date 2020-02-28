@@ -13,6 +13,7 @@ rabbit_user: "openstack"
 rabbit_password: "asdasd"
 
 # # IPs
+controller_fqdn: controller
 controller_ip: 192.168.99.101
 storage_ip: 192.168.99.101
 network_node_ip: 192.168.99.101
