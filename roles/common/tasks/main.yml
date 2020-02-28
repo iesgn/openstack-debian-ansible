@@ -1,3 +1,6 @@
+- name: Ensure apt info is updated
+  apt: update_cache=yes
+  
 - name: Ensure sources.list file is properly defined
   template: >
     src=etc/apt/sources.list
@@ -17,7 +20,7 @@
 #     group=root
 #     mode=0644
   
-- name: Ensure system is updated
+- name: Ensure system is updated and upgraded
   apt: update_cache=yes upgrade=yes
 
 - name: Ensure timezone is defined
