@@ -1,12 +1,19 @@
-- name: ensure keystone packages are installed
-  apt: name=keystone
+- name: ensure keystone and apache2 packages are installed
+  apt: name={{ item }}
+  loop:
+    - keystone
+    - apache2
+    - libapache2-mod-wsgi
+
+- name: ensure keystone service is stopped and disabled
+  service: name=keystone state=stopped enabled=no
 
 - name: ensure keystone database connections is configured
   ini_file:
     path: /etc/keystone/keystone.conf
     section: database
     option: connection
-    value: mysql+pymysql://keystone:{{ keystone_db_password }}:@{{ controller_ip }}/keystone
+    value: mysql+pymysql://keystone:{{ keystone_db_password }}@{{ controller_ip }}/keystone
 
 - name: ensure keystone is configured to use fernet tokens
   ini_file:
@@ -28,120 +35,37 @@
     section: catalog
     option: driver
     value: templated
-                           
+
+- name: ensure keystone template catalog is updated
+  template:
+    src: etc/keystone/default_catalog.templates
+    dest: /etc/keystone/default_catalog.templates
+    owner: keystone
+    group: keystone
+    mode: 0644
+    
+- name: ensure wsgi-keystone.conf is present
+  template: >-
+    src=etc/apache2/sites-available/wsgi-keystone.conf
+    dest=/etc/apache2/sites-available/wsgi-keystone.conf
+    owner=root
+    group=root
+    mode=0644
+  notify: restart apache2
+
+- name: ensure virtual host wsgi is enabled
+  shell: /usr/sbin/a2ensite wsgi-keystone.conf
+  notify: restart apache2
+  
+- name: ensure apache is enabled and restarted
+  service: name=apache2 state=restarted enabled=yes
+  
 - name: DB sync for keystone
   shell: /usr/bin/keystone-manage db_sync
 
 - name: Fernet keys initialization
   shell: /usr/bin/keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone && keystone-manage credential_setup --keystone-user keystone --keystone-group keystone
 
-# - name: ensure uwsgi and uswgi-plugin-python are installed
-#   apt: name={{ item }}
-#   loop:
-#     - uwsgi
-#     - uwsgi-plugin-python
-
-# - name: ensure keystone-admin uwsgi ini file is present
-#   template:
-#     src: etc/keystone/keystone-admin.ini
-#     dest: /etc/keystone/keystone-admin.ini
-#     owner: root
-#     group: root
-#     mode: 0644
-  
-# - name: ensure keystone-public uwsgi ini file is present
-#   template:
-#     src: etc/keystone/keystone-public.ini
-#     dest: /etc/keystone/keystone-public.ini
-#     owner: root
-#     group: root
-#     mode: 0644
-
-# - name: ensure keystone-admin is enabled
-#   file:
-#     src: /etc/keystone/keystone-admin.ini
-#     dest: /etc/uwsgi/apps-enabled/keystone-admin.ini
-#     state: link
-#   notify: restart uwsgi
-
-# - name: ensure keystone-public is enabled
-#   file: 
-#     src: /etc/keystone/keystone-public.ini
-#     dest: /etc/uwsgi/apps-enabled/keystone-public.ini
-#     state: link
-#   notify: restart uwsgi
-
-# - name: ensure apache2 is stoped and disabled
-#   systemd:
-#     name: apache2
-#     enabled: no
-#     state: stopped
-
-# - name: ensure nginx is installed
-#   apt: name=nginx
-
-# - name: ensure nginx ssl snippet is present
-#   template: 
-#     src: etc/nginx/snippets/controller-ssl.conf
-#     dest: /etc/nginx/snippets/controller-ssl.conf
-#     owner: root
-#     group: root
-#     mode: 0644
-    
-# - name: ensure kesytone-public site is present
-#   template:
-#     src: etc/nginx/sites-available/keystone-public
-#     dest: /etc/nginx/sites-available/keystone-public
-#     owner: root
-#     group: root
-#     mode: 0644
-    
-# - name: ensure keystone-public is enabled
-#   file: 
-#     src: /etc/nginx/sites-available/keystone-public
-#     dest: /etc/nginx/sites-enabled/keystone-public
-#     state: link
-#   notify: restart nginx
-
-# - name: ensure kesytone-admin site is present
-#   template: 
-#     src: etc/nginx/sites-available/keystone-admin
-#     dest: /etc/nginx/sites-available/keystone-admin
-#     owner: root
-#     group: root
-#     mode: 0644
-    
-# - name: ensure keystone-admin is enabled
-#   file: 
-#     src: /etc/nginx/sites-available/keystone-admin
-#     dest: /etc/nginx/sites-enabled/keystone-admin
-#     state: link    
-#   notify: restart nginx
-
-# # - name: ensure mod-gnutls and mod-proxy-uwsgi are installed
-# #   apt: name={{ item }}
-# #   loop:
-# #     - libapache2-mod-gnutls
-# #     - libapache2-mod-proxy-uwsgi
-
-# # - name: ensure wsgi-keystone.conf is present (with TLS activated)
-# #   template: >-
-# #     src=etc/apache2/sites-available/wsgi-keystone.conf
-# #     dest=/etc/apache2/sites-available/wsgi-keystone.conf
-# #     owner=root
-# #     group=root
-# #     mode=0644
-# #   notify: restart apache2
-  
-
-# - name: Change owner /var/log/keystone/ directory
-#   file: 
-#     dest: /var/log/keystone/
-#     owner: keystone
-#     group: keystone
-#     recurse: yes
-# #  notify: restart apache2
-  
 
 # # - name: bootstrap identity service
 # #   shell: keystone-manage bootstrap --bootstrap-password {{ admin_pass }} --bootstrap-admin-url http://{{ controller_ip }}:35357/v3/ --bootstrap-internal-url http://{{ controller_ip }}:35357/v3/ --bootstrap-public-url http://{{ controller_ip }}:5000/v3/ --bootstrap-region-id {{ region }}
