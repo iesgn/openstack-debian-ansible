@@ -1,9 +1,9 @@
-- name: ensure keystone and apache2 packages are installed
+- name: ensure keystone, apache2 and mod-wsgi-py3 packages are installed
   apt: name={{ item }}
   loop:
     - keystone
     - apache2
-    - libapache2-mod-wsgi
+    - libapache2-mod-wsgi-py3
 
 - name: ensure keystone service is stopped and disabled
   service: name=keystone state=stopped enabled=no
@@ -21,6 +21,34 @@
     section: token
     option: provider
     value: fernet
+
+- name: ensure cache is enabled in keystone
+  ini_file:
+    path: /etc/keystone/keystone.conf
+    section: cache
+    option: enabled
+    value: true
+
+- name: ensure cache is enabled in keystone
+  ini_file:
+    path: /etc/keystone/keystone.conf
+    section: cache
+    option: enabled
+    value: true
+
+- name: ensure dogfile.cache.memcached is configured as backend for cache
+  ini_file:
+    path: /etc/keystone/keystone.conf
+    section: cache
+    option: backend
+    value: dogpile.cache.memcached
+
+- name: ensure memcached url is set for dogfile
+  ini_file:
+    path: /etc/keystone/keystone.conf
+    section: cache
+    option: backend_argument
+    value: url:127.0.0.1:11211
 
 - name: ensure keystone is configured to use template catalog
   ini_file:
@@ -66,9 +94,6 @@
 - name: Fernet keys initialization
   shell: /usr/bin/keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone && keystone-manage credential_setup --keystone-user keystone --keystone-group keystone
 
+- name: bootstrap identity service
+  shell: keystone-manage bootstrap --bootstrap-password {{ admin_pass }} --bootstrap-region-id {{ region }}
 
-# # - name: bootstrap identity service
-# #   shell: keystone-manage bootstrap --bootstrap-password {{ admin_pass }} --bootstrap-admin-url http://{{ controller_ip }}:35357/v3/ --bootstrap-internal-url http://{{ controller_ip }}:35357/v3/ --bootstrap-public-url http://{{ controller_ip }}:5000/v3/ --bootstrap-region-id {{ region }}
-
-# - name: ensure sqlite keystone database is deleted
-#   file: dest=/var/lib/keystone/keystone.db state=absent
