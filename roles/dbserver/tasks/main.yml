@@ -10,7 +10,7 @@
     dest: /etc/mysql/mariadb.conf.d/99-openstack.cnf
     owner: root
     group: root
-    mode: 664
+    mode: 0664
   notify: restart mariadb
 
 # http://dev.mysql.com/doc/refman/5.6/en/default-privileges.html
