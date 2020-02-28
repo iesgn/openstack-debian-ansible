@@ -1,22 +1,26 @@
 ---
 
 - hosts: all
+  gather_facts: no
   roles:
     - role: common
 
-# - hosts: controller-nodes
-#   roles:
-#     - role: dbserver
-#     - role: dbserver_population
-#     - role: rabbitserver
+- hosts: controller-nodes
+  gather_facts: no
+  roles:
+   - role: dbserver
+   - role: dbserver_population
+   - role: rabbitserver
 
-# - hosts: all
-#   roles:
-#     - role: openstackclient
+- hosts: all
+  gather_facts: no
+  roles:
+    - role: openstackclient
 
-# - hosts: controller-nodes
-#   roles:
-#     - role: keystoneserver
+- hosts: controller-nodes
+  gather_facts: no
+  roles:
+    - role: keystoneserver
       
 # - hosts: controller-nodes
 #   roles:
