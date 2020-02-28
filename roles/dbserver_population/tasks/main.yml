@@ -8,8 +8,7 @@
     password: "{{ keystone_db_password }}"
     priv: 'keystone.*:ALL'
   loop:
-    - "{{ controller_ip }}"
-    - 127.0.0.1
+    - '%'
     - localhost
     - ::1
 
@@ -24,8 +23,7 @@
     password: "{{ glance_db_password }}"
     priv: 'glance.*:ALL'
   loop:
-    - "{{ controller_ip }}"
-    - 127.0.0.1
+    - '%'
     - localhost
     - ::1
 
@@ -39,8 +37,7 @@
     password: "{{ cinder_db_password }}"
     priv: 'cinder.*:ALL'
   loop:
-    - "{{ controller_ip }}"
-    - 127.0.0.1
+    - '%'
     - localhost
     - ::1
 
@@ -54,8 +51,7 @@
     password: "{{ manila_db_password }}"
     priv: 'manila.*:ALL'
   loop:
-    - "{{ controller_ip }}"
-    - 127.0.0.1
+    - '%'
     - localhost
     - ::1
 
@@ -69,8 +65,7 @@
     password: "{{ placement_db_password }}"
     priv: 'placement.*:ALL'
   loop:
-    - "{{ controller_ip }}"
-    - 127.0.0.1
+    - '%'
     - localhost
     - ::1
 
@@ -90,7 +85,6 @@
   loop:
     - '%'
     - localhost
-    - 127.0.0.1
     - ::1
 
 - name: ensure nova database user is present in nova_api
@@ -103,7 +97,6 @@
   loop:
     - '%'
     - localhost
-    - 127.0.0.1
     - ::1
 
 - name: ensure nova database user is present in nova_cell0
@@ -116,7 +109,6 @@
   loop:
     - '%'
     - localhost
-    - 127.0.0.1
     - ::1
 
 - name: ensure neutron database is present
@@ -129,8 +121,7 @@
     password: "{{ neutron_db_password }}"
     priv: 'neutron.*:ALL'
   loop:
-    - "{{ controller_ip }}"
-    - 127.0.0.1
+    - '%'
     - localhost
     - ::1
                    
@@ -144,8 +135,7 @@
     password: "{{ heat_db_password }}"
     priv: 'heat.*:ALL'
   loop:
-    - "{{ controller_ip }}"
-    - 127.0.0.1
+    - '%'
     - localhost
     - ::1
                    
@@ -159,8 +149,7 @@
     password: "{{ trove_db_password }}"
     priv: 'trove.*:ALL'
   loop:
-    - "{{ controller_ip }}"
-    - 127.0.0.1
+    - '%'
     - localhost
     - ::1
 
@@ -174,7 +163,6 @@
     password: "{{ magnum_db_password }}"
     priv: 'magnum.*:ALL'
   loop:
-    - "{{ controller_ip }}"
-    - 127.0.0.1
+    - '%'
     - localhost
     - ::1
