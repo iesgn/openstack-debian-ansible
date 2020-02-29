@@ -46,6 +46,7 @@ magnum_db_password: "asdasd"
 
 # # Keystone identity passwords:
 glance_identity_password: "glance"
+placement_identity_password: "placement"
 nova_identity_password: "nova"
 ec2_identity_password: "ec2"
 neutron_identity_password: "neutron"

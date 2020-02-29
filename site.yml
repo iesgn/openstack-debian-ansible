@@ -27,12 +27,15 @@
   roles:
     - role: keystone_population
 
-### Before Glance
+- hosts: storage-nodes
+  gather_facts: no
+  roles: 
+    - role: glanceserver
 
-# - hosts: storage-nodes
-#   roles: 
-#     - role: glanceserver
-
+- hosts: controller-nodes
+  gather_facts: no
+  roles: 
+    - role: placement
 
 # - hosts: controller-nodes
 #   roles:
