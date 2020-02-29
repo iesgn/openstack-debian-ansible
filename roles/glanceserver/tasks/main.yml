@@ -1,33 +1,59 @@
 - name: ensure glance is installed
-  apt: name={{ item }}
-  with_items:
-    - glance
+  apt: name=glance
 
-- name: ensure glance sqlite is deleted
-  file: dest=/var/lib/glance/glance.sqlite state=absent
-
-- name: ensure glance-api.conf file is up to date
-  template: >
-    src=etc/glance/glance-api.conf
-    dest=/etc/glance/glance-api.conf
-    owner=glance
-    group=glance
-    mode=0600
+- name: ensure glance database connection is configured
+  ini_file:
+    path: /etc/glance/glance-api.conf
+    section: database
+    option: connection
+    value: mysql+pymysql://glance:{{ glance_db_password }}@{{ controller_ip }}/glance
   notify:
-  - restart glance-services
+  - restart glance-api
 
-- name: ensure glance-registry.conf file is up to date
-  template: >
-    src=etc/glance/glance-registry.conf
-    dest=/etc/glance/glance-registry.conf
-    owner=glance
-    group=glance
-    mode=0600
+- name: ensure keystone_authtoken is configured
+  ini_file:
+    path: /etc/glance/glance-api.conf
+    section: keystone_authtoken
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  loop:
+    - { option: "www_authenticate_uri", value: 'http://{{ controller_fqdn }}:5000' }
+    - { option: "auth_url", value: 'http://{{ controller_fqdn }}:5000' }
+    - { option: "memcached_servers", value: '{{ controller_fqdn }}:11211' }
+    - { option: "auth_type", value: password }
+    - { option: "project_domain_name", value: Default}
+    - { option: "user_domain_name", value: Default}
+    - { option: "project_name", value: service}
+    - { option: "username", value: glance}
+    - { option: "password", value: "{{ glance_identity_password }}" }
+    - { option: "region", value: "{{ region }}" }    
   notify:
-  - restart glance-services
+  - restart glance-api
+
+- name: ensure paste_deploy is set to keystone
+  ini_file:
+    path: /etc/glance/glance-api.conf
+    section: paste_deploy
+    option: flavor
+    value: keystone
+  notify:
+  - restart glance-api
+
+- name: ensure keystone_authtoken is configured
+  ini_file:
+    path: /etc/glance/glance-api.conf
+    section: glance_store
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  loop:
+    - { option: "stores", value: file,http }
+    - { option: "default_store", value: file }
+    - { option: "filesystem_store_datadir", value: /var/lib/glance/images/ }
+  notify:
+  - restart glance-api
 
 - name: ensure glance db is initialized
   command: /usr/bin/glance-manage db_sync
   notify:
-  - restart glance-services
+  - restart glance-api
   
