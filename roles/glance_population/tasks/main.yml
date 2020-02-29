@@ -1,21 +1,17 @@
-# Using os_image module (ansible >= 2.0)
 - name: ensure cirros image is downloaded
-  get_url: >
-    url={{ img_url }} dest=/root/Cirros.img mode=0644
+  get_url:
+    url: "{{ img_url }}"
+    dest: /root/Cirros.img
+    mode: 0644
     
 - name: ensure cirros image is added to glance
-  os_image: 
-    auth:
-      auth_url: http://{{ controller_ip }}:5000/v2.0
-      username: demo
-      password: "{{ demo_pass }}"
-      project_name: demo
+  os_image:
+    auth: "{{ k3 }}"
     name: "{{ img_name }}"
     container_format: bare
     disk_format: qcow2
     state: present
     filename: /root/Cirros.img
-    endpoint_type: internal
 
 # It's necessary to install shade on the controller ... a good choice?
 # http://docs.openstack.org/infra/shade/
