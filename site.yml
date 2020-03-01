@@ -36,18 +36,12 @@
   gather_facts: no
   roles: 
     - role: placement
+    - role: novaserver
 
-- hosts: controller-nodes
+- hosts: compute-nodes
   gather_facts: no
   roles:
-    - role: novaserver
-#     - role: nova_init
-
-
-# - hosts: compute-nodes
-#   roles:
-#     - role: novacompute
-
+    - role: novacompute
 
 # - hosts: controller-nodes
 #   roles:
