@@ -17,6 +17,7 @@ Vagrant.configure("2") do |config|
   config.vm.define :compute do |compute|
     compute.vm.box = "debian/buster64"
     compute.vm.hostname = "compute1"
+    compute.vm.network :private_network, ip: "192.168.98.102"
     compute.vm.network :private_network, ip: "192.168.99.102"
     compute.nfs.verify_installed = false
     compute.vm.synced_folder '.', '/vagrant', disabled: true
