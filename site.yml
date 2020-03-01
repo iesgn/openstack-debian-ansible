@@ -53,9 +53,10 @@
   roles:
     - role: neutron-agents-compute
 
-# - hosts: controller-nodes
-#   roles:
-#     - role: horizon
+- hosts: controller-nodes
+  gather_facts: no
+  roles:
+    - role: horizon
 
 # - hosts: controller-nodes
 #   roles:

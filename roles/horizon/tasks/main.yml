@@ -1,110 +1,44 @@
-# - name: ensure apache default sites are disabled
-#   shell: echo openstack-dashboard-apache horizon/activate_vhost boolean true |debconf-set-selections
+- name: set openstack-dashboard-apache to be activated
+  shell: echo openstack-dashboard-apache horizon/activate_vhost boolean true |debconf-set-selections
   
-# - name: ensure openstack-dashboard-ssl debconf selection is set to true
-#   shell: echo openstack-dashboard-apache horizon/use_ssl boolean true |debconf-set-selections
+- name: set openstack-dashboard-apache-ssl to be activated
+  shell: echo openstack-dashboard-apache horizon/use_ssl boolean true |debconf-set-selections
 
-# - name: ensure default virtualhost is disabled
-#   command: a2dissite {{ item }}
-#   with_items:
-#     - 000-default
-#     - default-ssl
-#   notify: restart web services
+- name: ensure default virtualhost is disabled
+  command: a2dissite {{ item }}
+  loop:
+    - 000-default
+    - default-ssl
+  notify: restart web services
   
 - name: ensure horizon packages are installed 
   apt: name={{ item }}
-  with_items:
-    - python-django-horizon
-    - openstack-dashboard
+  loop:
+    - openstack-dashboard-apache
 
-- name: ensure uwsgi and uwsgi-plugin-python are installed
-  apt: name={{ item }}
-  with_items:
-    - uwsgi
-    - uwsgi-plugin-python
-  
-# - name: ensure mod-gnutls is installed
-#   apt: name=libapache2-mod-gnutls
-
-# - name: ensure openstack-dashboard-tls is configured to use gnutls instead ssl
-#   template: >-
-#     src=etc/apache2/sites-available/openstack-dashboard-tls.conf
-#     dest=/etc/apache2/sites-available/openstack-dashboard-tls.conf
-#   notify: restart web services
-
-# - name: ensure apache2 is stoped and disabled
-#   systemd: >-
-#     name=apache2
-#     enabled=no
-#     state=stopped
-
-- name: ensure horizon uwsgi ini file is present
-  template: >-
-    src=etc/uwsgi/apps-available/horizon.ini
-    dest=/etc/uwsgi/apps-available/horizon.ini
-    owner=root
-    group=root
-    mode=0644
-
-- name: ensure horizon uwsgi is enabled
-  file: >-      
-    src=/etc/uwsgi/apps-available/horizon.ini
-    dest=/etc/uwsgi/apps-enabled/horizon.ini
-    state=link
-  notify: restart uwsgi
-                    
-- name: ensure nginx is installed
-  apt: name=nginx
-
-- name: ensure nginx ssl snippet is present
-  template: >-
-    src=../../keystoneserver/templates/etc/nginx/snippets/controller-ssl.conf
-    dest=/etc/nginx/snippets/controller-ssl.conf
-    owner=root
-    group=root
-    mode=0644
-
-- name: ensure horizon site is present
-  template: >-
-    src=etc/nginx/sites-available/horizon
-    dest=/etc/nginx/sites-available/horizon
-    owner=root
-    group=root
-    mode=0644  
-
-- name: ensure horizon site is enabled
-  file: >-
-    src=/etc/nginx/sites-available/horizon
-    dest=/etc/nginx/sites-enabled/horizon
-    state=link
-  notify: restart web services
-                    
-# - name: ensure openstack-dashboard-tls is enabled
-#   command: a2ensite openstack-dashboard-tls
-#   notify: restart web services
-
-- name: ensure dashboard is configured
-  template: >
-    src=etc/openstack-dashboard/local_settings.py
-    dest=/etc/openstack-dashboard/local_settings.py
-    owner=root group=root mode=0644
+- name: configure local_settings.py
+  template:
+    src: etc/openstack-dashboard/local_settings.py
+    dest: /etc/openstack-dashboard/local_settings.py
+    owner: root
+    group: root
+    mode: 0644
   notify: restart web services
 
-# - name: ensure openstack-dashboard-ssl virtualhost is enabled
-#   command: a2ensite {{ item }}
-#   with_items:
-#     - openstack-dashboard-ssl
-#     - openstack-dashboard-ssl-redirect
-    
-#   notify: restart web services
+- name: ensure openstack-dashboard-ssl virtualhost is enabled
+  command: a2ensite {{ item }}
+  loop:
+    - openstack-dashboard-ssl
+    - openstack-dashboard-ssl-redirect
+  notify: restart web services
   
-# - name: ensure ssl, wsgi and rewrite modules are enabled
-#   apache2_module: name={{ item }} state=present
-#   with_items:
-#     - wsgi
-#     - ssl
-#     - rewrite
-#   notify: restart web services
+- name: ensure ssl, wsgi and rewrite modules are enabled
+  apache2_module: name={{ item }} state=present
+  loop:
+    - wsgi
+    - ssl
+    - rewrite
+  notify: restart web services
 
 # # Horizon css isn't loaded 
 
