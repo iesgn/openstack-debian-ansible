@@ -22,6 +22,7 @@ Vagrant.configure("2") do |config|
     compute.vm.synced_folder '.', '/vagrant', disabled: true
     compute.vm.provider "libvirt" do |libvirt|
       libvirt.memory = "2048"
+      libvirt.nested = true
     end
   end
 end
