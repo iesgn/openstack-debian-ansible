@@ -1,11 +1,4 @@
-- name: restart ovs agent
-  service: name=neutron-openvswitch-agent state=restarted
-  
-- name: restart neutron agents
+- name: restart neutron-services
   service: name={{ item }} state=restarted
-  with_items:
-    - neutron-openvswitch-agent
-    
-- name: restart openvswitch services
-  service: name=openvswitch-switch state=restarted
-
+  loop:
+    - neutron-linuxbridge-agent

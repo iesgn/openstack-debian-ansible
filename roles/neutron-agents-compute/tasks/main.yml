@@ -1,62 +1,102 @@
-- name: ensure IPv4 rp filter is deactivated
-  sysctl: name=net.ipv4.conf.all.rp_filter value=0 state=present reload=yes
+- name: ensure neutron-linuxbridge-agent is installed
+  apt: name=neutron-linuxbridge-agent
 
-- name: ensure IPv4 default rp filter is deactivated
-  sysctl: name=net.ipv4.conf.default.rp_filter value=0 state=present reload=yes
+- name: set default section options
+  ini_file:
+    path: /etc/neutron/neutron.conf
+    section: DEFAULT
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  loop:
+    - { option: "transport_url",
+    value: 'rabbit://{{ rabbit_user }}:{{ rabbit_password }}@{{ hostvars["controller"]["internal_ip"] }}:5672/'}
+    - { option: "auth_strategy", value: keystone }
+  notify: 
+  - restart neutron-services
 
-# When those bits are enabled:
-#
-# sysctl: cannot stat /proc/sys/net/bridge/bridge-nf-call-iptables: No such file or directory
-#
-# So the're commented out
-#
-# - name: ensure nf call for IPv4 is activated
-#   sysctl: name=net.bridge.bridge-nf-call-iptables value=1 state=present reload=yes
+- name: configure keystone_authtoken section
+  ini_file:
+    path: /etc/neutron/neutron.conf
+    section: keystone_authtoken
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  loop:
+    - { option: "www_authenticate_uri", value: 'http://{{ controller_fqdn }}:5000' }
+    - { option: "auth_url", value: 'http://{{ controller_fqdn }}:5000' }
+    - { option: "memcached_servers", value: '{{ controller_fqdn }}:11211' }
+    - { option: "auth_type", value: password }
+    - { option: "project_domain_name", value: Default}
+    - { option: "user_domain_name", value: Default}
+    - { option: "project_name", value: service}
+    - { option: "username", value: neutron}
+    - { option: "password", value: "{{ neutron_identity_password }}" }
+    - { option: "region", value: "{{ region }}" }    
+    - { option: "region_name", value: "{{ region }}" }    
+  notify: 
+  - restart neutron-services
 
-# - name: ensure nf call for IPv6 is activated
-#   sysctl: name=net.bridge.bridge-nf-call-ip6tables value=1 state=present reload=yes
-
-- name: register internal IP
-  shell: "ip a show dev {{ int_net_nic }}|grep inet|grep -v inet6|awk '{print $2}'|cut -d/ -f1"
-  register: internal_ip_address
-  
-- name: ensure plugins, agents and openvswitch packages are installed
-  apt: name={{ item }}
-  with_items:
-    - neutron-common
-    - neutron-openvswitch-agent
-  
-# - name: obtain service tenant id
-#   shell: >-
-#     keystone --os-endpoint http://{{ controller_ip }}:35357/v2.0 --os-token \
-#     {{ admin_token }} tenant-get service|grep id|awk '{print $4}' 
-#   register: nova_admin_tenant_id
-          
-- name: ensure neutron.conf is configured
-  template: >
-    src=../../neutronserver/templates/etc/neutron/neutron.conf
-    dest=/etc/neutron/neutron.conf
-    owner=neutron group=neutron mode=0660
+- name: configure oslo_concurrency section
+  ini_file:
+    path: /etc/neutron/neutron.conf
+    section: oslo_concurrency
+    option: lock_path
+    value: /var/lib/neutron/tmp
   notify:
-    - restart neutron agents
+  - restart neutron-services
 
-# - name: ensure ml2 plugin is configured
-#   template: >
-#     src=etc/neutron/plugins/ml2/ml2_conf.ini
-#     dest=/etc/neutron/plugins/ml2/ml2_conf.ini
-#     owner=root group=root mode=0644
-#   notify:
-#     - restart neutron agents
-
-- name: ensure openvswitch agent is configured
-  template: >
-    src=etc/neutron/plugins/ml2/openvswitch_agent.ini
-    dest=/etc/neutron/plugins/ml2/openvswitch_agent.ini
-    owner=root group=root mode=0644
-  notify:
-    - restart neutron agents
-
-- name: ensure br-int switch is created
-  openvswitch_bridge: bridge=br-int state=present
-  notify: restart neutron agents
+- name: register the interface name associated to the external_ip
+  shell: ip -o a|grep {{ external_ip }}|awk '{print $2}'
+  register: external_interface
   
+- name: configure the Linux bridge agent. linux_bridge section
+  ini_file:
+    path: /etc/neutron/plugins/ml2/linuxbridge_agent.ini 
+    section: linux_bridge
+    option: "physical_interface_mappings"
+    value: "provider:{{ external_interface.stdout }}"
+  notify:
+  - restart neutron-services
+    
+- name: configure the Linux bridge agent. vxlan section
+  ini_file:
+    path: /etc/neutron/plugins/ml2/linuxbridge_agent.ini 
+    section: vxlan
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  loop:
+    - { option: "enable_vxlan", value: true }
+    - { option: "local_ip", value: "{{ internal_ip }}" }
+    - { option: "l2_population", value: true }
+  notify:
+  - restart neutron-services
+
+- name: configure the Linux bridge agent. securitygroup section
+  ini_file:
+    path: /etc/neutron/plugins/ml2/linuxbridge_agent.ini 
+    section: securitygroup
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  loop:
+    - { option: "enable_security_group", value: true }
+    - { option: "firewall_driver", value: neutron.agent.linux.iptables_firewall.IptablesFirewallDriver }
+  notify:
+  - restart neutron-services
+
+# Needed when /proc/sys/net/bridge is missing
+- name: load br_netfilter kernel module
+  modprobe:
+    name: br_netfilter
+    state: present
+
+- name: set net.bridge.bridge-nf-call-iptables
+  sysctl:
+    name: net.bridge.bridge-nf-call-iptables
+    value: 1
+    reload: yes
+
+- name: set net.bridge.bridge-nf-call-ip6tables
+  sysctl:
+    name: net.bridge.bridge-nf-call-ip6tables
+    value: 1
+    reload: yes
+

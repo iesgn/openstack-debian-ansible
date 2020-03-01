@@ -1,17 +1,8 @@
-- name: restart neutron-server
-  service: name=neutron-server state=restarted
-
-- name: restart ovs-agent
-  service: name=neutron-plugin-openvswitch-agent state=restarted
-  
-- name: restart neutron agents
+- name: restart neutron-services
   service: name={{ item }} state=restarted
-  with_items:
-    - neutron-l3-agent
+  loop:
+    - neutron-api
+    - neutron-linuxbridge-agent
     - neutron-dhcp-agent
-#    - neutron-lbaas-agent
     - neutron-metadata-agent
-    
-- name: restart openvswitch services
-  service: name=openvswitch-switch state=restarted
-
+    - neutron-l3-agent
