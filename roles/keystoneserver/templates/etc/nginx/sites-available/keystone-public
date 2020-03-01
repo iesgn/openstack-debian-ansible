@@ -1,7 +1,7 @@
 server {
-	listen {{ controller_ip }}:5000;
+	listen {{ internal_ip }}:5000;
 	listen 127.0.0.1:5000;
-	listen {{ controller_external_ip }}:5000  ssl;
+	listen {{ external_ip }}:5000  ssl;
 	include snippets/controller-ssl.conf;
 
 	location / {

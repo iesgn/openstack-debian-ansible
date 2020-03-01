@@ -11,7 +11,7 @@
     path: /etc/nova/nova.conf
     section: api_database
     option: connection
-    value: mysql+pymysql://nova:{{ nova_db_password }}@{{ controller_ip }}/nova_api
+    value: mysql+pymysql://nova:{{ nova_db_password }}@{{ internal_ip }}/nova_api
   notify: 
   - restart nova-services
 
@@ -20,7 +20,7 @@
     path: /etc/nova/nova.conf
     section: database
     option: connection
-    value: mysql+pymysql://nova:{{ nova_db_password }}@{{ controller_ip }}/nova
+    value: mysql+pymysql://nova:{{ nova_db_password }}@{{ internal_ip }}/nova
   notify: 
   - restart nova-services
 
@@ -32,8 +32,8 @@
     value: "{{ item.value }}"
   loop:
     - { option: "transport_url",
-    value: 'rabbit://{{ rabbit_user }}:{{ rabbit_password }}@{{ controller_ip }}:5672/'}
-    - { option: "my_ip", value: '{{ controller_ip }}' }
+    value: 'rabbit://{{ rabbit_user }}:{{ rabbit_password }}@{{ internal_ip }}:5672/'}
+    - { option: "my_ip", value: '{{ internal_ip }}' }
     - { option: "use_neutron", value: true }
     - { option: "firewall_driver", value: nova.virt.firewall.NoopFirewallDriver }
   notify: 
@@ -87,7 +87,7 @@
     path: /etc/nova/nova.conf
     section: glance
     option: api_servers
-    value: 'http://{{ controller_ip }}:9292'
+    value: 'http://{{ internal_ip }}:9292'
   notify:
   - restart nova-services
 

@@ -13,7 +13,7 @@
     path: /etc/keystone/keystone.conf
     section: database
     option: connection
-    value: mysql+pymysql://keystone:{{ keystone_db_password }}@{{ controller_ip }}/keystone
+    value: mysql+pymysql://keystone:{{ keystone_db_password }}@{{ internal_ip }}/keystone
 
 - name: ensure keystone is configured to use fernet tokens
   ini_file:

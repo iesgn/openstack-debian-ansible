@@ -10,7 +10,7 @@
     path: /etc/placement/placement.conf
     section: placement_database
     option: connection
-    value: mysql+pymysql://placement:{{ placement_db_password }}@{{ controller_ip }}/placement
+    value: mysql+pymysql://placement:{{ placement_db_password }}@{{ internal_ip }}/placement
   notify:
   - restart apache2
 

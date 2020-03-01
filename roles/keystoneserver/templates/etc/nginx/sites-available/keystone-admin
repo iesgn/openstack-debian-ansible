@@ -1,5 +1,5 @@
 server {
-	listen {{ controller_ip }}:35357;
+	listen {{ internal_ip }}:35357;
 	listen 127.0.0.1:35357;
 
 	location / {

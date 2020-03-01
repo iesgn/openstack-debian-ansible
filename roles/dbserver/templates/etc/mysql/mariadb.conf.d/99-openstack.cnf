@@ -1,5 +1,5 @@
 [mysqld]
-bind-address = {{ controller_ip }}
+bind-address = {{ internal_ip }}
 
 default-storage-engine = innodb
 innodb_file_per_table = on

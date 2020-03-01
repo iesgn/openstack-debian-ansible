@@ -6,7 +6,7 @@
     path: /etc/glance/glance-api.conf
     section: database
     option: connection
-    value: mysql+pymysql://glance:{{ glance_db_password }}@{{ controller_ip }}/glance
+    value: mysql+pymysql://glance:{{ glance_db_password }}@{{ internal_ip }}/glance
   notify:
   - restart glance-api
 
