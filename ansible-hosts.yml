@@ -21,7 +21,7 @@ all:
           ansible_ssh_private_key_file: .vagrant/machines/controller/libvirt/private_key
           external_ip: 192.168.98.101
           internal_ip: 192.168.99.101
-    compute_nodes:
+    compute-nodes:
       hosts:
         compute:
           ansible_host: 192.168.99.102
