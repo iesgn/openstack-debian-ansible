@@ -43,20 +43,15 @@
   roles:
     - role: novacompute
 
-# - hosts: controller-nodes
-#   roles:
-#    - role: neutronserver
+- hosts: controller-nodes
+  gather_facts: no
+  roles:
+   - role: neutronserver
 
-# ### Before Open vSwitch
-
-# - hosts: network-nodes
-#   roles:
-#     - role: neutron-agents
-#     - role: openvswitch
-
-# - hosts: compute-nodes
-#   roles:
-#     - role: neutron-agents-compute
+- hosts: compute-nodes
+  gather_facts: no
+  roles:
+    - role: neutron-agents-compute
 
 # - hosts: controller-nodes
 #   roles:
