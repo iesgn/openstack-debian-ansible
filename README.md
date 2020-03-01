@@ -1,42 +1,33 @@
 openstack-debian-ansible
 ========================
 
-Ansible playbooks for installing OpenStack Newton on Debian stretch using debian official repos. The steps taken follow a standard OpenStack deployment: [OpenStack Installation Guide for Ubuntu](http://docs.openstack.org/newton/install-guide-ubuntu/) with some minors modifications to use with Debian.
+Ansible playbooks for installing OpenStack Train on Debian Buster
+using debian backports repository. The steps taken follow a standard
+OpenStack deployment:
+[OpenStack Train Installation Guide](https://docs.openstack.org/train/install/)
+with some minors modifications to use with Debian.
 
-The deployment schema selected is ["Classic with OpenvSwitch"](http://docs.openstack.org/mitaka/networking-guide/scenario-classic-ovs.html), instead of using linux bridges as explained in OpenStack Installation Guide.
+The networking option used is Self-service networks using linux bridges.
 
 These playbooks have been written with the idea of using them in a real deployment
 with physical servers, but thay can be used too to deploy a OpenStack test
-environment with vagrant.
+environment with vagrant using vagrant-libvirt plugin.
 
-**IMPORTANT: This is still a work in progress, feel free to open issues on github**
+**This is a work in progress, feel free to open issues on github**
 
 ## Software used (specific versions):
 
-- Debian GNU/Linux: stretch (amd64). 
-- Linux kernel: 4.9.0-4-amd64
-- Open vSwitch: 2.6.2
-- OpenStack: Newton
-- Ansible: 1.7.2
-- Vagrant: 1.8.6
-- VirtualBox: 5.0.24
+- Debian GNU/Linux: buster (amd64). 
+- Linux kernel: 4.19.0-8-amd64
+- OpenStack: Train
+- Ansible: 2.7.7
+- Vagrant: 2.2.3+dfsg-1
+- vagrant-libvirt: vagrant-libvirt
+- qemu-kvm: 1:3.1+dfsg-8+deb10u3
 
 ## OpenStack componens included:
 
-Keystone, Glance, Nova, Neutron, Horizon, Cinder and Heat
-
-## Get a debian jessie vagrant box:
-
-Tested using an unofficial debian stretch vagrant box available at (use it at your own risk or create your own vagrant box):
-
-    https://atlas.hashicorp.com/remram/boxes/debian-9-amd64
-
-You can download and install it locally with:
-
-    vagrant box add remram/debian-9-amd64
-
-If you are going to use these playbooks with physical serves, ignore the
-Vagranfile and configure ansible.cfg properly.
+Keystone, Glance, Placement, Nova, Neutron, Horizon, Cinder and Heat
 
 ## Configuration
 
@@ -57,20 +48,15 @@ The Vagranfile must be modified too:
 
     controller.vm.network :public_network, bridge: "wlan0" ,ip: "192.168.1.101" # eth2 external
 
-## Bring up the scenario (vagrant insecure private key is not used in recent vagrant releases, so the first step is not needed)
+## Bring up the scenario:
 
-    chmod 400 vagrant_private_key
 	vagrant up
 
-## Run ansible playbooks to configure the cloud
+## Run the ansible playbooks to configure the cloud
 
-    ansible-playbook site-aio.yml -s
+    ansible-playbook site.yml -b
 
 ## Using OpenStack
 
-Open your browser and type in the notification bar http://192.168.1.201 or the corresponding external IP chosen.
+Open your browser and type in the notification bar http://192.168.99.101 or the corresponding external IP chosen.
 
-## References
-
-- [https://github.com/openstack-ansible](https://github.com/openstack-ansible)
-- [https://github.com/djoreilly/quantum-ansible](https://github.com/djoreilly/quantum-ansible)
