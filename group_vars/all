@@ -62,7 +62,4 @@ log_debug: False
 shared_secret: "asdasd"
 
 # Cinder
-cinder_physical_device: /dev/vdb
-
-# Manila
-manila_physical_device: /dev/sdc
+cinder_physical_device: vdb

@@ -1,23 +1,89 @@
-- name: ensure cinder-volume and lvm2 packages are installed
+- name: ensure tgt, lvm2 and thin-provisioning-tools packages are installed
   apt: name={{ item }}
-  with_items:
-    - qemu
-    - cinder-volume
+  loop:
     - lvm2
-    - python-mysqldb
+    - tgt
+    - thin-provisioning-tools
 
-- name: ensure physical and group volume are created
-  lvg: vg=cinder-volumes pvs={{ cinder_physical_device }} vg_options=--force
+- name: create group volume
+  lvg: vg=cinder-volumes pvs=/dev/{{ cinder_physical_device }} vg_options=--force
 
-- name: register internal IP
-  shell: "ip a show dev {{ int_net_nic }}|grep inet|grep -v inet6|awk '{print $2}'|cut -d/ -f1"
-  register: internal_ip_address
-      
-- name: ensure cinder.conf is configured
-  template: >
-    src=../../cinderserver/templates/etc/cinder/cinder.conf
-    dest=/etc/cinder/cinder.conf
-    owner=cinder group=cinder mode=0640
+# Modify properly when the host is using LVM for OS
+- name: configure LVM to scan only the associated physical device
+  replace:
+    path: /etc/lvm/lvm.conf
+    after: 'This configuration option has an automatic default value.'
+    regexp: '(\s+)\# filter = \[ "a\|\.\*\/\|" \](\s+.*)?$'
+    replace: 'filter = ["a/{{ cinder_physical_device }}/", "r/.*/"]'
+
+- name: install cinder-volume package
+  apt: name=cinder-volume
+
+- name: ensure cinder_api database connections is configured
+  ini_file:
+    path: /etc/cinder/cinder.conf
+    section: api_database
+    option: connection
+    value: mysql+pymysql://cinder:{{ cinder_db_password }}@{{ internal_ip }}/cinder
+  notify: 
+  - restart cinder-services
+
+- name: set default section options
+  ini_file:
+    path: /etc/cinder/cinder.conf
+    section: DEFAULT
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  loop:
+    - { option: "transport_url",
+    value: 'rabbit://{{ rabbit_user }}:{{ rabbit_password }}@{{ internal_ip }}:5672/'}
+    - { option: "my_ip", value: '{{ internal_ip }}' }
+    - { option: "auth_strategy", value: keystone }
+    - { option: "enabled_backends", value: lvm }
+    - { option: "glance_api_servers", value: 'http://{{ controller_fqdn }}:9292' }
+  notify: 
+  - restart cinder-services
+
+- name: configure keystone_authtoken section
+  ini_file:
+    path: /etc/cinder/cinder.conf
+    section: keystone_authtoken
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  loop:
+    - { option: "www_authenticate_uri", value: 'http://{{ controller_fqdn }}:5000' }
+    - { option: "auth_url", value: 'http://{{ controller_fqdn }}:5000' }
+    - { option: "memcached_servers", value: '{{ controller_fqdn }}:11211' }
+    - { option: "auth_type", value: password }
+    - { option: "project_domain_name", value: Default}
+    - { option: "user_domain_name", value: Default}
+    - { option: "project_name", value: service}
+    - { option: "username", value: cinder}
+    - { option: "password", value: "{{ cinder_identity_password }}" }
+    - { option: "region", value: "{{ region }}" }    
+    - { option: "region_name", value: "{{ region }}" }    
+  notify: 
+  - restart cinder-services
+
+- name: configure lvm section
+  ini_file:
+    path: /etc/cinder/cinder.conf
+    section: lvm
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  loop:
+    - { option: "volume_driver", value: cinder.volume.drivers.lvm.LVMVolumeDriver }
+    - { option: "volume_group", value: cinder-volumes }
+    - { option: "target_protocol", value: iscsi }
+    - { option: "target_helper", value: tgtadm }
+  notify: 
+  - restart cinder-services
+
+- name: configure oslo_concurrency section
+  ini_file:
+    path: /etc/cinder/cinder.conf
+    section: oslo_concurrency
+    option: lock_path
+    value: /var/lib/cinder/tmp
   notify:
-    - restart cinder services
-
+  - restart cinder-services

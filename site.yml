@@ -58,13 +58,15 @@
   roles:
     - role: horizon
 
-# - hosts: controller-nodes
-#   roles:
-#     - role: cinderserver
+- hosts: controller-nodes
+  gather_facts: no
+  roles:
+    - role: cinderserver
 
-# - hosts: storage-nodes
-#   roles:
-#     - role: cindervolume
+- hosts: storage-nodes
+  gather_facts: no
+  roles:
+    - role: cindervolume
 
 # - hosts: controller-nodes
 #   roles:

@@ -139,6 +139,13 @@
   notify: 
   - restart nova-services
 
+- name: configure cinder section
+  ini_file:
+    path: /etc/nova/nova.conf
+    section: cinder
+    option: os_region_name
+    value: "{{ region }}"
+
 - name: populate nova-api db
   command: /usr/bin/nova-manage api_db sync
 

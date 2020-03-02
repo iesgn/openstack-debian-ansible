@@ -1,25 +1,62 @@
 - name: ensure cinder packages are installed
   apt: name={{ item }}
-  with_items:
+  loop:
     - cinder-api 
     - cinder-scheduler
-    - python-cinderclient
 
-- name: register internal IP
-  shell: "ip a show dev {{ int_net_nic }}|grep inet|grep -v inet6|awk '{print $2}'|cut -d/ -f1"
-  register: internal_ip_address
-      
-- name: ensure cinder sqlite is deleted
-  file: dest=/var/lib/cinder/glance.sqlite state=absent
-          
-- name: ensure cinder.conf is configured
-  template: >
-    src=etc/cinder/cinder.conf
-    dest=/etc/cinder/cinder.conf
-    owner=cinder group=cinder mode=0640
+- name: ensure cinder_api database connections is configured
+  ini_file:
+    path: /etc/cinder/cinder.conf
+    section: api_database
+    option: connection
+    value: mysql+pymysql://cinder:{{ cinder_db_password }}@{{ internal_ip }}/cinder
+  notify: 
+  - restart cinder-services
+
+- name: set default section options
+  ini_file:
+    path: /etc/cinder/cinder.conf
+    section: DEFAULT
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  loop:
+    - { option: "transport_url",
+    value: 'rabbit://{{ rabbit_user }}:{{ rabbit_password }}@{{ internal_ip }}:5672/'}
+    - { option: "my_ip", value: '{{ internal_ip }}' }
+    - { option: "auth_strategy", value: keystone }
+  notify: 
+  - restart cinder-services
+
+- name: configure keystone_authtoken section
+  ini_file:
+    path: /etc/cinder/cinder.conf
+    section: keystone_authtoken
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  loop:
+    - { option: "www_authenticate_uri", value: 'http://{{ controller_fqdn }}:5000' }
+    - { option: "auth_url", value: 'http://{{ controller_fqdn }}:5000' }
+    - { option: "memcached_servers", value: '{{ controller_fqdn }}:11211' }
+    - { option: "auth_type", value: password }
+    - { option: "project_domain_name", value: Default}
+    - { option: "user_domain_name", value: Default}
+    - { option: "project_name", value: service}
+    - { option: "username", value: cinder}
+    - { option: "password", value: "{{ cinder_identity_password }}" }
+    - { option: "region", value: "{{ region }}" }    
+    - { option: "region_name", value: "{{ region }}" }    
+  notify: 
+  - restart cinder-services
+
+- name: configure oslo_concurrency section
+  ini_file:
+    path: /etc/cinder/cinder.conf
+    section: oslo_concurrency
+    option: lock_path
+    value: /var/lib/cinder/tmp
   notify:
-    - restart cinder services
+  - restart cinder-services
 
 - name: ensure cinder db is initialized
   command: /usr/bin/cinder-manage db sync
-  notify: restart cinder services
+  notify: restart cinder-services

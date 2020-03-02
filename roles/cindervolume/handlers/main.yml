@@ -1,5 +1,5 @@
-- name: restart cinder services
+- name: restart cinder-services
   service: name={{ item }} state=restarted
-  with_items:
+  loop:
     - cinder-volume
     - tgt
