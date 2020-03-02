@@ -10,7 +10,7 @@ Vagrant.configure("2") do |config|
     controller.nfs.verify_installed = false
     controller.vm.synced_folder '.', '/vagrant', disabled: true
     controller.vm.provider "libvirt" do |libvirt|
-      libvirt.memory = "4098"
+      libvirt.memory = "5120"
       libvirt.storage :file, :size => '3G', :path => 'disk.img', :allow_existing => true, :shareable => true, :type => 'raw'
     end
   end
@@ -22,7 +22,7 @@ Vagrant.configure("2") do |config|
     compute.nfs.verify_installed = false
     compute.vm.synced_folder '.', '/vagrant', disabled: true
     compute.vm.provider "libvirt" do |libvirt|
-      libvirt.memory = "2048"
+      libvirt.memory = "1536"
       libvirt.nested = true
     end
   end
