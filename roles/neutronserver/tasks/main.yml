@@ -52,7 +52,8 @@
     - { option: "username", value: neutron}
     - { option: "password", value: "{{ neutron_identity_password }}" }
     - { option: "region", value: "{{ region }}" }    
-    - { option: "region_name", value: "{{ region }}" }    
+    - { option: "region_name", value: "{{ region }}" }
+    - { option: "service_token_roles_required", value: true }
   notify: 
   - restart neutron-services
 
