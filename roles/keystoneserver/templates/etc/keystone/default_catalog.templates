@@ -1,42 +1,49 @@
 catalog.{{ region }}.identity.publicURL = http://{{ controller_fqdn }}:5000/v3
 catalog.{{ region }}.identity.adminURL = http://{{ internal_ip }}:5000/v3
 catalog.{{ region }}.identity.internalURL = http://{{ internal_ip }}:5000/v3
-catalog.{{ region }}.identity.name = Identity Service
+catalog.{{ region }}.identity.descrition = "Identity Service"
+catalog.{{ region }}.identity.name = keystone
 
 catalog.{{ region }}.compute.publicURL = http://{{ external_ip }}:8774/v2.1
 catalog.{{ region }}.compute.adminURL = http://{{ internal_ip }}:8774/v2.1
 catalog.{{ region }}.compute.internalURL = http://{{ internal_ip }}:8774/v2.1
-catalog.{{ region }}.compute.name = Compute Service 
+catalog.{{ region }}.compute.descrition = "Compute Service"
+catalog.{{ region }}.compute.name = nova
 
 catalog.{{ region }}.placement.publicURL = http://{{ external_ip }}:8778
 catalog.{{ region }}.placement.adminURL = http://{{ internal_ip }}:8778
 catalog.{{ region }}.placement.internalURL = http://{{ internal_ip }}:8778
-catalog.{{ region }}.placement.name = Placement API
+catalog.{{ region }}.placement.descrition = "Placement Service"
+catalog.{{ region }}.placement.name = placement
 
 catalog.{{ region }}.volumev2.publicURL = http://{{ external_ip }}:8776/v2/$(project_id)s
 catalog.{{ region }}.volumev2.adminURL = http://{{ internal_ip }}:8776/v2/$(project_id)s
 catalog.{{ region }}.volumev2.internalURL = http://{{ internal_ip }}:8776/v2/$(project_id)s
+catalog.{{ region }}.volumev2.descrition = "Block Storage Service v2"
 catalog.{{ region }}.volumev2.name = cinderv2
 
 catalog.{{ region }}.volumev3.publicURL = http://{{ external_ip }}:8776/v3/$(project_id)s
 catalog.{{ region }}.volumev3.adminURL = http://{{ internal_ip }}:8776/v3/$(project_id)s
 catalog.{{ region }}.volumev3.internalURL = http://{{ internal_ip }}:8776/v3/$(project_id)s
+catalog.{{ region }}.volumev3.descrition = "Block Storage Service v3"
 catalog.{{ region }}.volumev3.name = cinderv3
 
 catalog.{{ region }}.ec2.publicURL = http://{{ external_ip }}:8773/services/Cloud
 catalog.{{ region }}.ec2.adminURL = http://{{ internal_ip }}:8773/services/Admin
 catalog.{{ region }}.ec2.internalURL = http://{{ internal_ip }}:8773/services/Cloud
-catalog.{{ region }}.ec2.name = EC2 Service
+catalog.{{ region }}.ec2.name = ec2
 
 catalog.{{ region }}.image.publicURL = http://{{ external_ip }}:9292
 catalog.{{ region }}.image.adminURL = http://{{ internal_ip }}:9292
 catalog.{{ region }}.image.internalURL = http://{{ internal_ip }}:9292
-catalog.{{ region }}.image.name = Image Service
+catalog.{{ region }}.image.descrition = "Image Service"
+catalog.{{ region }}.image.name = glance
 
 catalog.{{ region }}.network.publicURL = http://{{ external_ip }}:9696
 catalog.{{ region }}.network.adminURL = http://{{ internal_ip }}:9696
 catalog.{{ region }}.network.internalURL = http://{{ internal_ip }}:9696
-catalog.{{ region }}.network.name = Network Service
+catalog.{{ region }}.network.descrition = "Networking Service"
+catalog.{{ region }}.network.name = neutron
 
 catalog.{{ region }}.orchestration.publicURL = http://{{ external_ip }}:8004/v1/$(tenant_id)s
 catalog.{{ region }}.orchestration.adminURL = http://{{ internal_ip }}:8004/v1/$(tenant_id)s
