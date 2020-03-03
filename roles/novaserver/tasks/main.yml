@@ -4,7 +4,7 @@
     - nova-api
     - nova-conductor
     - nova-scheduler
-    - nova-novncproxy
+#    - nova-novncproxy
 
 - name: ensure nova_api database connections is configured
   ini_file:
@@ -34,11 +34,25 @@
     - { option: "transport_url",
     value: 'rabbit://{{ rabbit_user }}:{{ rabbit_password }}@{{ internal_ip }}:5672/'}
     - { option: "my_ip", value: '{{ internal_ip }}' }
-    - { option: "use_neutron", value: true }
-    - { option: "firewall_driver", value: nova.virt.firewall.NoopFirewallDriver }
+# Following options are deprecated, so no included anymore
+#    - { option: "use_neutron", value: true }
+#    - { option: "firewall_driver", value: nova.virt.firewall.NoopFirewallDriver }
   notify: 
   - restart nova-services
 
+- name: unset deprecated options
+  ini_file:
+    path: /etc/nova/nova.conf
+    section: DEFAULT
+    option: "{{ item.option }}"
+    state: absent
+  loop:
+    - { option: "linuxnet_interface_driver" }
+    - { option: "use_neutron" }
+    - { option: "firewall_driver" }
+  notify: 
+  - restart nova-services
+    
 - name: configure keystone_authtoken section
   ini_file:
     path: /etc/nova/nova.conf
@@ -56,7 +70,8 @@
     - { option: "username", value: nova}
     - { option: "password", value: "{{ nova_identity_password }}" }
     - { option: "region", value: "{{ region }}" }    
-    - { option: "region_name", value: "{{ region }}" }    
+    - { option: "region_name", value: "{{ region }}" }
+    - { option: "service_token_roles_required", value: true }
   notify: 
   - restart nova-services
 
@@ -69,16 +84,19 @@
   notify:
   - restart nova-services
 
-- name: configure vnc section
+- name: configure spice section
   ini_file:
     path: /etc/nova/nova.conf
-    section: vnc
+    section: spice
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   loop:
     - { option: "enabled", value: true }
     - { option: "server_listen", value: '$my_ip' }
     - { option: "server_proxyclient_address", value: '$my_ip' }
+    - { option: "html5proxy_base_url", value: "http://{{ controller_fqdn }}:6082/spice_auto.html" }
+    - { option: "html5proxy_host", value: "0.0.0.0" }
+    - { option: "html5proxy_port", value: "6082" }
   notify:
   - restart nova-services
 
