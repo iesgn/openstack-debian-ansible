@@ -56,17 +56,19 @@
   notify:
   - restart nova-compute
 
-- name: configure vnc section
+- name: configure spice section
   ini_file:
     path: /etc/nova/nova.conf
-    section: vnc
+    section: spice
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   loop:
     - { option: "enabled", value: true }
     - { option: "server_listen", value: '$my_ip' }
     - { option: "server_proxyclient_address", value: '$my_ip' }
-    - { option: "novncproxy_base_url", value:  'http://{{ controller_fqdn }}:6080/vnc_auto.html' }
+    - { option: "html5proxy_base_url", value: "http://{{ controller_fqdn }}:6082/spice_auto.html" }
+    - { option: "html5proxy_host", value: "0.0.0.0" }
+    - { option: "html5proxy_port", value: "6082" }
   notify:
   - restart nova-compute
 
