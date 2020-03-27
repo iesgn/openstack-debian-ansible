@@ -3,7 +3,10 @@ heat_template_version: newton
 description: 1 controller node and 1 compute node
 
 parameters:
-  flavor:
+  flavor_controller:
+    type: string
+    default: "m1.xlarge" #Must be defined
+  flavor_compute:
     type: string
     default: "m1.large" #Must be defined
   image:
@@ -119,7 +122,7 @@ resources:
     type: OS::Nova::Server
     properties:
       name: "controller"
-      flavor: { get_param: flavor }
+      flavor: { get_param: flavor_controller }
       image: { get_param: image }
       networks:
         - { port: { get_resource: controller_ext_port } }
@@ -130,7 +133,7 @@ resources:
     type: OS::Nova::Server
     properties:
       name: "compute"
-      flavor: { get_param: flavor }
+      flavor: { get_param: flavor_compute }
       image: { get_param: image }
       networks:
         - { port: { get_resource: compute_ext_port } }
