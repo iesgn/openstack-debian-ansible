@@ -1,0 +1,183 @@
+heat_template_version: newton
+
+description: 1 controller node and 1 compute node
+
+parameters:
+  flavor:
+    type: string
+    default: "m1.large" #Must be defined
+  image:
+    type: string
+    default: "bf688ff8-549e-4de6-8e96-13b10e85f1fe" #Must be defined
+  ext_net:
+    type: string
+    default: "49812d85-8e7a-4c31-baa2-d427692f6568" #Must be defined
+  pubkey:
+    type: string
+    default: "clave-openstack" #Must be defined
+  dns_server:
+    type: string
+    default: 192.168.202.2 #Must be defined
+  # fixed IPs
+  controller_ext_ip:
+    type: string
+    default: 192.168.98.101
+  controller_int_ip:
+    type: string
+    default: 192.168.99.101
+  compute_ext_ip:
+    type: string
+    default: 192.168.98.102
+  compute_int_ip:
+    type: string
+    default: 192.168.99.102
+
+resources:
+  # Volumes
+  controller_cinder_vol:
+    type: OS::Cinder::Volume
+    properties:
+      availability_zone: nova
+      size: 10
+
+  controller_manila_vol:
+    type: OS::Cinder::Volume
+    properties:
+      availability_zone: nova
+      size: 10
+
+ # Networks and subnets
+  external_net:
+    type: OS::Neutron::Net
+    properties:
+      name: "External Network"
+  internal_net:
+    type: OS::Neutron::Net
+    properties:
+      name: "Internal Network"
+
+  subnet1:
+    type: OS::Neutron::Subnet
+    properties:
+      network: { get_resource: external_net }
+      cidr: 192.168.98.0/24
+      dns_nameservers: [{ get_param: dns_server}]
+  subnet2:
+    type: OS::Neutron::Subnet
+    properties:
+      network: { get_resource: internal_net }
+      cidr: 192.168.99.0/24
+      dns_nameservers: [{ get_param: dns_server}]
+      gateway_ip: null
+
+  # Ports defined with fixed IPs and port security disabled
+  controller_ext_port:
+    type: OS::Neutron::Port
+    properties:
+      network: { get_resource: external_net }
+      fixed_ips:
+        - subnet: { get_resource: subnet1 }
+          ip_address: { get_param: controller_ext_ip }
+      port_security_enabled: false
+  controller_int_port:
+    type: OS::Neutron::Port
+    properties:
+      network: { get_resource: internal_net }
+      fixed_ips:
+        - subnet: { get_resource: subnet2 }
+          ip_address: { get_param: controller_int_ip }
+      port_security_enabled: false
+  compute_ext_port:
+    type: OS::Neutron::Port
+    properties:
+      network: { get_resource: external_net }
+      fixed_ips:
+        - subnet: { get_resource: subnet1 }
+          ip_address: { get_param: compute_ext_ip }
+      port_security_enabled: false
+  compute_int_port:
+    type: OS::Neutron::Port
+    properties:
+      network: { get_resource: internal_net }
+      fixed_ips:
+        - subnet: { get_resource: subnet2 }
+          ip_address: { get_param: compute_int_ip }
+      port_security_enabled: false
+
+  # Floating IPs
+  controller_floating_ip:
+    type: OS::Nova::FloatingIP
+    properties:
+      pool: ext-net
+  compute_floating_ip:
+    type: OS::Nova::FloatingIP
+    properties:
+      pool: ext-net
+      
+  # Controller server
+  controller:
+    type: OS::Nova::Server
+    properties:
+      name: "controller"
+      flavor: { get_param: flavor }
+      image: { get_param: image }
+      networks:
+        - { port: { get_resource: controller_ext_port } }
+        - { port: { get_resource: controller_int_port } }
+
+  # Compute server
+  compute:
+    type: OS::Nova::Server
+    properties:
+      name: "compute"
+      flavor: { get_param: flavor }
+      image: { get_param: image }
+      networks:
+        - { port: { get_resource: compute_ext_port } }
+        - { port: { get_resource: compute_int_port } }
+
+  # External router
+  r1:
+    type: OS::Neutron::Router
+    properties:
+      name: "Router 1"
+      external_gateway_info:
+        network: { get_param: ext_net }
+
+  r1_external_network:
+    type: OS::Neutron::RouterInterface
+    properties:
+      router_id: { get_resource: r1 }
+      subnet_id: { get_resource: subnet1 }
+
+  # Floating IP associations
+  controller_ip_association:
+    type: OS::Neutron::FloatingIPAssociation
+    properties:
+      floatingip_id: { get_resource: controller_floating_ip }
+      port_id: { get_resource: controller_ext_port }
+  compute_ip_association:
+    type: OS::Neutron::FloatingIPAssociation
+    properties:
+      floatingip_id: { get_resource: compute_floating_ip }
+      port_id: { get_resource: compute_ext_port }
+
+  # Volume attachments
+  cinder_attach:
+    type: OS::Cinder::VolumeAttachment
+    properties:
+      instance_uuid: { get_resource: controller }
+      volume_id: { get_resource: controller_cinder_vol }
+  manila_attach:
+    type: OS::Cinder::VolumeAttachment
+    properties:
+      instance_uuid: { get_resource: controller }
+      volume_id: { get_resource: controller_manila_vol }
+
+outputs:
+  controller_floating_ip:
+    description: "Controller's floating IP"
+    value: { get_attr: [controller_floating_ip, show] }
+  compute_floating_ip:
+    description: "Compute's floating IP"
+    value: { get_attr: [compute_floating_ip, show] }
