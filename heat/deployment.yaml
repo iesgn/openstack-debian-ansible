@@ -124,6 +124,7 @@ resources:
       name: "controller"
       flavor: { get_param: flavor_controller }
       image: { get_param: image }
+      key_name: { get_param: pubkey }
       networks:
         - { port: { get_resource: controller_ext_port } }
         - { port: { get_resource: controller_int_port } }
@@ -135,6 +136,7 @@ resources:
       name: "compute"
       flavor: { get_param: flavor_compute }
       image: { get_param: image }
+      key_name: { get_param: pubkey }
       networks:
         - { port: { get_resource: compute_ext_port } }
         - { port: { get_resource: compute_int_port } }
