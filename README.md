@@ -10,8 +10,11 @@ with some minors modifications to use with Debian.
 The networking option used is Self-service networks using linux bridges.
 
 These playbooks have been written with the idea of using them in a real deployment
-with physical servers, but thay can be used too to deploy a OpenStack test
-environment with vagrant using vagrant-libvirt plugin.
+with physical servers, but thay can be used to deploy a OpenStack test
+environment with:
+
+* Vagrant using vagrant-libvirt plugin.
+* OpenStack Heat
 
 **This is a work in progress, feel free to open issues on github**
 
@@ -25,28 +28,16 @@ environment with vagrant using vagrant-libvirt plugin.
 - vagrant-libvirt: vagrant-libvirt
 - qemu-kvm: 1:3.1+dfsg-8+deb10u3
 
-## OpenStack componens included:
+## OpenStack components included:
 
 Keystone, Glance, Placement, Nova, Neutron, Horizon, Cinder and Heat
 
-## Configuration
+## Vagrant Setup
 
 ![schema](https://raw.githubusercontent.com/iesgn/openstack-debian-ansible/master/img/openstack-debian-ansible.png)
 
 The file *groups_var/all* contains all variables needed by ansible playbooks and
-they can be customized if needed. It's **mandatory** to define the following
-variables according to your LAN:
-
-    controller_external_ip: 192.168.1.101
-	storage_external_ip: 192.168.1.101
-	network_node_external_ip: 192.168.1.101
-	network_node_external_netmask: 255.255.255.0
-	network_node_external_CIDR: 24
-	external_gateway: 192.168.1.1
-
-The Vagranfile must be modified too:
-
-    controller.vm.network :public_network, bridge: "wlan0" ,ip: "192.168.1.101" # eth2 external
+they can be customized if needed.
 
 ## Bring up the scenario:
 
@@ -58,5 +49,5 @@ The Vagranfile must be modified too:
 
 ## Using OpenStack
 
-Open your browser and type in the notification bar http://192.168.99.101 or the corresponding external IP chosen.
+Open your browser and type in the notification bar http://192.168.98.101 or the corresponding external IP chosen.
 

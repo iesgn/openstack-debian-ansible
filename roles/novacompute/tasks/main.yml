@@ -33,9 +33,9 @@
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   loop:
-    - { option: "www_authenticate_uri", value: 'http://{{ controller_fqdn }}:5000' }
-    - { option: "auth_url", value: 'http://{{ controller_fqdn }}:5000' }
-    - { option: "memcached_servers", value: '{{ controller_fqdn }}:11211' }
+    - { option: "www_authenticate_uri", value: 'http://{{ hostvars["controller"]["internal_ip"] }}:5000' }
+    - { option: "auth_url", value: 'http://{{ hostvars["controller"]["internal_ip"] }}:5000' }
+    - { option: "memcached_servers", value: '{{ hostvars["controller"]["internal_ip"] }}:11211' }
     - { option: "auth_type", value: password }
     - { option: "project_domain_name", value: Default}
     - { option: "user_domain_name", value: Default}
@@ -97,7 +97,7 @@
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   loop:
-    - { option: "auth_url", value: 'http://{{ controller_fqdn }}:5000' }
+    - { option: "auth_url", value: 'http://{{ hostvars["controller"]["internal_ip"] }}:5000' }
     - { option: "auth_type", value: password }
     - { option: "project_domain_name", value: Default}
     - { option: "user_domain_name", value: Default}
@@ -116,7 +116,7 @@
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   loop:
-    - { option: "auth_url", value: 'http://{{ controller_fqdn }}:5000' }
+    - { option: "auth_url", value: 'http://{{ hostvars["controller"]["internal_ip"] }}:5000' }
     - { option: "auth_type", value: password }
     - { option: "project_domain_name", value: Default}
     - { option: "user_domain_name", value: Default}

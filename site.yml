@@ -1,47 +1,47 @@
 ---
 
-- hosts: all
-  gather_facts: no
-  roles:
-    - role: common
+# - hosts: all
+#   gather_facts: no
+#   roles:
+#     - role: common
 
-- hosts: controller-nodes
-  gather_facts: no
-  roles:
-   - role: dbserver
-   - role: dbserver_population
-   - role: rabbitserver
+# - hosts: controller-nodes
+#   gather_facts: no
+#   roles:
+#    - role: dbserver
+#    - role: dbserver_population
+#    - role: rabbitserver
 
-- hosts: all
-  gather_facts: no
-  roles:
-    - role: openstackclient
+# - hosts: all
+#   gather_facts: no
+#   roles:
+#     - role: openstackclient
 
-- hosts: controller-nodes
-  gather_facts: no
-  roles:
-    - role: keystoneserver
+# - hosts: controller-nodes
+#   gather_facts: no
+#   roles:
+#     - role: keystoneserver
       
-- hosts: controller-nodes
-  gather_facts: no
-  roles:
-    - role: keystone_population
+# - hosts: controller-nodes
+#   gather_facts: no
+#   roles:
+#     - role: keystone_population
 
-- hosts: storage-nodes
-  gather_facts: no
-  roles: 
-    - role: glanceserver
+# - hosts: storage-nodes
+#   gather_facts: no
+#   roles: 
+#     - role: glanceserver
 
-- hosts: controller-nodes
-  gather_facts: no
-  roles: 
-    - role: placement
-    - role: novaserver
+# - hosts: controller-nodes
+#   gather_facts: no
+#   roles: 
+#     - role: placement
+#     - role: novaserver
 
-- hosts: compute-nodes
-  gather_facts: no
-  roles:
-    - role: novacompute
+# - hosts: compute-nodes
+#   gather_facts: no
+#   roles:
+#     - role: novacompute
 
 - hosts: controller-nodes
   gather_facts: no
@@ -53,20 +53,20 @@
   roles:
     - role: neutron-agents-compute
 
-- hosts: controller-nodes
-  gather_facts: no
-  roles:
-    - role: horizon
+# - hosts: controller-nodes
+#   gather_facts: no
+#   roles:
+#     - role: horizon
 
-- hosts: controller-nodes
-  gather_facts: no
-  roles:
-    - role: cinderserver
+# - hosts: controller-nodes
+#   gather_facts: no
+#   roles:
+#     - role: cinderserver
 
-- hosts: storage-nodes
-  gather_facts: no
-  roles:
-    - role: cindervolume
+# - hosts: storage-nodes
+#   gather_facts: no
+#   roles:
+#     - role: cindervolume
 
 # - hosts: controller-nodes
 #   roles:

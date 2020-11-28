@@ -3,21 +3,21 @@ all:
     controller-nodes:
       hosts:
         controller:
-          ansible_host: 172.22.200.58
+          ansible_host: 172.22.200.170
           ansible_ssh_user: debian
           external_ip: 192.168.98.101
           internal_ip: 192.168.99.101
     storage-nodes:
       hosts:
         controller:
-          ansible_host: 172.22.200.58
+          ansible_host: 172.22.200.170
           ansible_ssh_user: debian
           external_ip: 192.168.98.101
           internal_ip: 192.168.99.101
     network-nodes:
       hosts:
         controller:
-          ansible_host: 172.22.200.58
+          ansible_host: 172.22.200.170
           ansible_ssh_user: debian
           external_ip: 192.168.98.101
           internal_ip: 192.168.99.101

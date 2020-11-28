@@ -35,6 +35,15 @@
   notify: 
   - restart neutron-services
 
+- name: unset interface_driver option
+  ini_file:
+    path: /etc/neutron/neutron.conf
+    section: DEFAULT
+    option: "interface_driver"
+    state: absent
+  notify:
+  - restart neutron-services
+
 - name: configure keystone_authtoken section
   ini_file:
     path: /etc/neutron/neutron.conf
@@ -42,9 +51,9 @@
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   loop:
-    - { option: "www_authenticate_uri", value: 'http://{{ controller_fqdn }}:5000' }
-    - { option: "auth_url", value: 'http://{{ controller_fqdn }}:5000' }
-    - { option: "memcached_servers", value: '{{ controller_fqdn }}:11211' }
+    - { option: "www_authenticate_uri", value: 'http://{{ internal_ip }}:5000' }
+    - { option: "auth_url", value: 'http://{{ internal_ip }}:5000' }
+    - { option: "memcached_servers", value: '{{ internal_ip }}:11211' }
     - { option: "auth_type", value: password }
     - { option: "project_domain_name", value: Default}
     - { option: "user_domain_name", value: Default}
@@ -73,7 +82,7 @@
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   loop:
-    - { option: "auth_url", value: 'http://{{ controller_fqdn }}:5000' }
+    - { option: "auth_url", value: 'http://{{ internal_ip }}:5000' }
     - { option: "auth_type", value: password }
     - { option: "project_domain_name", value: Default}
     - { option: "user_domain_name", value: Default}
@@ -187,7 +196,7 @@
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   loop:
-    - { option: "nova_metadata_host", value: "{{ controller_fqdn }}" }
+    - { option: "nova_metadata_host", value: "{{ internal_ip }}" }
     - { option: "metadata_proxy_shared_secret", value: "{{ shared_secret }}" }
   notify:
   - restart neutron-services

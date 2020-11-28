@@ -15,12 +15,8 @@ k3:
 rabbit_user: "openstack"
 rabbit_password: "asdasd"
 
-# # IPs
+# Controller FQDN
 controller_fqdn: controller
-network_node_netmask: 255.255.255.0
-network_node_external_netmask: 255.255.255.0
-network_node_external_CIDR: 24
-external_gateway: 192.168.98.1
 
 # # MySQL passwords
 root_db_password: "asdasd" 

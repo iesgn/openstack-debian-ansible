@@ -4,6 +4,8 @@
     - nova-api
     - nova-conductor
     - nova-scheduler
+    - nova-consoleproxy
+    
 #    - nova-novncproxy
 
 - name: ensure nova_api database connections is configured
@@ -60,9 +62,9 @@
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   loop:
-    - { option: "www_authenticate_uri", value: 'http://{{ controller_fqdn }}:5000' }
-    - { option: "auth_url", value: 'http://{{ controller_fqdn }}:5000' }
-    - { option: "memcached_servers", value: '{{ controller_fqdn }}:11211' }
+    - { option: "www_authenticate_uri", value: 'http://{{ internal_ip }}:5000' }
+    - { option: "auth_url", value: 'http://{{ internal_ip }}:5000' }
+    - { option: "memcached_servers", value: '{{ internal_ip }}:11211' }
     - { option: "auth_type", value: password }
     - { option: "project_domain_name", value: Default}
     - { option: "user_domain_name", value: Default}
@@ -125,7 +127,7 @@
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   loop:
-    - { option: "auth_url", value: 'http://{{ controller_fqdn }}:5000' }
+    - { option: "auth_url", value: 'http://{{ internal_ip }}:5000' }
     - { option: "auth_type", value: password }
     - { option: "project_domain_name", value: Default}
     - { option: "user_domain_name", value: Default}
@@ -144,7 +146,7 @@
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   loop:
-    - { option: "auth_url", value: 'http://{{ controller_fqdn }}:5000' }
+    - { option: "auth_url", value: 'http://{{ internal_ip }}:5000' }
     - { option: "auth_type", value: password }
     - { option: "project_domain_name", value: Default}
     - { option: "user_domain_name", value: Default}
