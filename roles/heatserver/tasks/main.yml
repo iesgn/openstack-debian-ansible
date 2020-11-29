@@ -1,44 +1,75 @@
 - name: ensure heat packages are installed
   apt: name={{ item }}
-  with_items:
+  loop:
     - heat-api 
     - heat-api-cfn 
     - heat-engine 
 
-- name: ensure heat sqlite is deleted
-  file: dest=/var/lib/heat/heat.sqlite state=absent
-
-- name: ensure heat.conf file is up to date
-  template: >
-    src=etc/heat/heat.conf
-    dest=/etc/heat/heat.conf
-    owner=heat
-    group=heat
-    mode=0600
+- name: ensure heat_api database connections is configured
+  ini_file:
+    path: /etc/heat/heat.conf
+    section: api_database
+    option: connection
+    value: mysql+pymysql://heat:{{ heat_db_password }}@{{ internal_ip }}/heat
   notify:
   - restart heat-services
 
-# - name: ensure heat_init.sh script is transfered
-#   template: >-
-#     src=root/heat_init.sh
-#     dest=/root/heat_init.sh
-#     owner=root
-#     group=root
-#     mode=750
-    
-# - name: ensure heat domain is created
-#   shell: /root/heat_init.sh
-#   register: stack_user_domain_id
+- name: set default section options
+  ini_file:
+    path: /etc/heat/heat.conf
+    section: DEFAULT
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  loop:
+    - { option: "transport_url",
+    value: 'rabbit://{{ rabbit_user }}:{{ rabbit_password }}@{{ internal_ip }}:5672/'}
+    - { option: "heat_metadata_server_url", value: 'http://{{ internal_ip }}:8000' }
+    - { option: "heat_waitcondition_server_url",
+    value: 'http://{{ internal_ip }}:8000/v1/waitcondition' }
+    - { option: "stack_domain_admin", value: "heat_domain_admin" }
+    - { option: "stack_domain_admin_password",
+    value: "{{ heat_domain_admin_identity_password }}" }
+    - { option: "stack_user_domain_name", value: "heat" }
+  notify:
+  - restart heat-services
 
-# - name: ensure heat domain id is added to heat.conf
-#   ini_file: >-
-#     dest=/etc/heat/heat.conf
-#     section=DEFAULT
-#     option=stack_user_domain_id
-#     value={{ stack_user_domain_id.stdout }}
-    
+- name: configure keystone_authtoken section
+  ini_file:
+    path: /etc/heat/heat.conf
+    section: keystone_authtoken
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  loop:
+    - { option: "www_authenticate_uri", value: 'http://{{ internal_ip }}:5000' }
+    - { option: "auth_url", value: 'http://{{ internal_ip }}:5000' }
+    - { option: "memcached_servers", value: '{{ internal_ip }}:11211' }
+    - { option: "auth_type", value: password }
+    - { option: "project_domain_name", value: Default}
+    - { option: "user_domain_name", value: Default}
+    - { option: "project_name", value: service}
+    - { option: "username", value: heat}
+    - { option: "password", value: "{{ heat_identity_password }}" }
+    - { option: "region", value: "{{ region }}" }
+    - { option: "region_name", value: "{{ region }}" }
+  notify:
+  - restart heat-services
+
+- name: configure trustee section
+  ini_file:
+    path: /etc/heat/heat.conf
+    section: trustee
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  loop:
+    - { option: "auth_type", value: 'password' }
+    - { option: "auth_url", value: 'http://{{ internal_ip }}:5000' }
+    - { option: "username", value: 'heat' }
+    - { option: "password", value: "{{ heat_identity_password }}" }
+    - { option: "user_domain_name", value: Default}
+  notify:
+  - restart heat-services
+
 - name: ensure heat db is initialized
   command: /usr/bin/heat-manage db_sync
   notify:
   - restart heat-services
-
