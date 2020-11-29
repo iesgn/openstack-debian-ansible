@@ -29,13 +29,6 @@
     option: enabled
     value: true
 
-- name: ensure cache is enabled in keystone
-  ini_file:
-    path: /etc/keystone/keystone.conf
-    section: cache
-    option: enabled
-    value: true
-
 - name: ensure dogfile.cache.memcached is configured as backend for cache
   ini_file:
     path: /etc/keystone/keystone.conf

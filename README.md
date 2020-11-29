@@ -21,12 +21,12 @@ environment with:
 ## Software used (specific versions):
 
 - Debian GNU/Linux: buster (amd64). 
-- Linux kernel: 4.19.0-8-amd64
+- Linux kernel: 4.19.0-12-amd64
 - OpenStack: Victoria
 - Ansible: 2.10.3
 - Vagrant: 2.2.3+dfsg-1
-- vagrant-libvirt: vagrant-libvirt
-- qemu-kvm: 1:3.1+dfsg-8+deb10u3
+- vagrant-libvirt: 0.0.45-2
+- qemu-kvm: 1:3.1+dfsg-8+deb10u8
 
 ## OpenStack components included:
 
@@ -50,4 +50,3 @@ they can be customized if needed.
 ## Using OpenStack
 
 Open your browser and type in the notification bar http://192.168.98.101 or the corresponding external IP chosen.
-
