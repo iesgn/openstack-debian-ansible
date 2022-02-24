@@ -1,82 +1,84 @@
 ---
 
 - hosts: all
+  become: true
   gather_facts: no
   roles:
     - role: common
 
-- hosts: controller-nodes
-  gather_facts: no
-  roles:
-   - role: dbserver
-
-- hosts: controller-nodes
-  gather_facts: no
-  roles:
-   - role: dbserver_population
-  - role: rabbitserver
-
-- hosts: all
-  gather_facts: no
-  roles:
-    - role: openstackclient
-
-- hosts: controller-nodes
-  gather_facts: no
-  roles:
-    - role: keystoneserver
-      
-- hosts: controller-nodes
-  gather_facts: no
-  roles:
-    - role: keystone_population
-
-- hosts: storage-nodes
-  gather_facts: no
-  roles: 
-    - role: glanceserver
-
-- hosts: controller-nodes
-  gather_facts: no
-  roles: 
-    - role: placement
-    - role: novaserver
-
-- hosts: compute-nodes
-  gather_facts: no
-  roles:
-    - role: novacompute
-
-- hosts: controller-nodes
-  gather_facts: no
-  roles:
-   - role: neutronserver
-
-- hosts: compute-nodes
-  gather_facts: no
-  roles:
-    - role: neutron-agents-compute
-
-- hosts: controller-nodes
-  gather_facts: no
-  roles:
-    - role: horizon
-
-- hosts: controller-nodes
-  gather_facts: no
-  roles:
-    - role: cinderserver
-
-- hosts: storage-nodes
-  gather_facts: no
-  roles:
-    - role: cindervolume
-
-- hosts: controller-nodes
-  roles:
-    - role: heatserver
-
-- hosts: controller-nodes
-  roles:
-    - role: restart-services
-
+#- hosts: controller-nodes
+#  gather_facts: no
+#  roles:
+#   - role: dbserver
+#
+#- hosts: controller-nodes
+#  gather_facts: no
+#  roles:
+#   - role: dbserver_population
+#  - role: rabbitserver
+#
+#- hosts: all
+#  gather_facts: no
+#  roles:
+#    - role: openstackclient
+#
+#- hosts: controller-nodes
+#  gather_facts: no
+#  roles:
+#    - role: keystoneserver
+#      
+#- hosts: controller-nodes
+#  gather_facts: no
+#  roles:
+#    - role: keystone_population
+#
+#- hosts: storage-nodes
+#  gather_facts: no
+#  roles: 
+#    - role: glanceserver
+#
+#- hosts: controller-nodes
+#  gather_facts: no
+#  roles: 
+#    - role: placement
+#    - role: novaserver
+#
+#- hosts: compute-nodes
+#  gather_facts: no
+#  roles:
+#    - role: novacompute
+#
+#- hosts: controller-nodes
+#  gather_facts: no
+#  roles:
+#   - role: neutronserver
+#
+#- hosts: compute-nodes
+#  gather_facts: no
+#  roles:
+#    - role: neutron-agents-compute
+#
+#- hosts: controller-nodes
+#  gather_facts: no
+#  roles:
+#    - role: horizon
+#
+#- hosts: controller-nodes
+#  gather_facts: no
+#  roles:
+#    - role: cinderserver
+#
+#- hosts: storage-nodes
+#  gather_facts: no
+#  roles:
+#    - role: cindervolume
+#
+#- hosts: controller-nodes
+#  roles:
+#    - role: heatserver
+#
+#- hosts: controller-nodes
+#  roles:
+#    - role: restart-services
+#
+#
