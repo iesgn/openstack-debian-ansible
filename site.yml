@@ -6,10 +6,11 @@
   roles:
     - role: common
 
-#- hosts: controller-nodes
-#  gather_facts: no
-#  roles:
-#   - role: dbserver
+- hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles:
+   - role: dbserver
 #
 #- hosts: controller-nodes
 #  gather_facts: no

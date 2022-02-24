@@ -1,8 +1,8 @@
 - name: Ensure mariadb server and python-pymysql are installed
-  apt: name={{ item }}
-  loop:
+  apt:
+    pkg:
     - mariadb-server
-    - python-pymysql
+    - python3-pymysql
     
 - name: Ensure 99-openstack.cnf is present
   template:
