@@ -25,6 +25,13 @@
    - role: rabbitserver
 
 
+- hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles:
+   - role: etcd
+
+
 
 #  
 #
