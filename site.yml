@@ -31,14 +31,11 @@
   roles:
    - role: etcd
 
-
-
-#  
-#
-#- hosts: all
-#  gather_facts: no
-#  roles:
-#    - role: openstackclient
+- hosts: all
+  become: true
+  gather_facts: no
+  roles:
+    - role: openstackclient
 #
 #- hosts: controller-nodes
 #  gather_facts: no

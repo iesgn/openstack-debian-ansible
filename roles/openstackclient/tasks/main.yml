@@ -2,8 +2,6 @@
   apt: name=python3-openstackclient 
 
 - name: ensure the rest of openstack clients are installed
-  apt: name={{ item }}
-  loop:
-    - python3-troveclient
-    - python3-manilaclient
+  apt: 
+    pkg: 
     - python3-heatclient
