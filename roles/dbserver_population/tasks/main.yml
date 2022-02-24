@@ -41,19 +41,19 @@
     - localhost
     - ::1
 
-- name: ensure manila database is present
-  mysql_db: name=manila
-
-- name: ensure manila database user is present
-  mysql_user:
-    name: manila
-    host: "{{ item }}"
-    password: "{{ manila_db_password }}"
-    priv: 'manila.*:ALL'
-  loop:
-    - '%'
-    - localhost
-    - ::1
+#- name: ensure manila database is present
+#  mysql_db: name=manila
+#
+#- name: ensure manila database user is present
+#  mysql_user:
+#    name: manila
+#    host: "{{ item }}"
+#    password: "{{ manila_db_password }}"
+#    priv: 'manila.*:ALL'
+#  loop:
+#    - '%'
+#    - localhost
+#    - ::1
 
 - name: ensure placement databases is present
   mysql_db: name=placement
@@ -139,30 +139,31 @@
     - localhost
     - ::1
                    
-- name: ensure trove database is present
-  mysql_db: name=trove
-    
-- name: ensure trove database user is present
-  mysql_user:
-    name: trove
-    host: "{{ item }}"
-    password: "{{ trove_db_password }}"
-    priv: 'trove.*:ALL'
-  loop:
-    - '%'
-    - localhost
-    - ::1
-
-- name: ensure magnum database is present
-  mysql_db: name=magnum
-    
-- name: ensure magnum database user is present
-  mysql_user:
-    name: magnum
-    host: "{{ item }}"
-    password: "{{ magnum_db_password }}"
-    priv: 'magnum.*:ALL'
-  loop:
-    - '%'
-    - localhost
-    - ::1
+#- name: ensure trove database is present
+#  mysql_db: name=trove
+#    
+#- name: ensure trove database user is present
+#  mysql_user:
+#    name: trove
+#    host: "{{ item }}"
+#    password: "{{ trove_db_password }}"
+#    priv: 'trove.*:ALL'
+#  loop:
+#    - '%'
+#    - localhost
+#    - ::1
+#
+#- name: ensure magnum database is present
+#  mysql_db: name=magnum
+#    
+#- name: ensure magnum database user is present
+#  mysql_user:
+#    name: magnum
+#    host: "{{ item }}"
+#    password: "{{ magnum_db_password }}"
+#    priv: 'magnum.*:ALL'
+#  loop:
+#    - '%'
+#    - localhost
+#    - ::1
+#

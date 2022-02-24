@@ -11,11 +11,16 @@
   gather_facts: no
   roles:
    - role: dbserver
-#
-#- hosts: controller-nodes
-#  gather_facts: no
-#  roles:
-#   - role: dbserver_population
+
+- hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles:
+   - role: dbserver_population
+
+
+
+
 #  - role: rabbitserver
 #
 #- hosts: all
