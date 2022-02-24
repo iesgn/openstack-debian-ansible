@@ -55,13 +55,6 @@
   roles: 
     - role: glanceserver
 
-- hosts: storage_nodes
-  become: true
-  gather_facts: no
-  roles: 
-    - role: glance_population
-
-
 
 #- hosts: controller-nodes
 #  gather_facts: no
