@@ -37,23 +37,32 @@
 #  roles:
 #    - role: openstackclient
 
-- hosts: controller_nodes
-  become: true
-  gather_facts: no
-  roles:
-    - role: keystoneserver
-      
-- hosts: controller_nodes
-  become: true
-  gather_facts: no
-  roles:
-    - role: keystone_population
-#
-#- hosts: storage-nodes
+#- hosts: controller_nodes
+#  become: true
 #  gather_facts: no
-#  roles: 
-#    - role: glanceserver
+#  roles:
+#    - role: keystoneserver
+#      
+#- hosts: controller_nodes
+#  become: true
+#  gather_facts: no
+#  roles:
+#    - role: keystone_population
 #
+- hosts: storage_nodes
+  become: true
+  gather_facts: no
+  roles: 
+    - role: glanceserver
+
+- hosts: storage_nodes
+  become: true
+  gather_facts: no
+  roles: 
+    - role: glance_population
+
+
+
 #- hosts: controller-nodes
 #  gather_facts: no
 #  roles: 
