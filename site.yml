@@ -49,11 +49,11 @@
 #  roles:
 #    - role: keystone_population
 #
-#- hosts: storage_nodes
-#  become: true
-#  gather_facts: no
-#  roles: 
-#    - role: glanceserver
+- hosts: storage_nodes
+  become: true
+  gather_facts: no
+  roles: 
+    - role: glanceserver
 
 
 #- hosts: controller_nodes
@@ -87,11 +87,11 @@
 #  roles:
 #    - role: neutron-agents-compute
 #
-- hosts: controller_nodes
-  become: true
-  gather_facts: no
-  roles:
-    - role: horizon
+#- hosts: controller_nodes
+#  become: true
+#  gather_facts: no
+#  roles:
+#    - role: horizon
 #
 #- hosts: controller-nodes
 #  gather_facts: no

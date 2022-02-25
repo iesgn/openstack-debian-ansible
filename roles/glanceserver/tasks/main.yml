@@ -47,7 +47,7 @@
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   loop:
-    - { option: "stores", value: file,http }
+    - { option: "stores", value: 'file,http' }
     - { option: "default_store", value: file }
     - { option: "filesystem_store_datadir", value: /var/lib/glance/images/ }
   notify:
