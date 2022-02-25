@@ -4,9 +4,9 @@
     - nova-api
     - nova-conductor
     - nova-scheduler
-    - nova-consoleproxy
+    - nova-novncproxy
     
-#    - nova-novncproxy
+#    
 
 - name: ensure nova_api database connections is configured
   ini_file:

@@ -56,11 +56,18 @@
 #    - role: glanceserver
 
 
+#- hosts: controller_nodes
+#  become: true
+#  gather_facts: no
+#  roles: 
+#    - role: placement
+
 - hosts: controller_nodes
   become: true
   gather_facts: no
   roles: 
-    - role: placement
+    - role: novaserver
+
 
 
 
