@@ -1,16 +1,6 @@
-- name: verify if hypervisor support hw accel is enabled
-  command: egrep '(vmx|svm)' /proc/cpuinfo
-  register: result
-  ignore_errors: True
-
-- name: ensure nova-compute-kvm is installed when hw accel is enabled
-  apt: name=nova-compute-kvm 
-  when: result is success
-
-- name: ensure nova-compute-qemu is installed when hw accel is not enabled
-  apt: name=nova-compute-qemu 
-  when: result is failed
-
+- name: ensure nova-compute is installed 
+  apt: name=nova-compute
+  
 - name: set default section options
   ini_file:
     path: /etc/nova/nova.conf
