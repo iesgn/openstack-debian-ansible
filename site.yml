@@ -49,17 +49,21 @@
 #  roles:
 #    - role: keystone_population
 #
-- hosts: storage_nodes
+#- hosts: storage_nodes
+#  become: true
+#  gather_facts: no
+#  roles: 
+#    - role: glanceserver
+
+
+- hosts: controller_nodes
   become: true
   gather_facts: no
   roles: 
-    - role: glanceserver
+    - role: placement
 
 
-#- hosts: controller-nodes
-#  gather_facts: no
-#  roles: 
-#    - role: placement
+
 #    - role: novaserver
 #
 #- hosts: compute-nodes
