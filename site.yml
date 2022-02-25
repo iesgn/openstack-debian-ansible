@@ -73,7 +73,7 @@
 #  gather_facts: no
 #  roles:
 #    - role: novacompute
-#
+
 - hosts: controller-nodes
   become: true
   gather_facts: no
