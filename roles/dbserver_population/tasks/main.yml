@@ -1,16 +1,4 @@
-- name: ensure keystone database is present
-  mysql_db: name=keystone
 
-- name: ensure keystone database user is present
-  mysql_user:
-    name: keystone
-    host: "{{ item }}"
-    password: "{{ keystone_db_password }}"
-    priv: 'keystone.*:ALL'
-  loop:
-    - '%'
-    - localhost
-    - ::1
 
 - name: ensure glance database is present
   mysql_db:
