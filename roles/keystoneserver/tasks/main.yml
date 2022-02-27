@@ -11,7 +11,7 @@
     - '%'
     - localhost
 
-    
+
 - name: ensure keystone, apache2 and mod-wsgi-py3 packages are installed
   apt: name={{ item }}
   loop:
@@ -36,40 +36,40 @@
     option: provider
     value: fernet
 
-- name: ensure cache is enabled in keystone
-  ini_file:
-    path: /etc/keystone/keystone.conf
-    section: cache
-    option: enabled
-    value: true
+#- name: ensure cache is enabled in keystone
+#  ini_file:
+#    path: /etc/keystone/keystone.conf
+#    section: cache
+#    option: enabled
+#    value: true
 
-- name: ensure dogfile.cache.memcached is configured as backend for cache
-  ini_file:
-    path: /etc/keystone/keystone.conf
-    section: cache
-    option: backend
-    value: dogpile.cache.memcached
+#- name: ensure dogfile.cache.memcached is configured as backend for cache
+#  ini_file:
+#    path: /etc/keystone/keystone.conf
+#    section: cache
+#    option: backend
+#    value: dogpile.cache.memcached
 
-- name: ensure memcached url is set for dogfile
-  ini_file:
-    path: /etc/keystone/keystone.conf
-    section: cache
-    option: backend_argument
-    value: url:127.0.0.1:11211
+#- name: ensure memcached url is set for dogfile
+#  ini_file:
+#    path: /etc/keystone/keystone.conf
+#    section: cache
+#    option: backend_argument
+#    value: url:127.0.0.1:11211
 
-- name: ensure keystone is configured to use template catalog
-  ini_file:
-    path: /etc/keystone/keystone.conf
-    section: catalog
-    option: template_file
-    value: /etc/keystone/default_catalog.templates
+#- name: ensure keystone is configured to use template catalog
+#  ini_file:
+#    path: /etc/keystone/keystone.conf
+#    section: catalog
+#    option: template_file
+#    value: /etc/keystone/default_catalog.templates
 
-- name: ensure keystone is configured to use template catalog
-  ini_file:
-    path: /etc/keystone/keystone.conf
-    section: catalog
-    option: driver
-    value: templated
+#- name: ensure keystone is configured to use template catalog
+#  ini_file:
+#    path: /etc/keystone/keystone.conf
+#    section: catalog
+#    option: driver
+#    value: templated
 
 - name: ensure keystone template catalog is updated
   template:
