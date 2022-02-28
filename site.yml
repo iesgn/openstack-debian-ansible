@@ -61,46 +61,48 @@
   roles: 
     - role: placement
 
-#- hosts: controller_nodes
-#  become: true
-#  gather_facts: no
-#  roles: 
-#    - role: novaserver
-#- hosts: compute_nodes
-#  become: true
-#  gather_facts: no
-#  roles:
-#    - role: novacompute
-#- hosts: controller_nodes
-#  become: true
-#  gather_facts: no
-#  roles:
-#   - role: neutronserver
-#
-#- hosts: compute_nodes
-#  become: true
-#  gather_facts: no
-#  roles:
-#    - role: neutron-agents-compute
-#
-#- hosts: controller_nodes
-#  become: true
-#  gather_facts: no
-#  roles:
-#    - role: horizon
-#
-#- hosts: controller_nodes
-#  become: true
-#  gather_facts: no
-#  roles:
-#    - role: cinderserver
-#
-#- hosts: storage_nodes
-#  become: true
-#  gather_facts: no
-#  roles:
-#    - role: cindervolume
-#
+- hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles: 
+    - role: novaserver
+
+- hosts: compute_nodes
+  become: true
+  gather_facts: no
+  roles:
+    - role: novacompute
+
+- hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles:
+   - role: neutronserver
+
+- hosts: compute_nodes
+  become: true
+  gather_facts: no
+  roles:
+    - role: neutron-agents-compute
+
+- hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles:
+    - role: horizon
+
+- hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles:
+    - role: cinderserver
+
+- hosts: storage_nodes
+  become: true
+  gather_facts: no
+  roles:
+    - role: cindervolume
+
 ##- hosts: controller-nodes
 ##  roles:
 ##    - role: heatserver
