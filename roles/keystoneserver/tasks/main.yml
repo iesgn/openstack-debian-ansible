@@ -1,17 +1,3 @@
-- name: ensure keystone database is present
-  mysql_db: name=keystone
-
-- name: ensure keystone database user is present
-  mysql_user:
-    name: keystone
-    host: "{{ item }}"
-    password: "{{ keystone_db_password }}"
-    priv: 'keystone.*:ALL'
-  loop:
-    - '%'
-    - localhost
-
-
 - name: ensure keystone, apache2 and mod-wsgi-py3 packages are installed
   apt: name={{ item }}
   loop:
@@ -41,7 +27,7 @@
     path: /etc/keystone/keystone.conf
     section: cache
     option: enabled
-    value: true
+    value: 'true'
 
 - name: ensure dogfile.cache.memcached is configured as backend for cache
   ini_file:
@@ -96,5 +82,9 @@
   shell: /usr/bin/keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone && keystone-manage credential_setup --keystone-user keystone --keystone-group keystone
 
 - name: bootstrap identity service
-  shell: keystone-manage bootstrap --bootstrap-password {{ admin_pass }} --bootstrap-region-id {{ region }}
+  shell: keystone-manage bootstrap --bootstrap-password {{ admin_pass }} --bootstrap-admin-url http://{{ internal_ip }}:5000/v3/ --bootstrap-internal-url http://{{ internal_ip }}:5000/v3/  --bootstrap-public-url http://{{ controller_fqdn }}:5000/v3/   --bootstrap-region-id {{ region }}
+  register: kb
+  failed_when: "kb.rc not in [ 0, 1 ]"
 
+ 
+  

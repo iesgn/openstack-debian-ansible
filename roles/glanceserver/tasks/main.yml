@@ -26,8 +26,7 @@
     - { option: "project_name", value: service}
     - { option: "username", value: glance}
     - { option: "password", value: "{{ glance_identity_password }}" }
-    - { option: "region", value: "{{ region }}" }
-    - { option: "region_name", value: "{{ region }}" }
+
   notify:
   - restart glance-api
 

@@ -8,7 +8,7 @@
 
 - name: ensure service project is created
   environment: '{{ k3 }}'
-  command: /usr/bin/openstack project create --domain default --description "Service Project" service
+  command: /usr/bin/openstack project create --domain Default --description "Service Project" service
   when: result is failed
 
 - name: verify if demo project has been created
@@ -19,7 +19,7 @@
 
 - name: ensure demo project is created
   environment: '{{k3}}'
-  command: /usr/bin/openstack project create --domain default --description "Demo Project" demo
+  command: /usr/bin/openstack project create --domain Default --description "Demo Project" demo
   when: result is failed
 
 - name: verify if demo user has been created
@@ -30,7 +30,7 @@
 
 - name: ensure demo user is created
   environment: '{{k3}}'
-  command: /usr/bin/openstack user create --domain default demo --password {{ demo_pass }}
+  command: /usr/bin/openstack user create --domain Default demo --password {{ demo_pass }}
   when: result is failed
 
 - name: verify if user role has been created
@@ -57,7 +57,7 @@
 
 - name: ensure glance user is created
   environment: '{{k3}}'
-  command: /usr/bin/openstack user create --domain default glance --password {{ glance_identity_password }}
+  command: /usr/bin/openstack user create --domain Default glance --password {{ glance_identity_password }}
   when: result is failed
 
 - name: ensure admin role is added to glance user
@@ -73,7 +73,7 @@
 
 - name: ensure placement user is created
   environment: '{{k3}}'
-  command: /usr/bin/openstack user create --domain default placement --password {{ placement_identity_password }}
+  command: /usr/bin/openstack user create --domain Default placement --password {{ placement_identity_password }}
   when: result is failed
 
 - name: ensure admin role is added to placement user
@@ -89,7 +89,7 @@
 
 - name: ensure nova user is created
   environment: '{{k3}}'
-  command: /usr/bin/openstack user create --domain default nova --password {{ nova_identity_password }}
+  command: /usr/bin/openstack user create --domain Default nova --password {{ nova_identity_password }}
   when: result is failed
 
 - name: ensure admin role is added to nova user
@@ -105,7 +105,7 @@
 
 - name: ensure neutron user is created
   environment: '{{k3}}'
-  command: /usr/bin/openstack user create --domain default neutron --password {{ neutron_identity_password }}
+  command: /usr/bin/openstack user create --domain Default neutron --password {{ neutron_identity_password }}
   when: result is failed
 
 - name: ensure admin role is added to neutron user
@@ -121,7 +121,7 @@
 
 - name: ensure cinder user is created
   environment: '{{k3}}'
-  command: /usr/bin/openstack user create --domain default cinder --password {{ cinder_identity_password }}
+  command: /usr/bin/openstack user create --domain Default cinder --password {{ cinder_identity_password }}
   when: result is failed
 
 - name: ensure admin role is added to cinder user
@@ -137,7 +137,7 @@
 #
 #- name: ensure manila user is created
 #  environment: '{{k3}}'
-#  command: /usr/bin/openstack user create --domain default manila --password {{ manila_identity_password }}
+#  command: /usr/bin/openstack user create --domain Default manila --password {{ manila_identity_password }}
 #  when: result is failed
 #
 #- name: ensure admin role is added to manila user
@@ -147,7 +147,7 @@
 # Heat
 - name: ensure heat user is created
   environment: '{{k3}}'
-  command: /usr/bin/openstack user create --domain default heat --password {{ heat_identity_password }}
+  command: /usr/bin/openstack user create --domain Default heat --password {{ heat_identity_password }}
   when: result is failed
 
 - name: ensure admin role is added to heat user
@@ -215,7 +215,7 @@
 #
 #- name: ensure trove user is created
 #  environment: '{{k3}}'
-#  command: /usr/bin/openstack user create --domain default trove --password {{ trove_identity_password }}
+#  command: /usr/bin/openstack user create --domain Default trove --password {{ trove_identity_password }}
 #  when: result is failed
 #
 #- name: ensure admin role is added to trove user
@@ -231,7 +231,7 @@
 #
 #- name: ensure magnum user is created
 #  environment: '{{k3}}'
-#  command: /usr/bin/openstack user create --domain default magnum --password {{ magnum_identity_password }}
+#  command: /usr/bin/openstack user create --domain Default magnum --password {{ magnum_identity_password }}
 #  when: result is failed
 #
 #- name: ensure admin role is added to magnum user

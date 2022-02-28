@@ -1,4 +1,15 @@
+- name: ensure keystone database is present
+  mysql_db: name=keystone
 
+- name: ensure keystone database user is present
+  mysql_user:
+    name: keystone
+    host: "{{ item }}"
+    password: "{{ keystone_db_password }}"
+    priv: 'keystone.*:ALL'
+  loop:
+    - '%'
+    - localhost
 
 - name: ensure glance database is present
   mysql_db:
@@ -13,7 +24,7 @@
   loop:
     - '%'
     - localhost
-    - ::1
+    
 
 - name: ensure cinder database is present
   mysql_db: name=cinder
@@ -27,7 +38,7 @@
   loop:
     - '%'
     - localhost
-    - ::1
+    
 
 #- name: ensure manila database is present
 #  mysql_db: name=manila
@@ -41,7 +52,7 @@
 #  loop:
 #    - '%'
 #    - localhost
-#    - ::1
+#    
 
 - name: ensure placement databases is present
   mysql_db: name=placement
@@ -55,7 +66,7 @@
   loop:
     - '%'
     - localhost
-    - ::1
+    
 
 - name: ensure nova, nova_cell0 and nova_api databases are present
   mysql_db: name={{ item }}
@@ -73,7 +84,7 @@
   loop:
     - '%'
     - localhost
-    - ::1
+    
 
 - name: ensure nova database user is present in nova_api
   mysql_user:
@@ -85,7 +96,7 @@
   loop:
     - '%'
     - localhost
-    - ::1
+    
 
 - name: ensure nova database user is present in nova_cell0
   mysql_user:
@@ -97,7 +108,7 @@
   loop:
     - '%'
     - localhost
-    - ::1
+    
 
 - name: ensure neutron database is present
   mysql_db: name=neutron
@@ -111,7 +122,7 @@
   loop:
     - '%'
     - localhost
-    - ::1
+    
                    
 - name: ensure heat database is present
   mysql_db: name=heat
@@ -125,7 +136,7 @@
   loop:
     - '%'
     - localhost
-    - ::1
+    
                    
 #- name: ensure trove database is present
 #  mysql_db: name=trove
@@ -139,7 +150,7 @@
 #  loop:
 #    - '%'
 #    - localhost
-#    - ::1
+#    
 #
 #- name: ensure magnum database is present
 #  mysql_db: name=magnum
@@ -153,5 +164,5 @@
 #  loop:
 #    - '%'
 #    - localhost
-#    - ::1
+#    
 #
