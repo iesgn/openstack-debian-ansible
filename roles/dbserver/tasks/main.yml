@@ -37,6 +37,5 @@
     password: "{{ root_db_password }}"
   loop:
     - "{{ internal_ip }}"
-    - "localhost"
     - 127.0.0.1
 

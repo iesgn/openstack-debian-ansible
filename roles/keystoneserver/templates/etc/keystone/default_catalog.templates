@@ -55,23 +55,23 @@ catalog.{{ region }}.share.adminURL = http://{{ internal_ip }}:8786/v1/$(tenant_
 catalog.{{ region }}.share.internalURL = http://{{ internal_ip }}:8786/v1/$(tenant_id)s
 catalog.{{ region }}.share.name = manila
 
-catalog.{{ region }}.sharev2.publicURL = http://{{ external_ip }}:8786/v2/$(tenant_id)s
-catalog.{{ region }}.sharev2.adminURL = http://{{ internal_ip }}:8786/v2/$(tenant_id)s
-catalog.{{ region }}.sharev2.internalURL = http://{{ internal_ip }}:8786/v2/$(tenant_id)s
-catalog.{{ region }}.sharev2.name = manilav2
+#catalog.{{ region }}.sharev2.publicURL = http://{{ external_ip }}:8786/v2/$(tenant_id)s
+#catalog.{{ region }}.sharev2.adminURL = http://{{ internal_ip }}:8786/v2/$(tenant_id)s
+#catalog.{{ region }}.sharev2.internalURL = http://{{ internal_ip }}:8786/v2/$(tenant_id)s
+#catalog.{{ region }}.sharev2.name = manilav2
 
 catalog.{{ region }}.cloudformation.publicURL = http://{{ external_ip }}:8000/v1
 catalog.{{ region }}.cloudformation.adminURL = http://{{ internal_ip }}:8000/v1
 catalog.{{ region }}.cloudformation.internalURL = http://{{ internal_ip }}:8000/v1
 catalog.{{ region }}.cloudformation.name = heat-cfn
 
-catalog.{{ region }}.database.publicURL = http://{{ external_ip }}:8779/v1.0/$(tenant_id)s
-catalog.{{ region }}.database.adminURL = http://{{ internal_ip }}:8779/v1.0/$(tenant_id)s
-catalog.{{ region }}.database.internalURL = http://{{ internal_ip }}:8779/v1.0/$(tenant_id)s
-catalog.{{ region }}.database.name = trove
+#catalog.{{ region }}.database.publicURL = http://{{ external_ip }}:8779/v1.0/$(tenant_id)s
+#catalog.{{ region }}.database.adminURL = http://{{ internal_ip }}:8779/v1.0/$(tenant_id)s
+#catalog.{{ region }}.database.internalURL = http://{{ internal_ip }}:8779/v1.0/$(tenant_id)s
+#catalog.{{ region }}.database.name = trove
 
-catalog.{{ region }}.container-infra.publicURL = http://{{ external_ip }}:9511/v1
-catalog.{{ region }}.container-infra.adminURL = http://{{ internal_ip }}:9511/v1
-catalog.{{ region }}.container-infra.internalURL = http://{{ internal_ip }}:9511/v1
-catalog.{{ region }}.container-infra.name = magnum
+#catalog.{{ region }}.container-infra.publicURL = http://{{ external_ip }}:9511/v1
+#catalog.{{ region }}.container-infra.adminURL = http://{{ internal_ip }}:9511/v1
+#catalog.{{ region }}.container-infra.internalURL = http://{{ internal_ip }}:9511/v1
+#catalog.{{ region }}.container-infra.name = magnum
 
