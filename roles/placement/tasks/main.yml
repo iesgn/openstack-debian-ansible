@@ -14,6 +14,15 @@
   notify:
   - restart apache2
 
+- name: ensure auth_strategy is set to keystone
+  ini_file:
+    path: /etc/placement/placement.conf
+    section: api
+    option: auth_strategy
+    value: keystone
+  notify:
+  - restart apache2
+
 - name: ensure keystone_authtoken is configured
   ini_file:
     path: /etc/placement/placement.conf
@@ -32,18 +41,11 @@
     - { option: "password", value: "{{ placement_identity_password }}" }
     - { option: "region", value: "{{ region }}" }
     - { option: "region_name", value: "{{ region }}" }
-    - { option: "service_token_roles_required", value: true }
+    - { option: "service_token_roles_required", value: "true" }
   notify:
   - restart apache2
 
-- name: ensure auth_strategy is set to keystone
-  ini_file:
-    path: /etc/placement/placement.conf
-    section: api
-    option: auth_strategy
-    value: keystone
-  notify:
-  - restart apache2
+
 
 - name: ensure placement db is initialized
   command: /usr/bin/placement-manage db sync
