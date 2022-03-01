@@ -9,7 +9,7 @@ k3:
   OS_USER_DOMAIN_NAME: Default
   OS_PROJECT_DOMAIN_NAME: Default
   #OS_AUTH_URL: 'http://192.168.99.101:5000/v3'
-  OS_AUTH_URL: 'http://172.29.236.2:5000/v3'
+  OS_AUTH_URL: 'http://172.29.236.1:5000/v3'
   OS_IDENTITY_API_VERSION: 3 
 
 # Rabbit
@@ -17,7 +17,7 @@ rabbit_user: "openstack"
 rabbit_password: "asdasd"
 
 # Controller FQDN
-controller_fqdn: controller
+controller_fqdn: controller1
 
 # # MySQL passwords
 root_db_password: "asdasd" 
