@@ -1,0 +1,30 @@
+all:
+  children:
+    controller_nodes:
+      hosts:
+        controller:
+          ansible_host: 172.22.1.44
+          ansible_ssh_user: usuario
+          external_ip: 172.22.1.44
+          internal_ip: 172.29.236.1
+    storage_nodes:
+      hosts:
+        controller:
+          ansible_host: 172.22.1.44
+          ansible_ssh_user: usuario
+          external_ip: 172.22.1.44
+          internal_ip: 172.29.236.1
+    network_nodes:
+      hosts:
+        controller:
+          ansible_host: 172.22.1.44
+          ansible_ssh_user: usuario
+          external_ip: 172.22.1.44
+          internal_ip: 172.29.236.1
+    compute_nodes:
+      hosts:
+        compute:
+          ansible_host: 172.22.9.46
+          ansible_ssh_user: usuario
+          external_ip: 172.22.9.46
+          internal_ip: 172.29.236.2
