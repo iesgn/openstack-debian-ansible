@@ -73,9 +73,9 @@
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   loop:
-    - { option: "enable_vxlan", value: true }
+    - { option: "enable_vxlan", value: "true" }
     - { option: "local_ip", value: "{{ internal_ip }}" }
-    - { option: "l2_population", value: true }
+    - { option: "l2_population", value: "true" }
   notify:
   - restart neutron-services
 
@@ -86,7 +86,7 @@
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   loop:
-    - { option: "enable_security_group", value: true }
+    - { option: "enable_security_group", value: "true" }
     - { option: "firewall_driver", value: neutron.agent.linux.iptables_firewall.IptablesFirewallDriver }
   notify:
   - restart neutron-services

@@ -62,7 +62,7 @@
     - { option: "password", value: "{{ neutron_identity_password }}" }
     - { option: "region", value: "{{ region }}" }    
     - { option: "region_name", value: "{{ region }}" }
-    - { option: "service_token_roles_required", value: true }
+    #- { option: "service_token_roles_required", value: true }
   notify: 
   - restart neutron-services
 
@@ -107,7 +107,7 @@
     - { option: "extension_drivers", value: port_security }
     - { option: "flat_networks", value: provider }
     - { option: "vni_ranges", value: '1:1000' }
-    - { option: "enable_ipset", value: true }
+    - { option: "enable_ipset", value: "true" }
   notify:
   - restart neutron-services
 
@@ -131,9 +131,9 @@
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   loop:
-    - { option: "enable_vxlan", value: true }
+    - { option: "enable_vxlan", value: "true" }
     - { option: "local_ip", value: "{{ internal_ip }}" }
-    - { option: "l2_population", value: true }
+    - { option: "l2_population", value: "true" }
   notify:
   - restart neutron-services
 
@@ -144,7 +144,7 @@
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   loop:
-    - { option: "enable_security_group", value: true }
+    - { option: "enable_security_group", value: "true" }
     - { option: "firewall_driver", value: neutron.agent.linux.iptables_firewall.IptablesFirewallDriver }
   notify:
   - restart neutron-services
@@ -185,21 +185,21 @@
   loop:
     - { option: "interface_driver", value: linuxbridge }
     - { option: "dhcp_driver", value: neutron.agent.linux.dhcp.Dnsmasq }
-    - { option: "enable_isolated_metadata", value: true }
+    - { option: "enable_isolated_metadata", value: "true" }
   notify:
   - restart neutron-services
 
-- name: configure the metadata agent
-  ini_file:
-    path: /etc/neutron/metadata_agent.ini
-    section: DEFAULT
-    option: "{{ item.option }}"
-    value: "{{ item.value }}"
-  loop:
-    - { option: "nova_metadata_host", value: "{{ internal_ip }}" }
-    - { option: "metadata_proxy_shared_secret", value: "{{ shared_secret }}" }
-  notify:
-  - restart neutron-services
+#- name: configure the metadata agent
+#  ini_file:
+#    path: /etc/neutron/metadata_agent.ini
+#    section: DEFAULT
+#    option: "{{ item.option }}"
+#    value: "{{ item.value }}"
+#  loop:
+#    - { option: "nova_metadata_host", value: "{{ internal_ip }}" }
+#    - { option: "metadata_proxy_shared_secret", value: "{{ shared_secret }}" }
+#  notify:
+#  - restart neutron-services
 
 - name: ensure neutron db is initialized
   command: neutron-db-manage --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade head
