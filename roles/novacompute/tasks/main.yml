@@ -11,8 +11,8 @@
     - { option: "transport_url",
     value: 'rabbit://{{ rabbit_user }}:{{ rabbit_password }}@{{ hostvars["controller"]["internal_ip"] }}:5672/'}
     - { option: "my_ip", value: "{{ internal_ip }}" }
-    - { option: "use_neutron", value: true }
-    - { option: "firewall_driver", value: nova.virt.firewall.NoopFirewallDriver }
+  #  - { option: "use_neutron", value: true }
+  #  - { option: "firewall_driver", value: nova.virt.firewall.NoopFirewallDriver }
   notify: 
   - restart nova-compute
 
@@ -23,8 +23,8 @@
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   loop:
-    - { option: "www_authenticate_uri", value: 'http://{{ hostvars["controller"]["internal_ip"] }}:5000' }
-    - { option: "auth_url", value: 'http://{{ hostvars["controller"]["internal_ip"] }}:5000' }
+    - { option: "www_authenticate_uri", value: 'http://{{ hostvars["controller"]["internal_ip"] }}:5000/' }
+    - { option: "auth_url", value: 'http://{{ hostvars["controller"]["internal_ip"] }}:5000/' }
     - { option: "memcached_servers", value: '{{ hostvars["controller"]["internal_ip"] }}:11211' }
     - { option: "auth_type", value: password }
     - { option: "project_domain_name", value: Default}
@@ -87,7 +87,7 @@
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   loop:
-    - { option: "auth_url", value: 'http://{{ hostvars["controller"]["internal_ip"] }}:5000' }
+    - { option: "auth_url", value: 'http://{{ hostvars["controller"]["internal_ip"] }}:5000/v3' }
     - { option: "auth_type", value: password }
     - { option: "project_domain_name", value: Default}
     - { option: "user_domain_name", value: Default}

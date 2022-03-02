@@ -5,8 +5,7 @@
     - nova-conductor
     - nova-scheduler
     - nova-novncproxy
-    
-#    
+     
 
 - name: ensure nova_api database connections is configured
   ini_file:
@@ -36,24 +35,21 @@
     - { option: "transport_url",
     value: 'rabbit://{{ rabbit_user }}:{{ rabbit_password }}@{{ internal_ip }}:5672/'}
     - { option: "my_ip", value: '{{ internal_ip }}' }
-# Following options are deprecated, so no included anymore
-#    - { option: "use_neutron", value: true }
-#    - { option: "firewall_driver", value: nova.virt.firewall.NoopFirewallDriver }
   notify: 
   - restart nova-services
 
-- name: unset deprecated options
-  ini_file:
-    path: /etc/nova/nova.conf
-    section: DEFAULT
-    option: "{{ item.option }}"
-    state: absent
-  loop:
-    - { option: "linuxnet_interface_driver" }
-    - { option: "use_neutron" }
-    - { option: "firewall_driver" }
-  notify: 
-  - restart nova-services
+#- name: unset deprecated options
+#  ini_file:
+#    path: /etc/nova/nova.conf
+#    section: DEFAULT
+#    option: "{{ item.option }}"
+#    state: absent
+#  loop:
+#    - { option: "linuxnet_interface_driver" }
+#    - { option: "use_neutron" }
+#    - { option: "firewall_driver" }
+#  notify: 
+#  - restart nova-services
     
 - name: configure keystone_authtoken section
   ini_file:
@@ -73,7 +69,7 @@
     - { option: "password", value: "{{ nova_identity_password }}" }
     - { option: "region", value: "{{ region }}" }    
     - { option: "region_name", value: "{{ region }}" }
-    - { option: "service_token_roles_required", value: true }
+  #  - { option: "service_token_roles_required", value: true }
   notify: 
   - restart nova-services
 
@@ -85,6 +81,8 @@
     value: keystone
   notify:
   - restart nova-services
+
+  # Y la sección vnc
 
 - name: configure spice section
   ini_file:
@@ -127,7 +125,7 @@
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   loop:
-    - { option: "auth_url", value: 'http://{{ internal_ip }}:5000' }
+    - { option: "auth_url", value: 'http://{{ internal_ip }}:5000/v3' }
     - { option: "auth_type", value: password }
     - { option: "project_domain_name", value: Default}
     - { option: "user_domain_name", value: Default}
