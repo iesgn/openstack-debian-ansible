@@ -47,12 +47,13 @@ openstack router add subnet router_demo subred_demo
 
 ## Crear instancia
 
+```
 openstack server create --flavor m1.tiny \
  --image "Cirros 0.5.1" \
  --security-group default \
  --network "red_demo" \
  instancia_prueba
-
+```
 
 
 
