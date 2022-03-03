@@ -17,7 +17,7 @@ openstack image set --public "Cirros 0.5.1"
 
 ```
 openstack flavor create m1.tiny --id 1 \
-    --ram 512 --disk 0 --vcpus 1
+    --ram 512 --disk 10 --vcpus 1
 ```
 
 ## Crear red externa
@@ -28,9 +28,9 @@ openstack network create  --share --external \
   --provider-network-type flat ext-net
 
 openstack subnet create --network ext-net \
-  --allocation-pool start=192.168.99.129,end=192.168.99.158 \
-  --dns-nameserver 1.1.1.1 --gateway 192.168.99.1 \
-  --subnet-range 192.168.99.128/27 ext-subnet
+  --allocation-pool start=172.22.200.1,end=172.22.201.254 \
+  --dns-nameserver 192.168.202.2 --gateway 172.22.0.1 \
+  --subnet-range 172.22.0.0/16 ext-subnet
 ```
 
 ## Crear red y router demo

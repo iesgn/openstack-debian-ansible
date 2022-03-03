@@ -56,7 +56,8 @@
 - name: register the interface name associated to the external_ip
   shell: ip -o a|grep {{ external_ip }}|awk '{print $2}'
   register: external_interface
-  
+
+
 - name: configure the Linux bridge agent. linux_bridge section
   ini_file:
     path: /etc/neutron/plugins/ml2/linuxbridge_agent.ini 

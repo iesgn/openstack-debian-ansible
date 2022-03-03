@@ -17,7 +17,7 @@ rabbit_user: "openstack"
 rabbit_password: "asdasd"
 
 # Controller FQDN
-controller_fqdn: controller1
+controller_fqdn: controller
 
 # # MySQL passwords
 root_db_password: "asdasd" 

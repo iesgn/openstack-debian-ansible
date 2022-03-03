@@ -1,3 +1,4 @@
+# quitar apache2
 - name: ensure placement-api, apache2 and mod-wsgi-py3 are installed
   apt: name={{ item }}
   loop:
