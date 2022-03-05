@@ -1,11 +1,9 @@
 # quitar apache2
-- name: ensure placement-api, apache2 and mod-wsgi-py3 are installed
+- name: ensure placement-api is installed
   apt: name={{ item }}
   loop:
     - placement-api
-    - apache2
-    - libapache2-mod-wsgi-py3
-
+    
 - name: ensure placement database connection is configured
   ini_file:
     path: /etc/placement/placement.conf
@@ -13,7 +11,7 @@
     option: connection
     value: mysql+pymysql://placement:{{ placement_db_password }}@{{ internal_ip }}/placement
   notify:
-  - restart apache2
+  - restart placement
 
 - name: ensure auth_strategy is set to keystone
   ini_file:
@@ -22,7 +20,7 @@
     option: auth_strategy
     value: keystone
   notify:
-  - restart apache2
+  - restart placement
 
 - name: ensure keystone_authtoken is configured
   ini_file:
@@ -44,27 +42,12 @@
     - { option: "region_name", value: "{{ region }}" }
     - { option: "service_token_roles_required", value: "true" }
   notify:
-  - restart apache2
+  - restart placement
 
 
 
 - name: ensure placement db is initialized
   command: /usr/bin/placement-manage db sync
   notify:
-  - restart apache2
+  - restart placement
 
-- name: ensure placement-api service is stopped and disabled
-  service: name=placement-api state=stopped enabled=no
-
-- name: ensure wsgi-placement.conf is present
-  template:
-    src: etc/apache2/sites-available/wsgi-placement.conf
-    dest: /etc/apache2/sites-available/wsgi-placement.conf
-    owner: root
-    group: root
-    mode: 0644
-  notify: restart apache2
-
-- name: ensure virtual host wsgi is enabled
-  shell: /usr/sbin/a2ensite wsgi-placement.conf
-  notify: restart apache2

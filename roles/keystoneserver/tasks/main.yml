@@ -45,7 +45,7 @@
     section: catalog
     option: driver
     value: templated
-
+  
 - name: ensure keystone template catalog is updated
   template:
     src: etc/keystone/default_catalog.templates
