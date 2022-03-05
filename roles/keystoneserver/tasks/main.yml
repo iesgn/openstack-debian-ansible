@@ -9,6 +9,7 @@
     section: database
     option: connection
     value: mysql+pymysql://keystone:{{ keystone_db_password }}@{{ internal_ip }}/keystone
+  notify: restart keystone    
 
 - name: ensure keystone is configured to use fernet tokens
   ini_file:
@@ -16,6 +17,7 @@
     section: token
     option: provider
     value: fernet
+  notify: restart keystone    
 
 - name: ensure cache is enabled in keystone
   ini_file:
@@ -23,6 +25,7 @@
     section: cache
     option: enabled
     value: 'true'
+  notify: restart keystone    
 
 - name: ensure dogfile.cache.memcached is configured as backend for cache
   ini_file:
@@ -30,6 +33,7 @@
     section: cache
     option: backend
     value: dogpile.cache.memcached
+  notify: restart keystone    
 
 - name: ensure memcached url is set for dogfile
   ini_file:
@@ -37,7 +41,7 @@
     section: cache
     option: backend_argument
     value: url:127.0.0.1:11211
-
+  notify: restart keystone    
 
 - name: ensure keystone is configured to use template catalog
   ini_file:
@@ -45,7 +49,8 @@
     section: catalog
     option: driver
     value: templated
-  
+  notify: restart keystone    
+
 - name: ensure keystone template catalog is updated
   template:
     src: etc/keystone/default_catalog.templates
