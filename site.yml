@@ -6,81 +6,81 @@
 #  roles:
 #    - role: common
 #
-- hosts: controller_nodes
-  become: true
-  gather_facts: no
-  roles:
-   - role: dbserver
-
-- hosts: controller_nodes
-  become: true
-  gather_facts: no
-  roles:
-   - role: dbserver_population
-
-- hosts: controller_nodes
-  become: true
-  gather_facts: no
-  roles:
-   - role: rabbitserver
-
-
-- hosts: controller_nodes
-  become: true
-  gather_facts: no
-  roles:
-   - role: etcd
-
-- hosts: all
-  become: true
-  gather_facts: no
-  roles:
-    - role: openstackclient
+#- hosts: controller_nodes
+#  become: true
+#  gather_facts: no
+#  roles:
+#   - role: dbserver
+#
+#- hosts: controller_nodes
+#  become: true
+#  gather_facts: no
+#  roles:
+#   - role: dbserver_population
+#
+#- hosts: controller_nodes
+#  become: true
+#  gather_facts: no
+#  roles:
+#   - role: rabbitserver
+#
+#
+#- hosts: controller_nodes
+#  become: true
+#  gather_facts: no
+#  roles:
+#   - role: etcd
+#
+#- hosts: all
+#  become: true
+#  gather_facts: no
+#  roles:
+#    - role: openstackclient
 - hosts: controller_nodes
   become: true
   gather_facts: no
   roles:
     - role: keystoneserver
-     
-- hosts: controller_nodes
-  become: true
-  gather_facts: no
-  roles:
-    - role: keystone_population
-
-- hosts: storage_nodes
-  become: true
-  gather_facts: no
-  roles: 
-    - role: glanceserver
-- hosts: controller_nodes
-  become: true
-  gather_facts: no
-  roles: 
-    - role: placement
-- hosts: controller_nodes
-  become: true
-  gather_facts: no
-  roles: 
-    - role: novaserver
-
-- hosts: compute_nodes
-  become: true
-  gather_facts: no
-  roles:
-    - role: novacompute
-
-- hosts: controller_nodes
-  become: true
-  gather_facts: no
-  roles:
-   - role: neutronserver
-
-- hosts: compute_nodes
-  become: true
-  gather_facts: no
-  roles:
-    - role: neutron-agents-compute
+#     
+#- hosts: controller_nodes
+#  become: true
+#  gather_facts: no
+#  roles:
+#    - role: keystone_population
+#
+#- hosts: storage_nodes
+#  become: true
+#  gather_facts: no
+#  roles: 
+#    - role: glanceserver
+#- hosts: controller_nodes
+#  become: true
+#  gather_facts: no
+#  roles: 
+#    - role: placement
+#- hosts: controller_nodes
+#  become: true
+#  gather_facts: no
+#  roles: 
+#    - role: novaserver
+#
+#- hosts: compute_nodes
+#  become: true
+#  gather_facts: no
+#  roles:
+#    - role: novacompute
+#
+#- hosts: controller_nodes
+#  become: true
+#  gather_facts: no
+#  roles:
+#   - role: neutronserver
+#
+#- hosts: compute_nodes
+#  become: true
+#  gather_facts: no
+#  roles:
+#    - role: neutron-agents-compute
 #
 #- hosts: controller_nodes
 #  become: true
