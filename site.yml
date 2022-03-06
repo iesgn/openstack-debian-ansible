@@ -1,4 +1,4 @@
----
+#---
 #
 #- hosts: all
 #  become: true
@@ -53,11 +53,11 @@
 #  gather_facts: no
 #  roles: 
 #    - role: glanceserver
-- hosts: controller_nodes
-  become: true
-  gather_facts: no
-  roles: 
-    - role: placement
+#- hosts: controller_nodes
+#  become: true
+#  gather_facts: no
+#  roles: 
+#    - role: placement
 #- hosts: controller_nodes
 #  become: true
 #  gather_facts: no
@@ -69,7 +69,14 @@
 #  gather_facts: no
 #  roles:
 #    - role: novacompute
-#
+
+- hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles: 
+    - role: novadiscover
+
+
 #- hosts: controller_nodes
 #  become: true
 #  gather_facts: no

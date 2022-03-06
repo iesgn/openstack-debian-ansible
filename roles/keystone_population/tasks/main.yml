@@ -63,6 +63,9 @@
 - name: ensure admin role is added to glance user
   environment: '{{k3}}'
   command: openstack role add --project service --user glance admin
+
+
+
   
 # Placement
 - name: verify if placement user has been created

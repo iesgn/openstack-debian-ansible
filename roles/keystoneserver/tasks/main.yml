@@ -62,13 +62,14 @@
 
   
 - name: DB sync for keystone
-  shell: /usr/bin/keystone-manage db_sync
+  shell: keystone-manage db_sync
 
 - name: Fernet keys initialization
   shell: /usr/bin/keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone && keystone-manage credential_setup --keystone-user keystone --keystone-group keystone
 
 - name: bootstrap identity service
-  shell: keystone-manage bootstrap --bootstrap-password {{ admin_pass }} --bootstrap-region-id {{ region }}
-  
+  shell: keystone-manage bootstrap --bootstrap-password {{ admin_pass }} --bootstrap-admin-url http://{{ internal_ip }}:5000/v3/ --bootstrap-internal-url http://{{ internal_ip }}:5000/v3/  --bootstrap-public-url http://{{ controller_fqdn }}:5000/v3/   --bootstrap-region-id {{ region }}
+  register: kb
+  failed_when: "kb.rc not in [ 0, 1 ]"
  
   

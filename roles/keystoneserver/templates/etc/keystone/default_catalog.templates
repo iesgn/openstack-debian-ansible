@@ -16,17 +16,17 @@ catalog.{{ region }}.placement.internalURL = http://{{ internal_ip }}:8778
 catalog.{{ region }}.placement.descrition = "Placement Service"
 catalog.{{ region }}.placement.name = placement
 
-catalog.{{ region }}.volumev2.publicURL = http://{{ external_ip }}:8776/v2/$(project_id)s
-catalog.{{ region }}.volumev2.adminURL = http://{{ internal_ip }}:8776/v2/$(project_id)s
-catalog.{{ region }}.volumev2.internalURL = http://{{ internal_ip }}:8776/v2/$(project_id)s
-catalog.{{ region }}.volumev2.descrition = "Block Storage Service v2"
-catalog.{{ region }}.volumev2.name = cinderv2
-
-catalog.{{ region }}.volumev3.publicURL = http://{{ external_ip }}:8776/v3/$(project_id)s
-catalog.{{ region }}.volumev3.adminURL = http://{{ internal_ip }}:8776/v3/$(project_id)s
-catalog.{{ region }}.volumev3.internalURL = http://{{ internal_ip }}:8776/v3/$(project_id)s
-catalog.{{ region }}.volumev3.descrition = "Block Storage Service v3"
-catalog.{{ region }}.volumev3.name = cinderv3
+#catalog.{{ region }}.volumev2.publicURL = http://{{ external_ip }}:8776/v2/$(project_id)s
+#catalog.{{ region }}.volumev2.adminURL = http://{{ internal_ip }}:8776/v2/$(project_id)s
+#catalog.{{ region }}.volumev2.internalURL = http://{{ internal_ip }}:8776/v2/$(project_id)s
+#catalog.{{ region }}.volumev2.descrition = "Block Storage Service v2"
+#catalog.{{ region }}.volumev2.name = cinderv2
+#
+#catalog.{{ region }}.volumev3.publicURL = http://{{ external_ip }}:8776/v3/$(project_id)s
+#catalog.{{ region }}.volumev3.adminURL = http://{{ internal_ip }}:8776/v3/$(project_id)s
+#catalog.{{ region }}.volumev3.internalURL = http://{{ internal_ip }}:8776/v3/$(project_id)s
+#catalog.{{ region }}.volumev3.descrition = "Block Storage Service v3"
+#catalog.{{ region }}.volumev3.name = cinderv3
 
 catalog.{{ region }}.ec2.publicURL = http://{{ external_ip }}:8773/services/Cloud
 catalog.{{ region }}.ec2.adminURL = http://{{ internal_ip }}:8773/services/Admin
@@ -45,25 +45,25 @@ catalog.{{ region }}.network.internalURL = http://{{ internal_ip }}:9696
 catalog.{{ region }}.network.descrition = "Networking Service"
 catalog.{{ region }}.network.name = neutron
 
-catalog.{{ region }}.orchestration.publicURL = http://{{ external_ip }}:8004/v1/$(tenant_id)s
-catalog.{{ region }}.orchestration.adminURL = http://{{ internal_ip }}:8004/v1/$(tenant_id)s
-catalog.{{ region }}.orchestration.internalURL = http://{{ internal_ip }}:8004/v1/$(tenant_id)s
-catalog.{{ region }}.orchestration.name = heat
+#catalog.{{ region }}.orchestration.publicURL = http://{{ external_ip }}:8004/v1/$(tenant_id)s
+#catalog.{{ region }}.orchestration.adminURL = http://{{ internal_ip }}:8004/v1/$(tenant_id)s
+#catalog.{{ region }}.orchestration.internalURL = http://{{ internal_ip }}:8004/v1/$(tenant_id)s
+#catalog.{{ region }}.orchestration.name = heat
 
-catalog.{{ region }}.share.publicURL = http://{{ external_ip }}:8786/v1/$(tenant_id)s
-catalog.{{ region }}.share.adminURL = http://{{ internal_ip }}:8786/v1/$(tenant_id)s
-catalog.{{ region }}.share.internalURL = http://{{ internal_ip }}:8786/v1/$(tenant_id)s
-catalog.{{ region }}.share.name = manila
+#catalog.{{ region }}.share.publicURL = http://{{ external_ip }}:8786/v1/$(tenant_id)s
+#catalog.{{ region }}.share.adminURL = http://{{ internal_ip }}:8786/v1/$(tenant_id)s
+#catalog.{{ region }}.share.internalURL = http://{{ internal_ip }}:8786/v1/$(tenant_id)s
+#catalog.{{ region }}.share.name = manila
 
 #catalog.{{ region }}.sharev2.publicURL = http://{{ external_ip }}:8786/v2/$(tenant_id)s
 #catalog.{{ region }}.sharev2.adminURL = http://{{ internal_ip }}:8786/v2/$(tenant_id)s
 #catalog.{{ region }}.sharev2.internalURL = http://{{ internal_ip }}:8786/v2/$(tenant_id)s
 #catalog.{{ region }}.sharev2.name = manilav2
 
-catalog.{{ region }}.cloudformation.publicURL = http://{{ external_ip }}:8000/v1
-catalog.{{ region }}.cloudformation.adminURL = http://{{ internal_ip }}:8000/v1
-catalog.{{ region }}.cloudformation.internalURL = http://{{ internal_ip }}:8000/v1
-catalog.{{ region }}.cloudformation.name = heat-cfn
+#catalog.{{ region }}.cloudformation.publicURL = http://{{ external_ip }}:8000/v1
+#catalog.{{ region }}.cloudformation.adminURL = http://{{ internal_ip }}:8000/v1
+#catalog.{{ region }}.cloudformation.internalURL = http://{{ internal_ip }}:8000/v1
+#catalog.{{ region }}.cloudformation.name = heat-cfn
 
 #catalog.{{ region }}.database.publicURL = http://{{ external_ip }}:8779/v1.0/$(tenant_id)s
 #catalog.{{ region }}.database.adminURL = http://{{ internal_ip }}:8779/v1.0/$(tenant_id)s
