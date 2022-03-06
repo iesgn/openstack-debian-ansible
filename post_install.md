@@ -17,7 +17,7 @@ openstack image set --public "Cirros 0.5.1"
 
 ```
 openstack flavor create m1.tiny --id 1 \
-    --ram 512 --disk 10 --vcpus 1
+    --ram 512 --disk 1 --vcpus 1
 ```
 
 ## Crear red externa
@@ -55,5 +55,15 @@ openstack server create --flavor m1.tiny \
  instancia_prueba
 ```
 
+```
+openstack security group rule create --protocol tcp --remote-ip 0.0.0.0/0 --dst-port 80 default
+
+openstack security group rule create --protocol icmp  default
+```
 
 
+```
+openstack floating ip create ext-net
+
+openstack server add floating ip instancia_prueba <IP>
+```
