@@ -28,9 +28,9 @@
     value: 'rabbit://{{ rabbit_user }}:{{ rabbit_password }}@{{ internal_ip }}:5672/'}
     - { option: "core_plugin", value: ml2 }
     - { option: "service_plugins", value: router }
-    - { option: "allow_overlapping_ips", value: true }
-    - { option: "notify_nova_on_port_status_changes", value: true }
-    - { option: "notify_nova_on_port_data_changes", value: true }
+    - { option: "allow_overlapping_ips", value: "true" }
+    - { option: "notify_nova_on_port_status_changes", value: "true" }
+    - { option: "notify_nova_on_port_data_changes", value: "true" }
     - { option: "auth_strategy", value: keystone }
   notify: 
   - restart neutron-services
@@ -62,7 +62,7 @@
     - { option: "password", value: "{{ neutron_identity_password }}" }
     - { option: "region", value: "{{ region }}" }    
     - { option: "region_name", value: "{{ region }}" }
-    #- { option: "service_token_roles_required", value: true }
+    #- { option: "service_token_roles_required", value: "true" }
   notify: 
   - restart neutron-services
 
@@ -158,7 +158,7 @@
 - name: set net.bridge.bridge-nf-call-iptables
   sysctl:
     name: net.bridge.bridge-nf-call-iptables
-    value: 1
+    value: '1'
     reload: yes
 
 - name: set net.bridge.bridge-nf-call-ip6tables
