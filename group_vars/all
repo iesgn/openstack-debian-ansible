@@ -1,6 +1,3 @@
-# Controller
-controller: jupiter
-
 # Common
 timezone: Europe/Madrid
 
@@ -11,7 +8,7 @@ k3:
   OS_PROJECT_NAME: admin
   OS_USER_DOMAIN_NAME: Default
   OS_PROJECT_DOMAIN_NAME: Default
-  OS_AUTH_URL: 'http://{{controller}}:5000/v3'
+  OS_AUTH_URL: 'http://192.168.122.1:5000/v3'
     OS_IDENTITY_API_VERSION: 3 
 
 # Rabbit
