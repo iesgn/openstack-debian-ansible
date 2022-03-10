@@ -6,8 +6,7 @@
     path: /etc/glance/glance-api.conf
     section: database
     option: connection
-    value: mysql+pymysql://glance:{{ glance_db_password }}@{{ hostvars[item]["internal_ip"] }}/glance
-  with_items: "{{ groups.controller_nodes }}"
+    value: mysql+pymysql://glance:{{ glance_db_password }}@{{ controller }}/glance
   notify:
   - restart glance-api
 
@@ -18,9 +17,9 @@
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   loop:
-    - { option: "www_authenticate_uri", value: 'http://{{ hostvars[item]["internal_ip"] }}:5000' }
-    - { option: "auth_url", value: 'http://{{ hostvars[item]["internal_ip"] }}:5000' }
-    - { option: "memcached_servers", value: '{{ hostvars[item]["internal_ip"] }}:11211' }
+    - { option: "www_authenticate_uri", value: 'http://{{ controller }}:5000' }
+    - { option: "auth_url", value: 'http://{{ controller }}:5000' }
+    - { option: "memcached_servers", value: '{{ controller }}:11211' }
     - { option: "auth_type", value: password }
     - { option: "project_domain_name", value: Default}
     - { option: "user_domain_name", value: Default}
@@ -29,7 +28,6 @@
     - { option: "password", value: "{{ glance_identity_password }}" }
     - { option: "region", value: "{{ region }}" }
     - { option: "region_name", value: "{{ region }}" }
-  with_items: "{{ groups.controller_nodes }}"
   notify:
   - restart glance-api
 

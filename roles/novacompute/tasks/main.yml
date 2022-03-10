@@ -23,9 +23,9 @@
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   loop:
-    - { option: "www_authenticate_uri", value: 'http://{{ hostvars[items]["internal_ip"] }}:5000/' }
-    - { option: "auth_url", value: 'http://{{ hostvars[items]["internal_ip"] }}:5000/' }
-    - { option: "memcached_servers", value: '{{ hostvars[items]["internal_ip"] }}:11211' }
+    - { option: "www_authenticate_uri", value: 'http://{{ controller }}:5000/' }
+    - { option: "auth_url", value: 'http://{{ controller }}:5000/' }
+    - { option: "memcached_servers", value: '{{ controller }}:11211' }
     - { option: "auth_type", value: password }
     - { option: "project_domain_name", value: Default}
     - { option: "user_domain_name", value: Default}
@@ -34,7 +34,6 @@
     - { option: "password", value: "{{ nova_identity_password }}" }
     - { option: "region", value: "{{ region }}" }    
     - { option: "region_name", value: "{{ region }}" }    
-  with_items: "{{ groups.controller_nodes }}"
   notify: 
   - restart nova-compute
 
@@ -68,8 +67,7 @@
     path: /etc/nova/nova.conf
     section: glance
     option: api_servers
-    value: 'http://{{ hostvars[items]["internal_ip"] }}:9292'
-  with_items: "{{ groups.controller_nodes }}"
+    value: 'http://{{ controller }}:9292'
   notify:
   - restart nova-compute
 
@@ -89,7 +87,7 @@
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   loop:
-    - { option: "auth_url", value: 'http://{{ hostvars[items]["internal_ip"] }}:5000/v3' }
+    - { option: "auth_url", value: 'http://{{ controller }}:5000/v3' }
     - { option: "auth_type", value: password }
     - { option: "project_domain_name", value: Default}
     - { option: "user_domain_name", value: Default}
@@ -97,8 +95,7 @@
     - { option: "username", value: placement}
     - { option: "password", value: "{{ placement_identity_password }}" }
     - { option: "region", value: "{{ region }}" }    
-    - { option: "region_name", value: "{{ region }}" }   
-  with_items: "{{ groups.controller_nodes }}" 
+    - { option: "region_name", value: "{{ region }}" }    
   notify: 
   - restart nova-compute
 
@@ -109,7 +106,7 @@
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   loop:
-    - { option: "auth_url", value: 'http://{{ hostvars[items]["internal_ip"] }}:5000' }
+    - { option: "auth_url", value: 'http://{{ controller }}:5000' }
     - { option: "auth_type", value: password }
     - { option: "project_domain_name", value: Default}
     - { option: "user_domain_name", value: Default}
@@ -118,6 +115,5 @@
     - { option: "password", value: "{{ neutron_identity_password }}" }
     - { option: "region", value: "{{ region }}" }
     - { option: "region_name", value: "{{ region }}" }
-  with_items: "{{ groups.controller_nodes }}"
   notify:
   - restart nova-compute

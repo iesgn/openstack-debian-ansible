@@ -1,6 +1,11 @@
 # Common
 timezone: Europe/Madrid
 
+# Controller 
+controller: jupiter
+controller_fqdn: jupiter
+
+
 # KEYSTONE_3
 k3:
   OS_USERNAME: admin
@@ -14,9 +19,6 @@ k3:
 # Rabbit
 rabbit_user: "openstack"
 rabbit_password: "asdasd"
-
-# Controller FQDN
-controller_fqdn: jupiter
 
 # # MySQL passwords
 root_db_password: "asdasd" 
