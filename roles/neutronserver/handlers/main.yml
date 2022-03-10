@@ -2,7 +2,5 @@
   service: name={{ item }} state=restarted
   loop:
     - neutron-api
-    - neutron-linuxbridge-agent
-    - neutron-dhcp-agent
     - neutron-metadata-agent
     - neutron-l3-agent

@@ -164,7 +164,7 @@
 - name: set net.bridge.bridge-nf-call-ip6tables
   sysctl:
     name: net.bridge.bridge-nf-call-ip6tables
-    value: 1
+    value: '1'
     reload: yes
 
 #- name: configure the layer 3 agent
