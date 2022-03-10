@@ -2,29 +2,34 @@ all:
   children:
     controller_nodes:
       hosts:
-        controller:
-          ansible_host: 172.22.1.50
+        jupiter:
+          ansible_host: 192.168.122.1
           ansible_ssh_user: usuario
-          external_ip: 172.22.1.50
-          internal_ip: 172.29.236.1
+          external_ip: 172.22.122.1
+          internal_ip: 192.168.122.1
     storage_nodes:
       hosts:
-        controller:
-          ansible_host: 172.22.1.50
+        jupiter:
+          ansible_host: 192.168.122.1
           ansible_ssh_user: usuario
-          external_ip: 172.22.1.50
-          internal_ip: 172.29.236.1
+          external_ip: 172.22.122.1
+          internal_ip: 192.168.122.1
     network_nodes:
       hosts:
-        controller:
-          ansible_host: 172.22.1.50
+        corot:
+          ansible_host: 192.168.122.2
           ansible_ssh_user: usuario
-          external_ip: 172.22.1.50
-          internal_ip: 172.29.236.1
+          external_ip: 172.22.122.2
+          internal_ip: 192.168.122.2
     compute_nodes:
       hosts:
-        compute:
-          ansible_host: 172.22.0.24
+        io:
+          ansible_host: 192.168.122.3
           ansible_ssh_user: usuario
-          external_ip: 172.22.0.24
-          internal_ip: 172.29.236.2
+          external_ip: 172.22.122.3
+          internal_ip: 192.168.122.3
+        europa:
+          ansible_host: 192.168.122.4
+          ansible_ssh_user: usuario
+          external_ip: 172.22.122.4
+          internal_ip: 192.168.122.4
