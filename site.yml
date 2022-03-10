@@ -37,7 +37,7 @@
   roles:
     - role: openstackclient
 
- hosts: controller_nodes
+- hosts: controller_nodes
   become: true
   gather_facts: no
   roles:
