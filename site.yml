@@ -49,32 +49,35 @@
   roles:
     - role: keystone_population
 
-#- hosts: storage_nodes
-#  become: true
-#  gather_facts: no
-#  roles: 
-#    - role: glanceserver
-#- hosts: controller_nodes
-#  become: true
-#  gather_facts: no
-#  roles: 
-#    - role: placement
-#- hosts: controller_nodes
-#  become: true
-#  gather_facts: no
-#  roles: 
-#    - role: novaserver
-#
-#- hosts: compute_nodes
-#  become: true
-#  gather_facts: no
-#  roles:
-#    - role: novacompute
-#- hosts: controller_nodes
-#  become: true
-#  gather_facts: no
-#  roles: 
-#    - role: novadiscover
+- hosts: storage_nodes
+  become: true
+  gather_facts: no
+  roles: 
+    - role: glanceserver
+
+- hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles: 
+    - role: placement
+- hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles: 
+    - role: novaserver
+
+- hosts: compute_nodes
+  become: true
+  gather_facts: no
+  roles:
+    - role: novacompute
+
+- hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles: 
+    - role: novadiscover
+
 #- hosts: controller_nodes
 #  become: true
 #  gather_facts: no
