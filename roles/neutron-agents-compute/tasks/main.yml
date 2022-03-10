@@ -23,6 +23,15 @@
   notify: 
   - restart neutron-services
 
+- name: unset connection option
+  ini_file:
+    path: /etc/neutron/neutron.conf
+    section: database
+    option: "connection"
+    state: absent
+  notify: 
+  - restart neutron-services
+
 - name: configure keystone_authtoken section
   ini_file:
     path: /etc/neutron/neutron.conf
