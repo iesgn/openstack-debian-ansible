@@ -35,6 +35,15 @@
   notify: 
   - restart neutron-services
 
+- name: unset interface_driver option
+  ini_file:
+    path: /etc/neutron/neutron.conf
+    section: DEFAULT
+    option: "interface_driver"
+    state: absent
+  notify:
+  - restart neutron-services
+
 - name: configure the Linux bridge agent. linux_bridge section
   ini_file:
     path: /etc/neutron/plugins/ml2/linuxbridge_agent.ini 
