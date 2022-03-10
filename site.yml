@@ -85,18 +85,18 @@
 #   - role: neutronserver
 
 
-#- hosts: network_nodes
-#  become: true
-#  gather_facts: no
-#  roles:
-#   - role: neutron-agents
-
-
-- hosts: compute_nodes
+- hosts: network_nodes
   become: true
   gather_facts: no
   roles:
-    - role: neutron-agents-compute
+   - role: neutron-agents
+
+
+#- hosts: compute_nodes
+#  become: true
+#  gather_facts: no
+#  roles:
+#    - role: neutron-agents-compute
 ##
 #- hosts: controller_nodes
 #  become: true
