@@ -66,23 +66,23 @@
 #  roles: 
 #    - role: novaserver
 
-- hosts: compute_nodes
-  become: true
-  gather_facts: no
-  roles:
-    - role: novacompute
-
-- hosts: controller_nodes
-  become: true
-  gather_facts: no
-  roles: 
-    - role: novadiscover
-
-#- hosts: controller_nodes
+#- hosts: compute_nodes
 #  become: true
 #  gather_facts: no
 #  roles:
-#   - role: neutronserver
+#    - role: novacompute
+#
+#- hosts: controller_nodes
+#  become: true
+#  gather_facts: no
+#  roles: 
+#    - role: novadiscover
+#
+- hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles:
+   - role: neutronserver
 #
 #- hosts: compute_nodes
 #  become: true
