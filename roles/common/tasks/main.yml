@@ -32,7 +32,10 @@
     - memcached
     - python3-memcache
     
-
+- name: "Build hosts file"
+  lineinfile: dest=/etc/hosts regexp='.*{{ item }}$' line="{{ hostvars[item].internal_ip }} {{item}}" state=present
+  when: hostvars[item].internal_ip is defined
+  with_items: "{{ groups.all }}"
 
 
 

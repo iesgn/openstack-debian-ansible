@@ -1,11 +1,11 @@
-#---
-#
-#- hosts: all
-#  become: true
-#  gather_facts: no
-#  roles:
-#    - role: common
-#
+---
+
+- hosts: all
+  become: true
+  gather_facts: no
+  roles:
+    - role: common
+
 #- hosts: controller_nodes
 #  become: true
 #  gather_facts: no
@@ -36,6 +36,7 @@
 #  gather_facts: no
 #  roles:
 #    - role: openstackclient
+#
 #- hosts: controller_nodes
 #  become: true
 #  gather_facts: no
@@ -69,26 +70,23 @@
 #  gather_facts: no
 #  roles:
 #    - role: novacompute
-
 #- hosts: controller_nodes
 #  become: true
 #  gather_facts: no
 #  roles: 
 #    - role: novadiscover
-
-
-- hosts: controller_nodes
-  become: true
-  gather_facts: no
-  roles:
-   - role: neutronserver
-
-- hosts: compute_nodes
-  become: true
-  gather_facts: no
-  roles:
-    - role: neutron-agents-compute
+#- hosts: controller_nodes
+#  become: true
+#  gather_facts: no
+#  roles:
+#   - role: neutronserver
 #
+#- hosts: compute_nodes
+#  become: true
+#  gather_facts: no
+#  roles:
+#    - role: neutron-agents-compute
+##
 #- hosts: controller_nodes
 #  become: true
 #  gather_facts: no
