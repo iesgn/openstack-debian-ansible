@@ -18,9 +18,9 @@
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   loop:
-    - { option: "www_authenticate_uri", value: 'http://{{ hostvars[items]["internal_ip"] }}:5000' }
-    - { option: "auth_url", value: 'http://{{ hostvars[items]["internal_ip"] }}:5000' }
-    - { option: "memcached_servers", value: '{{ hostvars[items]["internal_ip"] }}:11211' }
+    - { option: "www_authenticate_uri", value: 'http://{{ hostvars[item]["internal_ip"] }}:5000' }
+    - { option: "auth_url", value: 'http://{{ hostvars[item]["internal_ip"] }}:5000' }
+    - { option: "memcached_servers", value: '{{ hostvars[item]["internal_ip"] }}:11211' }
     - { option: "auth_type", value: password }
     - { option: "project_domain_name", value: Default}
     - { option: "user_domain_name", value: Default}
