@@ -3,10 +3,4 @@
   with_items:
     - neutron-l3-agent
     - neutron-dhcp-agent
-    - neutron-metadata-agent
-    - neutron-openvswitch-agent
-    - neutron-lbaas-agent
-    
-- name: restart openvswitch services
-  service: name=openvswitch-switch state=restarted
-
+    - neutron-linux-bridge

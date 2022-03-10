@@ -78,12 +78,20 @@
 #  roles: 
 #    - role: novadiscover
 #
-- hosts: controller_nodes
+#- hosts: controller_nodes
+#  become: true
+#  gather_facts: no
+#  roles:
+#   - role: neutronserver
+
+
+- hosts: network_nodes
   become: true
   gather_facts: no
   roles:
-   - role: neutronserver
-#
+   - role: neutron-agents
+
+
 #- hosts: compute_nodes
 #  become: true
 #  gather_facts: no

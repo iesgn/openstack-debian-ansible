@@ -1,87 +1,67 @@
-- name: ensure IP forward bit is activated
-  sysctl: name=net.ipv4.ip_forward value=1 state=present reload=yes
-
-- name: ensure IPv4 rp filter is deactivated
-  sysctl: name=net.ipv4.conf.all.rp_filter value=0 state=present reload=yes
-
-- name: ensure IPv4 default rp filter is deactivated
-  sysctl: name=net.ipv4.conf.default.rp_filter value=0 state=present reload=yes
-    
-- name: ensure plugins, agents and openvswitch packages are installed
+- name: ensure neutron plugins are installed
   apt: name={{ item }}
-  with_items:
-    - neutron-common
-    - neutron-openvswitch-agent
-    - neutron-metadata-agent
+  loop:
+    #- neutron-server
+    #- neutron-plugin-ml2
+    - neutron-linuxbridge-agent
     - neutron-l3-agent
     - neutron-dhcp-agent
-    - neutron-lbaasv2-agent
-  
-- name: ensure neutron.conf is configured
-  template: >
-    src=../../neutronserver/templates/etc/neutron/neutron.conf
-    dest=/etc/neutron/neutron.conf
-    owner=neutron group=neutron mode=0660
+    #- neutron-metadata-agent
+
+- name: ensure neutron database connections is configured
+  ini_file:
+    path: /etc/neutron/neutron.conf
+    section: database
+    option: connection
+    value: mysql+pymysql://neutron:{{ neutron_db_password }}@{{ internal_ip }}/neutron
+  notify: 
+  - restart neutron-services
+
+- name: set default section options
+  ini_file:
+    path: /etc/neutron/neutron.conf
+    section: DEFAULT
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  loop:
+    - { option: "transport_url",
+    value: 'rabbit://{{ rabbit_user }}:{{ rabbit_password }}@{{ internal_ip }}:5672/'}
+    - { option: "core_plugin", value: ml2 }
+    - { option: "service_plugins", value: router }
+    - { option: "allow_overlapping_ips", value: "true" }
+    - { option: "notify_nova_on_port_status_changes", value: "true" }
+    - { option: "notify_nova_on_port_data_changes", value: "true" }
+    - { option: "auth_strategy", value: keystone }
+  notify: 
+  - restart neutron-services
+
+- name: configure the Linux bridge agent. linux_bridge section
+  ini_file:
+    path: /etc/neutron/plugins/ml2/linuxbridge_agent.ini 
+    section: linux_bridge
+    option: "physical_interface_mappings"
+    value: "provider:{{ external_interface }}"
   notify:
-    - restart neutron agents
+  - restart neutron-services
 
-- name: register internal IP
-  shell: "ip a show dev {{ int_net_nic }}|grep inet|grep -v inet6|awk '{print $2}'|cut -d/ -f1"
-  register: internal_ip_address
-      
-- name: ensure openvswitch agent is configured
-  template: >
-    src=etc/neutron/plugins/ml2/openvswitch_agent.ini
-    dest=/etc/neutron/plugins/ml2/openvswitch_agent.ini
-    owner=root group=root mode=0644
-  notify:
-    - restart neutron agents
-
-- name: ensure l3 agent is configured
-  template: >
-    src=etc/neutron/l3_agent.ini
-    dest=/etc/neutron/l3_agent.ini
-    owner=root group=root mode=0644
-  notify:
-    - restart neutron agents
-
-- name: ensure lbaasv2 agent is configured
-  template: >
-    src=etc/neutron/lbaas_agent.ini
-    dest=/etc/neutron/lbaas_agent.ini
-    owner=root group=root mode=0644
-  notify:
-    - restart neutron agents
-
-- name: ensure DHCP agent is configured
-  template: >
-    src=etc/neutron/dhcp_agent.ini
-    dest=/etc/neutron/dhcp_agent.ini
-    owner=root group=root mode=0644
-  notify:
-    - restart neutron agents
-
-# - name: ensure DNSmasq is configured to use MTU=1454
-#   template: >
-#     src=etc/neutron/dnsmasq-neutron.conf
-#     dest=/etc/neutron/dnsmasq-neutron.conf
-#     owner=root group=root mode=0644
-
-# - name: ensure lbaas agent is configured
-#   template: >
-#     src=etc/neutron/lbaas_agent.ini
-#     dest=/etc/neutron/lbaas_agent.ini
-#     owner=root group=root mode=0644
-#   notify:
-#     - restart neutron agents
-
-- name: ensure metadata agent is configured
-  template: >
-    src=etc/neutron/metadata_agent.ini
-    dest=/etc/neutron/metadata_agent.ini
-    owner=root group=root mode=0644
-  notify:
-    - restart neutron agents
-
-- name: ensure openvswitch-switch is restarted
-  service: name=openvswitch-switch state=restarted
+#- name: configure the layer 3 agent
+#  ini_file:
+#    path: /etc/neutron/l3_agent.ini
+#    section: DEFAULT
+#    option: "interface_driver"
+#    value: linuxbridge
+#  notify:
+#  - restart neutron-services
+#    
+#- name: configure the DHCP agent
+#  ini_file:
+#    path: /etc/neutron/dhcp_agent.ini
+#    section: DEFAULT
+#    option: "{{ item.option }}"
+#    value: "{{ item.value }}"
+#  loop:
+#    - { option: "interface_driver", value: linuxbridge }
+#    - { option: "dhcp_driver", value: neutron.agent.linux.dhcp.Dnsmasq }
+#    - { option: "enable_isolated_metadata", value: "true" }
+#  notify:
+#  - restart neutron-services

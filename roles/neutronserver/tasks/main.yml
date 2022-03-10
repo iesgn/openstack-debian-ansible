@@ -111,16 +111,13 @@
   notify:
   - restart neutron-services
 
-- name: register the interface name associated to the external_ip
-  shell: ip -o a|grep {{ external_ip }}|awk '{print $2}'
-  register: external_interface
   
 - name: configure the Linux bridge agent. linux_bridge section
   ini_file:
     path: /etc/neutron/plugins/ml2/linuxbridge_agent.ini 
     section: linux_bridge
     option: "physical_interface_mappings"
-    value: "provider:{{ external_interface.stdout }}"
+    value: "provider:{{ external_interface }}"
   notify:
   - restart neutron-services
     
@@ -166,28 +163,6 @@
     name: net.bridge.bridge-nf-call-ip6tables
     value: '1'
     reload: yes
-
-#- name: configure the layer 3 agent
-#  ini_file:
-#    path: /etc/neutron/l3_agent.ini
-#    section: DEFAULT
-#    option: "interface_driver"
-#    value: linuxbridge
-#  notify:
-#  - restart neutron-services
-#    
-#- name: configure the DHCP agent
-#  ini_file:
-#    path: /etc/neutron/dhcp_agent.ini
-#    section: DEFAULT
-#    option: "{{ item.option }}"
-#    value: "{{ item.value }}"
-#  loop:
-#    - { option: "interface_driver", value: linuxbridge }
-#    - { option: "dhcp_driver", value: neutron.agent.linux.dhcp.Dnsmasq }
-#    - { option: "enable_isolated_metadata", value: "true" }
-#  notify:
-#  - restart neutron-services
 
 - name: configure the metadata agent
   ini_file:
