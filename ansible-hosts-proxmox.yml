@@ -3,33 +3,33 @@ all:
     controller_nodes:
       hosts:
         jupiter:
-          ansible_host: 192.168.122.1
+          ansible_host: 192.168.121.1
           ansible_ssh_user: usuario
-          external_ip: 172.22.122.1
-          internal_ip: 192.168.122.1
+          external_ip: 172.22.121.1
+          internal_ip: 192.168.121.1
     storage_nodes:
       hosts:
         jupiter:
-          ansible_host: 192.168.122.1
+          ansible_host: 192.168.121.1
           ansible_ssh_user: usuario
-          external_ip: 172.22.122.1
-          internal_ip: 192.168.122.1
+          external_ip: 172.22.121.1
+          internal_ip: 192.168.121.1
     network_nodes:
       hosts:
         corot:
-          ansible_host: 192.168.122.2
+          ansible_host: 192.168.121.2
           ansible_ssh_user: usuario
-          external_ip: 172.22.122.2
-          internal_ip: 192.168.122.2
+          external_ip: 172.22.121.2
+          internal_ip: 192.168.121.2
     compute_nodes:
       hosts:
         io:
-          ansible_host: 192.168.122.3
+          ansible_host: 192.168.121.3
           ansible_ssh_user: usuario
-          external_ip: 172.22.122.3
-          internal_ip: 192.168.122.3
+          external_ip: 172.22.121.3
+          internal_ip: 192.168.121.3
         europa:
-          ansible_host: 192.168.122.4
+          ansible_host: 192.168.121.4
           ansible_ssh_user: usuario
-          external_ip: 172.22.122.4
-          internal_ip: 192.168.122.4
+          external_ip: 172.22.121.4
+          internal_ip: 192.168.121.4
