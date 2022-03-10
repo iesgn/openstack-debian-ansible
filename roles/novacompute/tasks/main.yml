@@ -9,7 +9,7 @@
     value: "{{ item.value }}"
   loop:
     - { option: "transport_url",
-    value: 'rabbit://{{ rabbit_user }}:{{ rabbit_password }}@{{ hostvars["controller"]["internal_ip"] }}:5672/'}
+    value: 'rabbit://{{ rabbit_user }}:{{ rabbit_password }}@{{ internal_ip }}:5672/'}
     - { option: "my_ip", value: "{{ internal_ip }}" }
   #  - { option: "use_neutron", value: true }
   #  - { option: "firewall_driver", value: nova.virt.firewall.NoopFirewallDriver }
