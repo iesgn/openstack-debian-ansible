@@ -1,43 +1,43 @@
 ---
 
-#- hosts: all
-#  become: true
-#  gather_facts: no
-#  roles:
-#    - role: common
-#
-#- hosts: controller_nodes
-#  become: true
-#  gather_facts: no
-#  roles:
-#   - role: dbserver
-#
-#- hosts: controller_nodes
-#  become: true
-#  gather_facts: no
-#  roles:
-#   - role: dbserver_population
-#
-#- hosts: controller_nodes
-#  become: true
-#  gather_facts: no
-#  roles:
-#   - role: rabbitserver
-#
-#
-#- hosts: controller_nodes
-#  become: true
-#  gather_facts: no
-#  roles:
-#   - role: etcd
-#
-#- hosts: all
-#  become: true
-#  gather_facts: no
-#  roles:
-#    - role: openstackclient
-#
+- hosts: all
+  become: true
+  gather_facts: no
+  roles:
+    - role: common
+
 - hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles:
+   - role: dbserver
+
+- hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles:
+   - role: dbserver_population
+
+- hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles:
+   - role: rabbitserver
+
+
+- hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles:
+   - role: etcd
+
+- hosts: all
+  become: true
+  gather_facts: no
+  roles:
+    - role: openstackclient
+
+ hosts: controller_nodes
   become: true
   gather_facts: no
   roles:
