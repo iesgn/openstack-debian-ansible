@@ -5,7 +5,7 @@
     #- neutron-plugin-ml2
     - neutron-linuxbridge-agent
     - neutron-l3-agent
-    - neutron-dhcp-agent
+    #- neutron-dhcp-agent
     #- neutron-metadata-agent
 
 - name: ensure neutron database connections is configured
@@ -66,6 +66,10 @@
   notify: 
   - restart neutron-services
 
+########
+# Linux Bridge
+########
+
 - name: configure the Linux bridge agent. linux_bridge section
   ini_file:
     path: /etc/neutron/plugins/ml2/linuxbridge_agent.ini 
@@ -74,6 +78,36 @@
     value: "provider:{{ external_interface }}"
   notify:
   - restart neutron-services
+    
+- name: configure the Linux bridge agent. vxlan section
+  ini_file:
+    path: /etc/neutron/plugins/ml2/linuxbridge_agent.ini 
+    section: vxlan
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  loop:
+    - { option: "enable_vxlan", value: "true" }
+    - { option: "local_ip", value: "{{ internal_ip }}" }
+    - { option: "l2_population", value: "true" }
+  notify:
+  - restart neutron-services
+
+- name: configure the Linux bridge agent. securitygroup section
+  ini_file:
+    path: /etc/neutron/plugins/ml2/linuxbridge_agent.ini 
+    section: securitygroup
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  loop:
+    - { option: "enable_security_group", value: "true" }
+    - { option: "firewall_driver", value: neutron.agent.linux.iptables_firewall.IptablesFirewallDriver }
+  notify:
+  - restart neutron-services
+
+########
+# Layer-3
+########
+
 
 - name: configure the layer 3 agent
   ini_file:
