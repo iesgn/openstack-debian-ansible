@@ -6,7 +6,7 @@
     #- neutron-linuxbridge-agent
     #- neutron-l3-agent
     #- neutron-dhcp-agent
-    - neutron-metadata-agent
+    #- neutron-metadata-agent
 
 - name: ensure neutron database connections is configured
   ini_file:

@@ -74,15 +74,7 @@
 # Linux Bridge
 ########
 
-- name: configure the Linux bridge agent. linux_bridge section
-  ini_file:
-    path: /etc/neutron/plugins/ml2/linuxbridge_agent.ini 
-    section: linux_bridge
-    option: "physical_interface_mappings"
-    value: "provider:{{ external_interface }}"
-  notify:
-  - restart neutron-services
-    
+   
 - name: configure the Linux bridge agent. vxlan section
   ini_file:
     path: /etc/neutron/plugins/ml2/linuxbridge_agent.ini 
@@ -96,17 +88,7 @@
   notify:
   - restart neutron-services
 
-- name: configure the Linux bridge agent. securitygroup section
-  ini_file:
-    path: /etc/neutron/plugins/ml2/linuxbridge_agent.ini 
-    section: securitygroup
-    option: "{{ item.option }}"
-    value: "{{ item.value }}"
-  loop:
-    - { option: "enable_security_group", value: "true" }
-    - { option: "firewall_driver", value: neutron.agent.linux.iptables_firewall.IptablesFirewallDriver }
-  notify:
-  - restart neutron-services
+
 
 
 
