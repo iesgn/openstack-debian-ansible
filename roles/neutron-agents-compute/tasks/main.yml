@@ -1,5 +1,12 @@
-- name: ensure neutron-linuxbridge-agent is installed
-  apt: name=neutron-linuxbridge-agent
+- name: ensure neutron-linuxbridge-agent. dhcp-agent, metadata-agent is installed
+  apt: name={{ item }}
+  loop:
+    #- neutron-server
+    #- neutron-plugin-ml2
+    - neutron-linuxbridge-agent
+    #- neutron-l3-agent
+    - neutron-dhcp-agent
+    - neutron-metadata-agent
 
 - name: set default section options
   ini_file:
@@ -62,17 +69,17 @@
   notify:
   - restart neutron-services
 
-- name: register the interface name associated to the external_ip
-  shell: ip -o a|grep {{ external_ip }}|awk '{print $2}'
-  register: external_interface
 
+########
+# Linux Bridge
+########
 
 - name: configure the Linux bridge agent. linux_bridge section
   ini_file:
     path: /etc/neutron/plugins/ml2/linuxbridge_agent.ini 
     section: linux_bridge
     option: "physical_interface_mappings"
-    value: "provider:{{ external_interface.stdout }}"
+    value: "provider:{{ external_interface }}"
   notify:
   - restart neutron-services
     
@@ -100,6 +107,44 @@
     - { option: "firewall_driver", value: neutron.agent.linux.iptables_firewall.IptablesFirewallDriver }
   notify:
   - restart neutron-services
+
+
+
+###########
+# DHCP
+###########
+
+
+- name: configure the DHCP agent
+  ini_file:
+    path: /etc/neutron/dhcp_agent.ini
+    section: DEFAULT
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  loop:
+    - { option: "interface_driver", value: linuxbridge }
+    - { option: "dhcp_driver", value: neutron.agent.linux.dhcp.Dnsmasq }
+    - { option: "enable_isolated_metadata", value: "true" }
+  notify:
+  - restart neutron-services
+
+###########
+# METADATA
+###########
+
+
+- name: configure the metadata agent
+  ini_file:
+    path: /etc/neutron/metadata_agent.ini
+    section: DEFAULT
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  loop:
+    - { option: "nova_metadata_host", value: "{{ internal_ip }}" }
+    - { option: "metadata_proxy_shared_secret", value: "{{ shared_secret }}" }
+  notify:
+  - restart neutron-services
+
 
 # Needed when /proc/sys/net/bridge is missing
 - name: load br_netfilter kernel module

@@ -132,17 +132,6 @@
     value: '1'
     reload: yes
 
-- name: configure the metadata agent
-  ini_file:
-    path: /etc/neutron/metadata_agent.ini
-    section: DEFAULT
-    option: "{{ item.option }}"
-    value: "{{ item.value }}"
-  loop:
-    - { option: "nova_metadata_host", value: "{{ internal_ip }}" }
-    - { option: "metadata_proxy_shared_secret", value: "{{ shared_secret }}" }
-  notify:
-  - restart neutron-services
 
 - name: ensure neutron db is initialized
   command: neutron-db-manage --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade head

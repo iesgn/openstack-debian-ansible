@@ -118,15 +118,3 @@
   notify:
   - restart neutron-services
     
-- name: configure the DHCP agent
-  ini_file:
-    path: /etc/neutron/dhcp_agent.ini
-    section: DEFAULT
-    option: "{{ item.option }}"
-    value: "{{ item.value }}"
-  loop:
-    - { option: "interface_driver", value: linuxbridge }
-    - { option: "dhcp_driver", value: neutron.agent.linux.dhcp.Dnsmasq }
-    - { option: "enable_isolated_metadata", value: "true" }
-  notify:
-  - restart neutron-services
