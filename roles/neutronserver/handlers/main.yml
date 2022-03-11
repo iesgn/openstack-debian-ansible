@@ -2,5 +2,5 @@
   service: name={{ item }} state=restarted
   loop:
     - neutron-api
-    - neutron-metadata-agent
+    #- neutron-metadata-agent
     - neutron-l3-agent
