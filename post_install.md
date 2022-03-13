@@ -24,7 +24,7 @@ openstack flavor create m1.tiny --id 1 \
 
 ```
 openstack network create  --share --external \
-  --provider-physical-network external \
+  --provider-physical-network provider \
   --provider-network-type flat ext-net
 
 openstack subnet create --network ext-net \
