@@ -71,6 +71,7 @@ openstack server add floating ip instancia_prueba <IP>
 
 ## Lista de flavor
 
+```
 openstack flavor list
 +----+------------+------+------+-----------+-------+-----------+
 | ID | Name       |  RAM | Disk | Ephemeral | VCPUs | Is Public |
@@ -97,3 +98,23 @@ openstack server create --flavor m1.mini \
  --security-group default \
  --network "red_demo" \
  instancia_prueba2
+
+```
+
+## Configuración de LDAP
+
+En el fichero `/etc/keystone/domains/keystone.iesgn.conf`:
+
+```
+[identity]
+driver = ldap
+
+[ldap]
+group_tree_dn = cn=openstackusers,ou=Group,dc=gonzalonazareno,dc=org
+url = ldap://ldap.gonzalonazareno.org
+user_filter = (memberOf=cn=openstackusers,ou=Group,dc=gonzalonazareno,dc=org)
+user_id_attribute = cn
+user_name_attribute = uid
+user_objectclass = posixAccount
+user_tree_dn = ou=People,dc=gonzalonazareno,dc=org
+```
