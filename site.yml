@@ -77,27 +77,27 @@
 #  become: true
 #  gather_facts: no
 #  roles: 
-#    - role: novadiscover
+#    - role: 13_novadiscover
 #
 - hosts: controller_nodes
   become: true
   gather_facts: no
   roles:
-   - role: 13_neutronserver
+   - role: 14_neutronserver
 
 
 - hosts: network_nodes
   become: true
   gather_facts: no
   roles:
-   - role: 14_neutronnetwork
+   - role: 15_neutronnetwork
 
 
 - hosts: compute_nodes
   become: true
   gather_facts: no
   roles:
-    - role: 15_neutroncompute
+    - role: 16_neutroncompute
 ##
 #- hosts: controller_nodes
 #  become: true
