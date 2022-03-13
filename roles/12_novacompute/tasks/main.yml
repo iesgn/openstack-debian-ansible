@@ -55,7 +55,7 @@
     - { option: "enabled", value: 'true' }
     - { option: "server_listen", value: '0.0.0.0' }
     - { option: "server_proxyclient_address", value: '$my_ip' }
-    - { option: "novncproxy_base_url", value: "http://{{ controller_fqdn }}:6080/vnc_auto.html" }
+    - { option: "novncproxy_base_url", value: "https://{{ controller_fqdn }}:6080/vnc_auto.html" }
     #- { option: "html5proxy_host", value: "0.0.0.0" }
     #- { option: "html5proxy_port", value: "6082" }
   notify:
@@ -114,5 +114,7 @@
     - { option: "password", value: "{{ neutron_identity_password }}" }
     - { option: "region", value: "{{ region }}" }
     - { option: "region_name", value: "{{ region }}" }
+    - { option: "service_metadata_proxy", value: 'true' }
+    - { option: "metadata_proxy_shared_secret", value: "{{ shared_secret }}"
   notify:
   - restart nova-compute
