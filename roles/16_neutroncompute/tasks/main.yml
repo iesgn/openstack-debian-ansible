@@ -107,6 +107,7 @@
     - { option: "interface_driver", value: linuxbridge }
     - { option: "dhcp_driver", value: neutron.agent.linux.dhcp.Dnsmasq }
     - { option: "enable_isolated_metadata", value: "true" }
+    - { option: "force_metadata", value: "true" }
   notify:
   - restart neutron-services
 
