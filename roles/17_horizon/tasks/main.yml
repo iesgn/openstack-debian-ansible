@@ -4,12 +4,12 @@
 - name: set openstack-dashboard-apache-ssl to be activated
   shell: echo openstack-dashboard-apache horizon/use_ssl boolean true |debconf-set-selections
 
-- name: ensure apache2 packages are installed
+- name: ensure horizon packages are installed
   apt: name={{ item }}
   loop:
     - apache2
     - libapache2-mod-wsgi-py3
-
+    - openstack-dashboard-apache
 
 - name: ensure default virtualhost is disabled
   command: a2dissite {{ item }}
@@ -17,11 +17,6 @@
     - 000-default
     - default-ssl
   notify: restart web services
-  
-- name: ensure horizon packages are installed 
-  apt: name={{ item }}
-  loop:
-    - openstack-dashboard-apache
 
 - name: configure local_settings.py
   template:
