@@ -122,7 +122,7 @@
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   loop:
-    - { option: "nova_metadata_host", value: "{{ internal_ip }}" }
+    - { option: "nova_metadata_host", value: "{{ controller }}" }
     - { option: "metadata_proxy_shared_secret", value: "{{ shared_secret }}" }
   notify:
   - restart neutron-services
