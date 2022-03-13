@@ -67,3 +67,33 @@ openstack floating ip create ext-net
 
 openstack server add floating ip instancia_prueba <IP>
 ```
+
+
+## Lista de flavor
+
+openstack flavor list
++----+------------+------+------+-----------+-------+-----------+
+| ID | Name       |  RAM | Disk | Ephemeral | VCPUs | Is Public |
++----+------------+------+------+-----------+-------+-----------+
+| 10 | m1.nano    |  128 |   10 |         0 |     1 | True      |
+| 11 | m1.micro   |  256 |   10 |         0 |     1 | True      |
+| 12 | m1.mini    |  512 |   10 |         0 |     1 | True      |
+| 13 | m1.normal  | 1024 |   10 |         0 |     2 | True      |
+| 14 | m1.medium  | 2048 |   20 |         0 |     2 | True      |
+| 15 | m1.large   | 4096 |   20 |         0 |     2 | True      |
+| 16 | m1.xlarge  | 8192 |   20 |         0 |     4 | True      |
+| 22 | vol.mini   |  512 |    0 |         0 |     1 | True      |
+| 23 | vol.normal | 1024 |    0 |         0 |     1 | True      |
+| 24 | vol.medium | 2048 |    0 |         0 |     2 | True      |
+| 25 | vol.large  | 4096 |    0 |         0 |     2 | True      |
+| 26 | vol.xlarge | 8192 |    0 |         0 |     4 | True      |
+| 33 | win.normal | 1024 |   20 |        10 |     1 | True      |
+| 34 | win.medium | 2048 |   20 |        10 |     1 | True      |
+| 35 | win.large  | 4096 |   20 |        10 |     2 | True      |
++----+------------+------+------+-----------+-------+-----------+
+
+openstack server create --flavor m1.mini \
+ --image "Debian 11 Bullseye" \
+ --security-group default \
+ --network "red_demo" \
+ instancia_prueba2
