@@ -106,12 +106,37 @@
     - { option: "mechanism_drivers", value: "linuxbridge,l2population" }
     - { option: "extension_drivers", value: port_security }
     - { option: "flat_networks", value: provider }
-    - { option: "vni_ranges", value: '1:1000' }
-    - { option: "enable_ipset", value: "true" }
   notify:
   - restart neutron-services
 
-  
+- name: configure ml2 plugin (flat_networks)
+  ini_file:
+    path: /etc/neutron/plugins/ml2/ml2_conf.ini
+    section: ml2_type_flat
+    option: flat_networks
+    value: 'provider'
+  notify:
+  - restart neutron-services
+
+
+
+- name: configure ml2 plugin (vni_ranges)
+  ini_file:
+    path: /etc/neutron/plugins/ml2/ml2_conf.ini
+    section: ml2_type_vxlan
+    option: vni_ranges
+    value: '1:1000'
+  notify:
+  - restart neutron-services
+
+- name: configure ml2 plugin (enable_ipset)
+  ini_file:
+    path: /etc/neutron/plugins/ml2/ml2_conf.ini
+    section: securitygroup
+    option: enable_ipset
+    value: 'True'
+  notify:
+  - restart neutron-services
 
 
 # Needed when /proc/sys/net/bridge is missing
