@@ -115,6 +115,6 @@
     - { option: "region", value: "{{ region }}" }
     - { option: "region_name", value: "{{ region }}" }
     - { option: "service_metadata_proxy", value: 'true' }
-    - { option: "metadata_proxy_shared_secret", value: "{{ shared_secret }}"
+    - { option: "metadata_proxy_shared_secret", value: "{{ shared_secret }}" }
   notify:
   - restart nova-compute
