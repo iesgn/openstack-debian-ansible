@@ -4,73 +4,74 @@
 #  become: true
 #  gather_facts: no
 #  roles:
-#    - role: common
+#    - role: 01_common
 #
 #- hosts: controller_nodes
 #  become: true
 #  gather_facts: no
 #  roles:
-#   - role: dbserver
+#   - role: 02_dbserver
 #
 #- hosts: controller_nodes
 #  become: true
 #  gather_facts: no
 #  roles:
-#   - role: dbserver_population
+#   - role: 03_dbserver_population
 #
 #- hosts: controller_nodes
 #  become: true
 #  gather_facts: no
 #  roles:
-#   - role: rabbitserver
+#   - role: 04_rabbitserver
 #
 #
 #- hosts: controller_nodes
 #  become: true
 #  gather_facts: no
 #  roles:
-#   - role: etcd
+#   - role: 05_etcd
 #
 #- hosts: all
 #  become: true
 #  gather_facts: no
 #  roles:
-#    - role: openstackclient
+#    - role: 06_openstackclient
 #
 #- hosts: controller_nodes
 #  become: true
 #  gather_facts: no
 #  roles:
-#    - role: keystoneserver
+#    - role: 07_keystoneserver
 #     
 #- hosts: controller_nodes
 #  become: true
 #  gather_facts: no
 #  roles:
-#    - role: keystone_population
+#    - role: 08_keystone_population
 #
 #- hosts: storage_nodes
 #  become: true
 #  gather_facts: no
 #  roles: 
-#    - role: glanceserver
+#    - role: 09_glanceserver
 #
 #- hosts: controller_nodes
 #  become: true
 #  gather_facts: no
 #  roles: 
-#    - role: placement
+#    - role: 10_placement
+
 #- hosts: controller_nodes
 #  become: true
 #  gather_facts: no
 #  roles: 
-#    - role: novaserver
+#    - role: 11_novaserver
 
 #- hosts: compute_nodes
 #  become: true
 #  gather_facts: no
 #  roles:
-#    - role: novacompute
+#    - role: 12_novacompute
 #
 #- hosts: controller_nodes
 #  become: true
@@ -82,21 +83,21 @@
   become: true
   gather_facts: no
   roles:
-   - role: neutronserver
+   - role: 13_neutronserver
 
 
 - hosts: network_nodes
   become: true
   gather_facts: no
   roles:
-   - role: neutron-agents
+   - role: 14_neutronnetwork
 
 
 - hosts: compute_nodes
   become: true
   gather_facts: no
   roles:
-    - role: neutron-agents-compute
+    - role: 15_neutroncompute
 ##
 #- hosts: controller_nodes
 #  become: true
