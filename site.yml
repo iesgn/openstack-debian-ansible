@@ -1,6 +1,6 @@
 ---
 #
-- hosts: compute_nodes
+- hosts: all
   become: true
   gather_facts: no
   roles:
