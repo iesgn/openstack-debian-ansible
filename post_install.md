@@ -1,3 +1,16 @@
+# Pre-install
+
+En el nodo de red:
+
+```
+auto eth0 
+iface eth0 inet manual 
+up ip link set dev $IFACE up
+down ip link set dev $IFACE down
+```
+
+Para que tenga internet ponemos como puerta enlace una máquina que haga SNAT.
+
 # Post Install
 
 ## Subir imagen Cirros
@@ -118,3 +131,4 @@ user_name_attribute = uid
 user_objectclass = posixAccount
 user_tree_dn = ou=People,dc=gonzalonazareno,dc=org
 ```
+

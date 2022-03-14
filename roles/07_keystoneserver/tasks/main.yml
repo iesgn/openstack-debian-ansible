@@ -1,8 +1,10 @@
-- name: ensure keystone is installed
+- name: ensure keystone and memcached are installed
   apt: name={{ item }}
   loop:
     - keystone
- 
+    - memcached
+    - python3-memcache
+
 - name: ensure keystone database connections is configured
   ini_file:
     path: /etc/keystone/keystone.conf
