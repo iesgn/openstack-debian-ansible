@@ -34,6 +34,10 @@
     - openstack-dashboard-ssl-redirect
   notify: restart web services
   
+- name: Deelete debian's configuration of cache
+  file: path=/etc/openstack-dashboard/local_settings.d/_0006_debian_cache.py state=absent
+
+
 - name: ensure ssl, wsgi and rewrite modules are enabled
   apache2_module: name={{ item }} state=present
   loop:
