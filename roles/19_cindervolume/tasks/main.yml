@@ -1,7 +1,8 @@
-- name: ensure lvm2 and thin-provisioning-tools packages are installed
+- name: ensure tgt,lvm2 and thin-provisioning-tools packages are installed
   apt: name={{ item }}
   loop:
     - lvm2
+    - tgt
     - thin-provisioning-tools
 
 - name: create group volume
@@ -35,11 +36,11 @@
     value: "{{ item.value }}"
   loop:
     - { option: "transport_url",
-    value: 'rabbit://{{ rabbit_user }}:{{ rabbit_password }}@{{ hostvars["controller"]["internal_ip"] }}:5672/'}
+    value: 'rabbit://{{ rabbit_user }}:{{ rabbit_password }}@{{ controller }}:5672/'}
     - { option: "my_ip", value: '{{ internal_ip }}' }
     - { option: "auth_strategy", value: keystone }
     - { option: "enabled_backends", value: lvm }
-    - { option: "glance_api_servers", value: 'http://{{ hostvars["controller"]["internal_ip"] }}:9292' }
+    - { option: "glance_api_servers", value: 'http://{{ controller }}:9292' }
   notify: 
   - restart cinder-services
 
@@ -50,9 +51,9 @@
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   loop:
-    - { option: "www_authenticate_uri", value: 'http://{{ hostvars["controller"]["internal_ip"] }}:5000' }
-    - { option: "auth_url", value: 'http://{{ hostvars["controller"]["internal_ip"] }}:5000' }
-    - { option: "memcached_servers", value: '{{ hostvars["controller"]["internal_ip"] }}:11211' }
+    - { option: "www_authenticate_uri", value: 'http://{{ controller }}:5000' }
+    - { option: "auth_url", value: 'http://{{ controller }}:5000' }
+    - { option: "memcached_servers", value: '{{ controller }}:11211' }
     - { option: "auth_type", value: password }
     - { option: "project_domain_name", value: Default}
     - { option: "user_domain_name", value: Default}
