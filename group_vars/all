@@ -61,4 +61,4 @@ shared_secret: "asdasd"
 external_interface: "eth0"
 
 # Cinder
-cinder_physical_device: vdb
+cinder_physical_device: sdb
