@@ -122,7 +122,7 @@
 - name: configure cinder section
   ini_file:
     path: /etc/nova/nova.conf
-    section: neutron
+    section: cinder
     option: "os_region_name"
     value: "{{ region }}"
   notify:
