@@ -1,8 +1,7 @@
-- name: ensure tgt, lvm2 and thin-provisioning-tools packages are installed
+- name: ensure lvm2 and thin-provisioning-tools packages are installed
   apt: name={{ item }}
   loop:
     - lvm2
-    - tgt
     - thin-provisioning-tools
 
 - name: create group volume
@@ -24,7 +23,7 @@
     path: /etc/cinder/cinder.conf
     section: api_database
     option: connection
-    value: mysql+pymysql://cinder:{{ cinder_db_password }}@{{ hostvars["controller"]["internal_ip"] }}/cinder
+    value: mysql+pymysql://cinder:{{ cinder_db_password }}@{{ controller }}/cinder
   notify: 
   - restart cinder-services
 
