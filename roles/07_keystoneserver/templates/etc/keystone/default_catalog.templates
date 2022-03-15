@@ -16,15 +16,15 @@ catalog.{{ region }}.placement.internalURL = http://{{ internal_ip }}:8778
 catalog.{{ region }}.placement.descrition = "Placement Service"
 catalog.{{ region }}.placement.name = placement
 
-catalog.{{ region }}.volumev2.publicURL = http://{{ external_ip }}:8776/v2/%\(project_id\)s
-catalog.{{ region }}.volumev2.adminURL = http://{{ internal_ip }}:8776/v2/%\(project_id\)s
-catalog.{{ region }}.volumev2.internalURL = http://{{ internal_ip }}:8776/v2/%\(project_id\)s
+catalog.{{ region }}.volumev2.publicURL = http://{{ external_ip }}:8776/v2/%(project_id)s
+catalog.{{ region }}.volumev2.adminURL = http://{{ internal_ip }}:8776/v2/%(project_id)s
+catalog.{{ region }}.volumev2.internalURL = http://{{ internal_ip }}:8776/v2/%(project_id)s
 catalog.{{ region }}.volumev2.descrition = "Block Storage Service v2"
 catalog.{{ region }}.volumev2.name = cinderv2
 
-catalog.{{ region }}.volumev3.publicURL = http://{{ external_ip }}:8776/v3/%\(project_id\)s
-catalog.{{ region }}.volumev3.adminURL = http://{{ internal_ip }}:8776/v3/%\(project_id\)s
-catalog.{{ region }}.volumev3.internalURL = http://{{ internal_ip }}:8776/v3/%\(project_id\)s
+catalog.{{ region }}.volumev3.publicURL = http://{{ external_ip }}:8776/v3/%(project_id)s
+catalog.{{ region }}.volumev3.adminURL = http://{{ internal_ip }}:8776/v3/%(project_id)s
+catalog.{{ region }}.volumev3.internalURL = http://{{ internal_ip }}:8776/v3/%(project_id)s
 catalog.{{ region }}.volumev3.descrition = "Block Storage Service v3"
 catalog.{{ region }}.volumev3.name = cinderv3
 
