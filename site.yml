@@ -37,17 +37,17 @@
 #  roles:
 #    - role: 06_openstackclient
 #
-- hosts: controller_nodes
-  become: true
-  gather_facts: no
-  roles:
-    - role: 07_keystoneserver
-     
-- hosts: controller_nodes
-  become: true
-  gather_facts: no
-  roles:
-    - role: 08_keystone_population
+#- hosts: controller_nodes
+#  become: true
+#  gather_facts: no
+#  roles:
+#    - role: 07_keystoneserver
+#     
+#- hosts: controller_nodes
+#  become: true
+#  gather_facts: no
+#  roles:
+#    - role: 08_keystone_population
 #
 #- hosts: controller_nodes
 #  become: true
@@ -104,17 +104,17 @@
 #  roles:
 #    - role: 17_horizon
 #
-#- hosts: controller_nodes
-#  become: true
-#  gather_facts: no
-#  roles:
-#    - role: 18_cinderserver
-#
-#- hosts: storage_nodes
-#  become: true
-#  gather_facts: no
-#  roles:
-#    - role: 19_cindervolume
+- hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles:
+    - role: 18_cinderserver
+
+- hosts: storage_nodes
+  become: true
+  gather_facts: no
+  roles:
+    - role: 19_cindervolume
 #
 ##- hosts: controller-nodes
 ##  roles:

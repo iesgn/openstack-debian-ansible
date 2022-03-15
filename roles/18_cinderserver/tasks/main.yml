@@ -7,7 +7,7 @@
 - name: ensure cinder_api database connections is configured
   ini_file:
     path: /etc/cinder/cinder.conf
-    section: api_database
+    section: database
     option: connection
     value: mysql+pymysql://cinder:{{ cinder_db_password }}@{{ internal_ip }}/cinder
   notify: 
