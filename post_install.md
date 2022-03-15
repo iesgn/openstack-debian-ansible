@@ -106,6 +106,26 @@ openstack flavor list
 | 35 | win.large  | 4096 |   20 |        10 |     2 | True      |
 +----+------------+------+------+-----------+-------+-----------+
 
+
+openstack flavor create m1.nano --id 1 --ram 128 --disk 10 --ephemeral 0 --vcpus 1 
+openstack flavor create m1.micro --id 2 --ram 256 --disk 10 --ephemeral 0 --vcpus 1 
+openstack flavor create m1.mini --id 3 --ram 512 --disk 10 --ephemeral 0 --vcpus 1 
+openstack flavor create m1.normal --id 4 --ram 1024 --disk 10 --ephemeral 0 --vcpus 2 
+openstack flavor create m1.medium --id 5 --ram 2048 --disk 20 --ephemeral 0 --vcpus 2 
+openstack flavor create m1.large --id 6 --ram 4096 --disk 20 --ephemeral 0 --vcpus 2 
+openstack flavor create m1.xlarge --id 7 --ram 8192 --disk 20 --ephemeral 0 --vcpus 4 
+openstack flavor create vol.mini --id 8 --ram 512 --disk 0 --ephemeral 0 --vcpus 1 
+openstack flavor create vol.normal --id 9 --ram 1024 --disk 0 --ephemeral 0 --vcpus  1
+openstack flavor create vol.medium --id 10 --ram 2048 --disk 0 --ephemeral 0 --vcpus  2
+openstack flavor create vol.large --id 11 --ram 4096 --disk 0 --ephemeral 0 --vcpus  2
+openstack flavor create vol.xlarge --id 12 --ram 8192 --disk 0 --ephemeral 0 --vcpus  4
+openstack flavor create win.normal --id 13 --ram 1024 --disk 20 --ephemeral 10 --vcpus  1
+openstack flavor create win.medium --id 14 --ram 2048 --disk 20 --ephemeral 10 --vcpus  1
+openstack flavor create win.large --id 15 --ram 4096 --disk 20 --ephemeral 10 --vcpus  2
+openstack flavor create m1.prueba --id 16 --ram 512 --disk 3 --vcpus 1
+
+
+
 openstack server create --flavor m1.mini \
  --image "Debian 11 Bullseye" \
  --security-group default \

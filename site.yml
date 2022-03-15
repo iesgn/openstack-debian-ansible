@@ -1,10 +1,10 @@
 ---
 
-#- hosts: all
-#  become: true
-#  gather_facts: no
-#  roles:
-#    - role: 01_common
+- hosts: all
+  become: true
+  gather_facts: no
+  roles:
+    - role: 01_common
 #
 #- hosts: controller_nodes
 #  become: true
@@ -31,11 +31,11 @@
 #  roles:
 #   - role: 05_etcd
 #
-#- hosts: all
-#  become: true
-#  gather_facts: no
-#  roles:
-#    - role: 06_openstackclient
+- hosts: all
+  become: true
+  gather_facts: no
+  roles:
+    - role: 06_openstackclient
 #
 #- hosts: controller_nodes
 #  become: true
@@ -49,7 +49,7 @@
 #  roles:
 #    - role: 08_keystone_population
 #
-#- hosts: storage_nodes
+#- hosts: controller_nodes
 #  become: true
 #  gather_facts: no
 #  roles: 
@@ -98,11 +98,11 @@
 #  roles:
 #    - role: 16_neutroncompute
 
-- hosts: controller_nodes
-  become: true
-  gather_facts: no
-  roles:
-    - role: 17_horizon
+#- hosts: controller_nodes
+#  become: true
+#  gather_facts: no
+#  roles:
+#    - role: 17_horizon
 #
 #- hosts: controller_nodes
 #  become: true
