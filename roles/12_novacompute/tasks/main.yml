@@ -66,7 +66,7 @@
     path: /etc/nova/nova.conf
     section: glance
     option: api_servers
-    value: 'http://{{ controller }}:9292'  # Lo mismo: será la dirección de glance
+    value: 'http://{{ controller }}:9292'  
   notify:
   - restart nova-compute
 
@@ -116,5 +116,14 @@
     - { option: "region_name", value: "{{ region }}" }
     - { option: "service_metadata_proxy", value: 'true' }
     - { option: "metadata_proxy_shared_secret", value: "{{ shared_secret }}" }
+  notify:
+  - restart nova-compute
+
+- name: configure cinder section
+  ini_file:
+    path: /etc/nova/nova.conf
+    section: neutron
+    option: "os_region_name"
+    value: "{{ region }}"
   notify:
   - restart nova-compute
