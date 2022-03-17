@@ -116,8 +116,9 @@
 #  roles:
 #    - role: 19_cindervolume
 #
-- hosts: controller-nodes
+- hosts: controller_nodes
   become: true
+  gather_facts: no
   roles:
     - role: 20_heatserver
 
