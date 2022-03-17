@@ -45,14 +45,14 @@
   notify:
   - restart nova-compute
 
-- name: configure spice section 3 Repasarlo para hacerlo con vpn
+- name: configure spice section 
   ini_file:
     path: /etc/nova/nova.conf
     section: spice
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   loop:
-    - { option: "enabled", value: 'True' }
+    - { option: "enabled", value: "True" }
     - { option: "server_listen", value: '0.0.0.0' }
     - { option: "server_proxyclient_address", value: '$my_ip' }
     #- { option: "novncproxy_base_url", value: "https://{{ controller_fqdn }}:6080/vnc_auto.html" }

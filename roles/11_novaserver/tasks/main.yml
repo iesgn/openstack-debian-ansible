@@ -76,7 +76,7 @@
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   loop:
-    - { option: "enabled", value: 'True' }
+    - { option: "enabled", value: "True" }
     - { option: "server_listen", value: '$my_ip' }
     - { option: "server_proxyclient_address", value: '$my_ip' }
     #- { option: "html5proxy_base_url", value: "http://{{ controller_fqdn }}:6082/spice_auto.html" }
