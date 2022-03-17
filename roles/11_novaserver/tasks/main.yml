@@ -69,7 +69,7 @@
   notify:
   - restart nova-services
 
-  - name: configure spice section 
+- name: configure spice section 
   ini_file:
     path: /etc/nova/nova.conf
     section: spice
