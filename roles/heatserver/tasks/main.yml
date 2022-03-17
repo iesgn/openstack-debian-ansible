@@ -8,7 +8,7 @@
 - name: ensure heat_api database connections is configured
   ini_file:
     path: /etc/heat/heat.conf
-    section: api_database
+    section: database
     option: connection
     value: mysql+pymysql://heat:{{ heat_db_password }}@{{ internal_ip }}/heat
   notify:

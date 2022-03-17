@@ -37,11 +37,11 @@
 #  roles:
 #    - role: 06_openstackclient
 #
-#- hosts: controller_nodes
-#  become: true
-#  gather_facts: no
-#  roles:
-#    - role: 07_keystoneserver
+- hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles:
+    - role: 07_keystoneserver
 #     
 #- hosts: controller_nodes
 #  become: true
@@ -66,11 +66,11 @@
 #  roles: 
 #    - role: 11_novaserver
 #
-- hosts: compute_nodes
-  become: true
-  gather_facts: no
-  roles:
-    - role: 12_novacompute
+#- hosts: compute_nodes
+#  become: true
+#  gather_facts: no
+#  roles:
+#    - role: 12_novacompute
 #
 #- hosts: controller_nodes
 #  become: true
@@ -116,10 +116,11 @@
 #  roles:
 #    - role: 19_cindervolume
 #
-##- hosts: controller-nodes
-##  roles:
-##    - role: heatserver
-##
+- hosts: controller-nodes
+  become: true
+  roles:
+    - role: 20_heatserver
+
 ##- hosts: controller_nodes
 ##  become: true
 ##  roles:

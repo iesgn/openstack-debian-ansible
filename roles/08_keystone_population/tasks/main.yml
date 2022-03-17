@@ -131,22 +131,7 @@
   environment: '{{k3}}'
   command: openstack role add --project service --user cinder admin
   
-# Manila
-#- name: verify if manila user has been created
-#  environment: '{{k3}}'
-#  command: /usr/bin/openstack user show manila
-#  register: result
-#  ignore_errors: True
-#
-#- name: ensure manila user is created
-#  environment: '{{k3}}'
-#  command: /usr/bin/openstack user create --domain Default manila --password {{ manila_identity_password }}
-#  when: result is failed
-#
-#- name: ensure admin role is added to manila user
-#  environment: '{{k3}}'
-#  command: openstack role add --project service --user manila admin
-  
+
 # Heat
 - name: ensure heat user is created
   environment: '{{k3}}'
@@ -208,6 +193,23 @@
   environment: '{{k3}}'
   command: /usr/bin/openstack role create heat_stack_user
   when: result is failed
+
+# Manila
+#- name: verify if manila user has been created
+#  environment: '{{k3}}'
+#  command: /usr/bin/openstack user show manila
+#  register: result
+#  ignore_errors: True
+#
+#- name: ensure manila user is created
+#  environment: '{{k3}}'
+#  command: /usr/bin/openstack user create --domain Default manila --password {{ manila_identity_password }}
+#  when: result is failed
+#
+#- name: ensure admin role is added to manila user
+#  environment: '{{k3}}'
+#  command: openstack role add --project service --user manila admin
+  
 
 # Trove
 #- name: verify if trove user has been created

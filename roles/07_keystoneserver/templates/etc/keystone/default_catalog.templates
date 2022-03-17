@@ -45,10 +45,15 @@ catalog.{{ region }}.network.internalURL = http://{{ internal_ip }}:9696
 catalog.{{ region }}.network.descrition = "Networking Service"
 catalog.{{ region }}.network.name = neutron
 
-#catalog.{{ region }}.orchestration.publicURL = http://{{ external_ip }}:8004/v1/$(tenant_id)s
-#catalog.{{ region }}.orchestration.adminURL = http://{{ internal_ip }}:8004/v1/$(tenant_id)s
-#catalog.{{ region }}.orchestration.internalURL = http://{{ internal_ip }}:8004/v1/$(tenant_id)s
-#catalog.{{ region }}.orchestration.name = heat
+catalog.{{ region }}.orchestration.publicURL = http://{{ external_ip }}:8004/v1/$(tenant_id)s
+catalog.{{ region }}.orchestration.adminURL = http://{{ internal_ip }}:8004/v1/$(tenant_id)s
+catalog.{{ region }}.orchestration.internalURL = http://{{ internal_ip }}:8004/v1/$(tenant_id)s
+catalog.{{ region }}.orchestration.name = heat
+
+catalog.{{ region }}.cloudformation.publicURL = http://{{ external_ip }}:8000/v1
+catalog.{{ region }}.cloudformation.adminURL = http://{{ internal_ip }}:8000/v1
+catalog.{{ region }}.cloudformation.internalURL = http://{{ internal_ip }}:8000/v1
+catalog.{{ region }}.cloudformation.name = heat-cfn
 
 #catalog.{{ region }}.share.publicURL = http://{{ external_ip }}:8786/v1/$(tenant_id)s
 #catalog.{{ region }}.share.adminURL = http://{{ internal_ip }}:8786/v1/$(tenant_id)s
@@ -59,11 +64,6 @@ catalog.{{ region }}.network.name = neutron
 #catalog.{{ region }}.sharev2.adminURL = http://{{ internal_ip }}:8786/v2/$(tenant_id)s
 #catalog.{{ region }}.sharev2.internalURL = http://{{ internal_ip }}:8786/v2/$(tenant_id)s
 #catalog.{{ region }}.sharev2.name = manilav2
-
-#catalog.{{ region }}.cloudformation.publicURL = http://{{ external_ip }}:8000/v1
-#catalog.{{ region }}.cloudformation.adminURL = http://{{ internal_ip }}:8000/v1
-#catalog.{{ region }}.cloudformation.internalURL = http://{{ internal_ip }}:8000/v1
-#catalog.{{ region }}.cloudformation.name = heat-cfn
 
 #catalog.{{ region }}.database.publicURL = http://{{ external_ip }}:8779/v1.0/$(tenant_id)s
 #catalog.{{ region }}.database.adminURL = http://{{ internal_ip }}:8779/v1.0/$(tenant_id)s
