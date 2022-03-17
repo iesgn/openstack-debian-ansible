@@ -45,6 +45,13 @@
   notify:
   - restart nova-compute
 
+- name: configure vnc section 
+  ini_file:
+    path: /etc/nova/nova.conf
+    section: vnc
+    option: "enabled"
+    value: "false"
+
 - name: configure spice section 
   ini_file:
     path: /etc/nova/nova.conf
