@@ -36,7 +36,7 @@ openstack flavor create m1.tiny --id 1 \
 ## Crear red externa
 
 ```
-openstack network create  --share --external \
+openstack network create  --external \
   --provider-physical-network provider \
   --provider-network-type flat ext-net
 
