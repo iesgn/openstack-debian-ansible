@@ -4,8 +4,7 @@
     - nova-api
     - nova-conductor
     - nova-scheduler
-    - nova-novncproxy
-     
+         
 
 - name: ensure nova_api database connections is configured
   ini_file:
@@ -70,12 +69,10 @@
   notify:
   - restart nova-services
 
-  # Y la sección vnc
-
-- name: configure spice section # Hay que repasarla, en la documentación está la vpn
+  - name: configure spice section 
   ini_file:
     path: /etc/nova/nova.conf
-    section: vnc
+    section: spice
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   loop:
@@ -83,8 +80,9 @@
     - { option: "server_listen", value: '$my_ip' }
     - { option: "server_proxyclient_address", value: '$my_ip' }
     #- { option: "html5proxy_base_url", value: "http://{{ controller_fqdn }}:6082/spice_auto.html" }
-    #- { option: "html5proxy_host", value: "0.0.0.0" }
-    #- { option: "html5proxy_port", value: "6082" }
+    - { option: "html5proxy_base_url", value: "https://172.121.1.:6082/spice_auto.html" }
+    - { option: "html5proxy_host", value: "0.0.0.0" }
+    - { option: "html5proxy_port", value: "6082" }
   notify:
   - restart nova-services
 
