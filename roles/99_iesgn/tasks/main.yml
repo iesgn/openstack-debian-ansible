@@ -6,9 +6,13 @@
     value: "{{ item.value }}"
   loop:
     - { option: "domain_config_dir", value: '/etc/keystone/domains' }
-    - { option: "domain_specific_drivers_enabled", value: True }
+    - { option: "domain_specific_drivers_enabled", value: "true" }
   notify: restart keystone 
  
+- name: create directory domain
+    path: /etc/keystone/domains
+    state: directory
+    mode: '0755'
 
 - name: ensure ldap configuration is updated
   template:
