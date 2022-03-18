@@ -5,6 +5,7 @@
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   loop:
+    - { option: "driver", value: "sql"}
     - { option: "domain_config_dir", value: '/etc/keystone/domains' }
     - { option: "domain_specific_drivers_enabled", value: "true" }
   notify: restart keystone 
