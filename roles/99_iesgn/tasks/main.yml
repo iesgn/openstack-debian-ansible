@@ -42,7 +42,7 @@
 - name: Copy file with owner and permissions
   copy:
     src: logo-splash2.svg
-    dest: /usr/share/openstack-dashboard/openstack_dashboard/static/dashboard/img/logo-splash.svg
+    dest: /var/lib/openstack-dashboard/static/dashboard/img/logo-splash.svg
     owner: root
     group: root
     mode: '0644'
