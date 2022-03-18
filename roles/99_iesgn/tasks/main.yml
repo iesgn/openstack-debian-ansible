@@ -6,16 +6,15 @@
     value: "{{ item.value }}"
   loop:
     - { option: "domain_config_dir", value: '/etc/keystone/domains' }
-    - { option: "domain_specific_drivers_enabled", value: "True" }
+    - { option: "domain_specific_drivers_enabled", value: True }
   notify: restart keystone 
  
 
 - name: ensure ldap configuration is updated
-  file:
-    path: keystone.iesgn.conf
+  template:
+    src: keystone.iesgn.conf
     dest: /etc/keystone/domains/keystone.iesgn.conf
     owner: keystone
     group: keystone
     mode: 0644
   notify: restart keystone    
-
