@@ -1,0 +1,12 @@
+- name: restart nova-services
+  service: name={{ item }} state=restarted enabled=yes
+  loop:
+    - nova-api
+    - nova-api-metadata
+    - nova-scheduler
+    - nova-conductor
+    - nova-spicehtml5proxy
+    - nova-serialproxy
+
+- name: restart keystone
+  service: name=keystone state=restarted

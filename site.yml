@@ -60,17 +60,17 @@
 #  gather_facts: no
 #  roles: 
 #    - role: 10_placement
-- hosts: controller_nodes
-  become: true
-  gather_facts: no
-  roles: 
-    - role: 11_novaserver
-
-- hosts: compute_nodes
-  become: true
-  gather_facts: no
-  roles:
-    - role: 12_novacompute
+#- hosts: controller_nodes
+#  become: true
+#  gather_facts: no
+#  roles: 
+#    - role: 11_novaserver
+#
+#- hosts: compute_nodes
+#  become: true
+#  gather_facts: no
+#  roles:
+#    - role: 12_novacompute
 #
 #- hosts: controller_nodes
 #  become: true
@@ -122,9 +122,8 @@
 #  roles:
 #    - role: 20_heatserver
 
-##- hosts: controller_nodes
-##  become: true
-##  roles:
-##    - role: restart-services
-#
-#
+- hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles:
+    - role: 99_iesgn
