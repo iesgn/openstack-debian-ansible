@@ -23,3 +23,14 @@
     group: keystone
     mode: 0644
   notify: restart keystone    
+
+- name: verify if iesgn domain is created
+  environment: '{{k3}}'
+  command: /usr/bin/openstack domain show iesgn
+  register: result
+  ignore_errors: True
+
+- name: ensure iesgn domaint is created
+  environment: '{{k3}}'
+  command: /usr/bin/openstack domain create iesgn
+  when: result is failed
