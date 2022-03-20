@@ -10,4 +10,4 @@
     owner: root
     group: root
     mode: '0755'
-  when "'controller_nodes' in group_names"
+  when: "'controller_nodes' in group_names"
