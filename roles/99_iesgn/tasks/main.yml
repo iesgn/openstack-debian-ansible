@@ -47,3 +47,14 @@
     group: root
     mode: '0644'
   notify: restart apache2
+
+## Inject password root
+
+- name: configure inject password root
+  ini_file:
+    path: /etc/nova/nova.conf
+    section: libvirt
+    option: inject_password
+    value: 'true'
+  notify:
+  - restart nova-services

@@ -123,15 +123,15 @@
 #    - role: 20_heatserver
 
 
-- hosts: all
-  become: true
-  gather_facts: no
-  roles:
-    - role: 98_restart_services
-
-
-#- hosts: controller_nodes
+#- hosts: all
 #  become: true
 #  gather_facts: no
 #  roles:
-#    - role: 99_iesgn
+#    - role: 98_restart_services
+
+
+- hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles:
+    - role: 99_iesgn
