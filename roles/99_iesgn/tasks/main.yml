@@ -81,7 +81,7 @@
   loop:
     - { option: "cpu_allocation_ratio", value: '16' }
     - { option: "ram_allocation_ratio", value: '1.5' }
-    - { option: "disk_allocation_ratio", value: '1.3'}
+    - { option: "disk_allocation_ratio", value: '1.2'}
   notify:
   - restart nova-services
 
