@@ -123,7 +123,7 @@
 #    - role: 20_heatserver
 
 
-- hosts: controller_nodes
+- hosts: all
   become: true
   gather_facts: no
   roles:
