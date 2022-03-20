@@ -75,7 +75,7 @@
 - name: Configure Allocation ratios
   ini_file:
     path: /etc/nova/nova.conf
-    section: DEAFULT
+    section: DEFAULT
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   loop:
