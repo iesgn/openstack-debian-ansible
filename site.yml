@@ -130,14 +130,14 @@
 #    - role: 98_restart_services
 
 
-#- hosts: controller_nodes
-#  become: true
-#  gather_facts: no
-#  roles:
-#    - role: 99_iesgn
-
-- hosts: compute_nodes
+- hosts: controller_nodes
   become: true
   gather_facts: no
   roles:
-    - role: 100_iesgn_compute
+    - role: 99_iesgn
+
+#- hosts: compute_nodes
+#  become: true
+#  gather_facts: no
+#  roles:
+#    - role: 100_iesgn_compute

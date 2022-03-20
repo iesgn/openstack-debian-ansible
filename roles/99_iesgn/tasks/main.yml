@@ -58,3 +58,30 @@
     value: 'true'
   notify:
   - restart nova-services
+
+## max instancias por host
+
+- name: configure inject password root
+  ini_file:
+    path: /etc/nova/nova.conf
+    section: filter_scheduler
+    option: max_instances_per_host
+    value: '100'
+  notify:
+  - restart nova-services
+
+## Allocation ratios
+
+- name: Configure Allocation ratios
+  ini_file:
+    path: /etc/nova/nova.conf
+    section: DEAFULT
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  loop:
+    - { option: "cpu_allocation_ratio", value: '16' }
+    - { option: "ram_allocation_ratio", value: '1.5' }
+    - { option: "disk_allocation_ratio", value: '1.2'}
+  notify:
+  - restart nova-compute
+
