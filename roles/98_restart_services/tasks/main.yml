@@ -6,7 +6,7 @@
 - name: Copy script restart_nova
   copy:
     src: restart_nova.sh
-    dest: /root/openstack_utils/logo-splash.svg
+    dest: /root/openstack_utils/restart_nova.sh
     owner: root
     group: root
     mode: '0755'
