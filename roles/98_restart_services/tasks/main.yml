@@ -1,0 +1,13 @@
+- name: create directory domain
+  file:
+    path: /root/openstack_utils
+    state: directory
+    mode: '0755'
+- name: Copy script restart_nova
+  copy:
+    src: restart_nova.sh
+    dest: /root/openstack_utils/logo-splash.svg
+    owner: root
+    group: root
+    mode: '0755'
+  when "'controller_nodes' in group_names"
