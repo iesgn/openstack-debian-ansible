@@ -92,7 +92,7 @@
     path: /etc/nova/nova.conf
     section: glance
     option: api_servers
-    value: 'http://{{ internal_ip }}:9292' # No es internal_ip, es la dirección de glance que puede estar en otro nodo
+    value: 'http://{{ hostvars[groups["storage_nodes"][0]]["internal_ip"] }}:9292' # No es internal_ip, es la dirección de glance que puede estar en otro nodo
   notify:
   - restart nova-services
 
