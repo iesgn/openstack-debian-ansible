@@ -37,11 +37,11 @@
 #  roles:
 #    - role: 06_openstackclient
 #
-#- hosts: controller_nodes
-#  become: true
-#  gather_facts: no
-#  roles:
-#    - role: 07_keystoneserver
+- hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles:
+    - role: 07_keystoneserver
 #     
 #- hosts: controller_nodes
 #  become: true
@@ -130,11 +130,11 @@
 #    - role: 98_restart_services
 
 
-- hosts: controller_nodes
-  become: true
-  gather_facts: no
-  roles:
-    - role: 99_iesgn
+#- hosts: controller_nodes
+#  become: true
+#  gather_facts: no
+#  roles:
+#    - role: 99_iesgn
 
 #- hosts: compute_nodes
 #  become: true

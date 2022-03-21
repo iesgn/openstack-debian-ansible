@@ -33,9 +33,9 @@ catalog.{{ region }}.ec2.adminURL = http://{{ internal_ip }}:8773/services/Admin
 catalog.{{ region }}.ec2.internalURL = http://{{ internal_ip }}:8773/services/Cloud
 catalog.{{ region }}.ec2.name = ec2
 
-catalog.{{ region }}.image.publicURL = http://{{ external_ip }}:9292
-catalog.{{ region }}.image.adminURL = http://{{ internal_ip }}:9292
-catalog.{{ region }}.image.internalURL = http://{{ internal_ip }}:9292
+catalog.{{ region }}.image.publicURL = http://{{ hostvars[groups['storage_nodes'][0]]['external_ip'] }}:9292
+catalog.{{ region }}.image.adminURL = http://{{ hostvars[groups['storage_nodes'][0]]['internal_ip'] }}:9292
+catalog.{{ region }}.image.internalURL = http://{{ hostvars[groups['storage_nodes'][0]]['internal_ip'] }}:9292
 catalog.{{ region }}.image.descrition = "Image Service"
 catalog.{{ region }}.image.name = glance
 
