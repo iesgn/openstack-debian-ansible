@@ -16,7 +16,7 @@
     value: "{{ item.value }}"
   loop:
     - { option: "transport_url",
-    value: 'rabbit://{{ rabbit_user }}:{{ rabbit_password }}@{{ controller }}:5672/'}
+    value: 'rabbit://{{ rabbit_user }}:{{ rabbit_password }}@{{ hostvars[groups["controller_nodes"][0]]["internal_ip"] }}:5672/'}
     - { option: "auth_strategy", value: keystone }
   notify: 
   - restart neutron-services
@@ -46,9 +46,9 @@
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   loop:
-    - { option: "www_authenticate_uri", value: 'http://{{ controller }}:5000' }
-    - { option: "auth_url", value: 'http://{{ controller }}:5000' }
-    - { option: "memcached_servers", value: '{{ controller }}:11211' }
+    - { option: "www_authenticate_uri", value: 'http://{{ hostvars[groups["controller_nodes"][0]]["internal_ip"] }}:5000' }
+    - { option: "auth_url", value: 'http://{{ hostvars[groups["controller_nodes"][0]]["internal_ip"] }}:5000' }
+    - { option: "memcached_servers", value: '{{ hostvars[groups["controller_nodes"][0]]["internal_ip"] }}:11211' }
     - { option: "auth_type", value: password }
     - { option: "project_domain_name", value: Default}
     - { option: "user_domain_name", value: Default}
@@ -123,7 +123,7 @@
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   loop:
-    - { option: "nova_metadata_host", value: "{{ controller }}" }
+    - { option: "nova_metadata_host", value: "{{ hostvars[groups["controller_nodes"][0]]["internal_ip"] }}" }
     - { option: "metadata_proxy_shared_secret", value: "{{ shared_secret }}" }
   notify:
   - restart neutron-services

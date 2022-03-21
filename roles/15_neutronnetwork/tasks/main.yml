@@ -13,7 +13,7 @@
     path: /etc/neutron/neutron.conf
     section: database
     option: connection
-    value: mysql+pymysql://neutron:{{ neutron_db_password }}@{{ controller }}/neutron
+    value: mysql+pymysql://neutron:{{ neutron_db_password }}@{{ hostvars[groups["controller_nodes"][0]]["internal_ip"] }}/neutron
   notify: 
   - restart neutron-services
 
@@ -25,7 +25,7 @@
     value: "{{ item.value }}"
   loop:
     - { option: "transport_url",
-    value: 'rabbit://{{ rabbit_user }}:{{ rabbit_password }}@{{ controller }}:5672/'}
+    value: 'rabbit://{{ rabbit_user }}:{{ rabbit_password }}@{{ hostvars[groups["controller_nodes"][0]]["internal_ip"] }}:5672/'}
     - { option: "core_plugin", value: ml2 }
     - { option: "service_plugins", value: router }
     - { option: "allow_overlapping_ips", value: "true" }
@@ -51,9 +51,9 @@
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   loop:
-    - { option: "www_authenticate_uri", value: 'http://{{ controller }}:5000' }
-    - { option: "auth_url", value: 'http://{{ controller }}:5000' }
-    - { option: "memcached_servers", value: '{{ controller }}:11211' }
+    - { option: "www_authenticate_uri", value: 'http://{{ hostvars[groups["controller_nodes"][0]]["internal_ip"] }}:5000' }
+    - { option: "auth_url", value: 'http://{{ hostvars[groups["controller_nodes"][0]]["internal_ip"] }}:5000' }
+    - { option: "memcached_servers", value: '{{ hostvars[groups["controller_nodes"][0]]["internal_ip"] }}:11211' }
     - { option: "auth_type", value: password }
     - { option: "project_domain_name", value: Default}
     - { option: "user_domain_name", value: Default}

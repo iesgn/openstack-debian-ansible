@@ -2,7 +2,6 @@
 timezone: Europe/Madrid
 
 # Controller 
-controller: jupiter
 controller_fqdn: jupiter
 
 
