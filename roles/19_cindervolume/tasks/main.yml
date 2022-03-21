@@ -40,7 +40,7 @@
     - { option: "my_ip", value: '{{ internal_ip }}' }
     - { option: "auth_strategy", value: keystone }
     - { option: "enabled_backends", value: lvm }
-    - { option: "glance_api_servers", value: 'http://{{ groups["storage_nodes"][0]]["internal_ip"] }}:9292' }
+    - { option: "glance_api_servers", value: 'http://{{ hostvars[groups["storage_nodes"][0]]["internal_ip"] }}:9292' }
   notify: 
   - restart cinder-services
 
