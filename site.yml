@@ -66,11 +66,11 @@
 #  roles: 
 #    - role: 11_novaserver
 ##
-- hosts: compute_nodes
-  become: true
-  gather_facts: no
-  roles:
-    - role: 12_novacompute
+#- hosts: compute_nodes
+#  become: true
+#  gather_facts: no
+#  roles:
+#    - role: 12_novacompute
 #
 #- hosts: controller_nodes
 #  become: true
@@ -85,19 +85,19 @@
 #   - role: 14_neutronserver
 #  
 #
-- hosts: network_nodes
-  become: true
-  gather_facts: no
-  roles:
-   - role: 15_neutronnetwork
+#- hosts: network_nodes
+#  become: true
+#  gather_facts: no
+#  roles:
+#   - role: 15_neutronnetwork
+##
+##
+#- hosts: compute_nodes
+#  become: true
+#  gather_facts: no
+#  roles:
+#    - role: 16_neutroncompute
 #
-#
-- hosts: compute_nodes
-  become: true
-  gather_facts: no
-  roles:
-    - role: 16_neutroncompute
-
 #- hosts: controller_nodes
 #  become: true
 #  gather_facts: no
@@ -140,4 +140,4 @@
 #  become: true
 #  gather_facts: no
 #  roles:
-#    - role: 100_iesgn_compute
+#    - role: 100_iesgn_compute  
