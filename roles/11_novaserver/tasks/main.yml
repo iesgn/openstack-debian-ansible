@@ -4,6 +4,7 @@
     - nova-api
     - nova-conductor
     - nova-scheduler
+    - nova-consoleproxy
          
 
 - name: ensure nova_api database connections is configured
