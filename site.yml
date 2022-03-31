@@ -5,139 +5,119 @@
   gather_facts: no
   roles:
     - role: 01_common
+
+- hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles:
+   - role: 02_dbserver
+
+- hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles:
+   - role: 03_dbserver_population
+
+- hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles:
+   - role: 04_rabbitserver
+
+
+- hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles:
+   - role: 05_etcd
+
+- hosts: all
+  become: true
+  gather_facts: no
+  roles:
+    - role: 06_openstackclient
+
+- hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles:
+    - role: 07_keystoneserver
+     
+- hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles:
+    - role: 08_keystone_population
+
+- hosts: storage_nodes
+  become: true
+  gather_facts: no
+  roles: 
+    - role: 09_glanceserver
+
+- hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles: 
+    - role: 10_placement
+- hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles: 
+    - role: 11_novaserver
 #
-#- hosts: controller_nodes
-#  become: true
-#  gather_facts: no
-#  roles:
-#   - role: 02_dbserver
+- hosts: compute_nodes
+  become: true
+  gather_facts: no
+  roles:
+    - role: 12_novacompute
+
+- hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles: 
+    - role: 13_novadiscover
+
+- hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles:
+   - role: 14_neutronserver
+  
+
+- hosts: network_nodes
+  become: true
+  gather_facts: no
+  roles:
+   - role: 15_neutronnetwork
 #
-#- hosts: controller_nodes
-#  become: true
-#  gather_facts: no
-#  roles:
-#   - role: 03_dbserver_population
 #
-#- hosts: controller_nodes
-#  become: true
-#  gather_facts: no
-#  roles:
-#   - role: 04_rabbitserver
-#
-#
-#- hosts: controller_nodes
-#  become: true
-#  gather_facts: no
-#  roles:
-#   - role: 05_etcd
-#
-#- hosts: all
-#  become: true
-#  gather_facts: no
-#  roles:
-#    - role: 06_openstackclient
-#
-#- hosts: controller_nodes
-#  become: true
-#  gather_facts: no
-#  roles:
-#    - role: 07_keystoneserver
-#     
-#- hosts: controller_nodes
-#  become: true
-#  gather_facts: no
-#  roles:
-#    - role: 08_keystone_population
-#
-#- hosts: storage_nodes
-#  become: true
-#  gather_facts: no
-#  roles: 
-#    - role: 09_glanceserver
-#
-#- hosts: controller_nodes
-#  become: true
-#  gather_facts: no
-#  roles: 
-#    - role: 10_placement
-#- hosts: controller_nodes
-#  become: true
-#  gather_facts: no
-#  roles: 
-#    - role: 11_novaserver
-##
-#- hosts: compute_nodes
-#  become: true
-#  gather_facts: no
-#  roles:
-#    - role: 12_novacompute
-#
-#- hosts: controller_nodes
-#  become: true
-#  gather_facts: no
-#  roles: 
-#    - role: 13_novadiscover
-#
-#- hosts: controller_nodes
-#  become: true
-#  gather_facts: no
-#  roles:
-#   - role: 14_neutronserver
-#  
-#
-#- hosts: network_nodes
-#  become: true
-#  gather_facts: no
-#  roles:
-#   - role: 15_neutronnetwork
-##
-##
-#- hosts: compute_nodes
-#  become: true
-#  gather_facts: no
-#  roles:
-#    - role: 16_neutroncompute
-#
-#- hosts: controller_nodes
-#  become: true
-#  gather_facts: no
-#  roles:
-#    - role: 17_horizon
-#
-#- hosts: controller_nodes
-#  become: true
-#  gather_facts: no
-#  roles:
-#    - role: 18_cinderserver
-#
-#- hosts: storage_nodes
-#  become: true
-#  gather_facts: no
-#  roles:
-#    - role: 19_cindervolume
-#
+- hosts: compute_nodes
+  become: true
+  gather_facts: no
+  roles:
+    - role: 16_neutroncompute
+
+- hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles:
+    - role: 17_horizon
+
+- hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles:
+    - role: 18_cinderserver
+
+- hosts: storage_nodes
+  become: true
+  gather_facts: no
+  roles:
+    - role: 19_cindervolume
+
 #- hosts: controller_nodes
 #  become: true
 #  gather_facts: no
 #  roles:
 #    - role: 20_heatserver
-
-
-#- hosts: all
-#  become: true
-#  gather_facts: no
-#  roles:
-#    - role: 98_restart_services
-
-
-#- hosts: controller_nodes
-#  become: true
-#  gather_facts: no
-#  roles:
-#    - role: 99_iesgn
-
-#- hosts: compute_nodes
-#  become: true
-#  gather_facts: no
-#  roles:
-#    - role: 100_iesgn_compute  

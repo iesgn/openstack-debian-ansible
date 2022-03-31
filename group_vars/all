@@ -2,7 +2,7 @@
 timezone: Europe/Madrid
 
 # Controller 
-controller_fqdn: jupiter
+controller_fqdn: controller
 
 
 # KEYSTONE_3
@@ -12,7 +12,7 @@ k3:
   OS_PROJECT_NAME: admin
   OS_USER_DOMAIN_NAME: Default
   OS_PROJECT_DOMAIN_NAME: Default
-  OS_AUTH_URL: 'http://192.168.121.1:5000/v3'
+  OS_AUTH_URL: 'http://192.168.99.101:5000/v3'
   OS_IDENTITY_API_VERSION: 3 
 
 # Rabbit
@@ -57,7 +57,7 @@ log_debug: False
 
 # # Neutron
 shared_secret: "asdasd"
-external_interface: "eth0"
+external_interface: "eth2"
 
 # Cinder
-cinder_physical_device: sdb
+cinder_physical_device: vdb

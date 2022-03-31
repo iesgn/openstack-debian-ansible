@@ -1,5 +1,0 @@
-- name: restart nova-services
-  service: name={{ item }} state=restarted enabled=yes
-  loop:
-    - nova-compute
-    
