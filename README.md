@@ -53,8 +53,10 @@ down ip link set dev $IFACE down
 
 Y reiniciamos la interface:
 
-  ifdown eth2
-  ifup eth2
+```
+ifdown eth2
+ifup eth2
+```
 
 
 ### Configuración de ansible
