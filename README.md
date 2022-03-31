@@ -64,7 +64,7 @@ ifup eth2
 En el fichero `groups_var/all` se indicanm las variables usadas por el playbook, se pueden modificar para que se adapten a las necesidades. En nuestro caso:
 
 * `controller_fqdn`: Nombre por el que se puede acceder si queremos usar resolución estática.
-* `external_interface: "eth2"`: Interface del controlador.que se va a usar cómo entrada de las instancias.
+* `external_interface: "eth2"`: Interface del controlador que se va a usar cómo entrada (IP flotantes) de las instancias.
 * `cinder_physical_device: vdb`: Dispositivo de bloque que se usa en cinder. En nuestro caso el disco que se ha añadido al nodo controlador.
 
 ## Ejecución de ansible
