@@ -55,8 +55,8 @@
     - { option: "project_name", value: service}
     - { option: "username", value: nova}
     - { option: "password", value: "{{ nova_identity_password }}" }
-    - { option: "region", value: "{{ region }}" }    
-    - { option: "region_name", value: "{{ region }}" }
+    #- { option: "region", value: "{{ region }}" }    
+    #- { option: "region_name", value: "{{ region }}" }
   #  - { option: "service_token_roles_required", value: true } # Hay que mirar esta opción, no aparece en la documentación
   notify: 
   - restart nova-services
@@ -113,44 +113,45 @@
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   loop:
-    - { option: "auth_url", value: 'http://{{ internal_ip }}:5000/v3' }
-    - { option: "auth_type", value: password }
+    - { option: "region_name", value: "{{ region }}" }    
     - { option: "project_domain_name", value: Default}
-    - { option: "user_domain_name", value: Default}
     - { option: "project_name", value: service}
+    - { option: "auth_type", value: password }
+    - { option: "user_domain_name", value: Default}
+    - { option: "auth_url", value: 'http://{{ internal_ip }}:5000/v3' }
     - { option: "username", value: placement}
     - { option: "password", value: "{{ placement_identity_password }}" }
-    - { option: "region", value: "{{ region }}" }    
-    - { option: "region_name", value: "{{ region }}" }    
+    #- { option: "region", value: "{{ region }}" }    
+    
   notify: 
   - restart nova-services
 
-- name: configure neutron section
-  ini_file:
-    path: /etc/nova/nova.conf
-    section: neutron
-    option: "{{ item.option }}"
-    value: "{{ item.value }}"
-  loop:
-    - { option: "auth_url", value: 'http://{{ internal_ip }}:5000' }
-    - { option: "auth_type", value: password }
-    - { option: "project_domain_name", value: Default}
-    - { option: "user_domain_name", value: Default}
-    - { option: "project_name", value: service}
-    - { option: "username", value: neutron}
-    - { option: "password", value: "{{ neutron_identity_password }}" }
-    - { option: "region", value: "{{ region }}" }    
-    - { option: "region_name", value: "{{ region }}" }
-    - { option: "metadata_proxy_shared_secret", value: "{{ shared_secret }}" }
-  notify: 
-  - restart nova-services
-
-- name: configure cinder section
-  ini_file:
-    path: /etc/nova/nova.conf
-    section: cinder
-    option: os_region_name
-    value: "{{ region }}"
+#- name: configure neutron section
+#  ini_file:
+#    path: /etc/nova/nova.conf
+#    section: neutron
+#    option: "{{ item.option }}"
+#    value: "{{ item.value }}"
+#  loop:
+#    - { option: "auth_url", value: 'http://{{ internal_ip }}:5000' }
+#    - { option: "auth_type", value: password }
+#    - { option: "project_domain_name", value: Default}
+#    - { option: "user_domain_name", value: Default}
+#    - { option: "project_name", value: service}
+#    - { option: "username", value: neutron}
+#    - { option: "password", value: "{{ neutron_identity_password }}" }
+#    - { option: "region", value: "{{ region }}" }    
+#    - { option: "region_name", value: "{{ region }}" }
+#    - { option: "metadata_proxy_shared_secret", value: "{{ shared_secret }}" }
+#  notify: 
+#  - restart nova-services
+#
+#- name: configure cinder section
+#  ini_file:
+#    path: /etc/nova/nova.conf
+#    section: cinder
+#    option: os_region_name
+#    value: "{{ region }}"
 
 - name: populate nova-api db
   command: /usr/bin/nova-manage api_db sync

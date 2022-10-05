@@ -2,7 +2,6 @@
   service: name={{ item }} state=restarted enabled=yes
   loop:
     - nova-api
-    - nova-api-metadata
     - nova-scheduler
     - nova-conductor
     - nova-spicehtml5proxy

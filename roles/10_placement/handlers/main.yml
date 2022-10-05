@@ -1,2 +1,2 @@
 - name: restart placement
-  service: name=placement-api state=restarted
+  service: name=apache2 state=restarted
