@@ -1,0 +1,10 @@
+- name: ensure memcached are installed
+  apt: name={{ item }}
+  loop:
+    - memcached
+    - python3-memcache
+
+- name: memcached listen ip
+  lineinfile: dest=/etc/memcached.conf regexp="^-l 127.0.0.1" line="-l {{internal_ip}}" state=present
+  notify:
+    - restart memcached

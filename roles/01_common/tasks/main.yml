@@ -8,13 +8,13 @@
     
 - name: Add openstack repository into sources list
   ansible.builtin.apt_repository:
-    repo: 'deb http://osbpo.debian.net/osbpo bullseye-wallaby-backports main'
+    repo: 'deb http://osbpo.debian.net/osbpo bullseye-yoga-backports main'
     update_cache: no
     state: present
 
 - name: Add openstack repository into sources list
   ansible.builtin.apt_repository:
-    repo: 'deb http://osbpo.debian.net/osbpo bullseye-wallaby-backports-nochange main'
+    repo: 'deb http://osbpo.debian.net/osbpo bullseye-yoga-backports-nochange main'
     update_cache: no
     state: present
 
