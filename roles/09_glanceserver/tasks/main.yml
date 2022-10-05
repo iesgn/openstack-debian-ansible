@@ -10,7 +10,7 @@
   notify:
   - restart glance-api
 
-- name: ensure keystone_authtoken is configured
+- name: ensure glance_authtoken is configured
   ini_file:
     path: /etc/glance/glance-api.conf
     section: keystone_authtoken
@@ -26,12 +26,20 @@
     - { option: "project_name", value: service}
     - { option: "username", value: glance}
     - { option: "password", value: "{{ glance_identity_password }}" }
-    - { option: "region", value: "{{ region }}" }
-    - { option: "region_name", value: "{{ region }}" }
   notify:
   - restart glance-api
 
-- name: ensure paste_deploy is set to keystone
+- name: ensure glance_authtoken is cleared
+  ini_file:
+    path: /etc/glance/glance-api.conf
+    section: keystone_authtoken
+    option: region_name
+    value: regionOne
+    state: absent
+  notify:
+  - restart glance-api
+
+- name: ensure paste_deploy is set to glance
   ini_file:
     path: /etc/glance/glance-api.conf
     section: paste_deploy
@@ -40,7 +48,7 @@
   notify:
   - restart glance-api
 
-- name: ensure keystone_authtoken is configured
+- name: ensure glance_store is set to glance
   ini_file:
     path: /etc/glance/glance-api.conf
     section: glance_store
@@ -52,6 +60,8 @@
     - { option: "filesystem_store_datadir", value: /var/lib/glance/images/ }
   notify:
   - restart glance-api
+
+
 
 - name: ensure glance db is initialized
   command: /usr/bin/glance-manage db_sync

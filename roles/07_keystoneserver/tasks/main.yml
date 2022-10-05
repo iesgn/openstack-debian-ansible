@@ -2,8 +2,6 @@
   apt: name={{ item }}
   loop:
     - keystone
-    - memcached
-    - python3-memcache
 
 - name: ensure keystone database connections is configured
   ini_file:
@@ -21,30 +19,30 @@
     value: fernet
   notify: restart keystone    
 
-- name: ensure cache is enabled in keystone
-  ini_file:
-    path: /etc/keystone/keystone.conf
-    section: cache
-    option: enabled
-    value: 'true'
-  notify: restart keystone    
-
-- name: ensure dogfile.cache.memcached is configured as backend for cache
-  ini_file:
-    path: /etc/keystone/keystone.conf
-    section: cache
-    option: backend
-    value: dogpile.cache.memcached
-  notify: restart keystone    
-
-- name: ensure memcached url is set for dogfile
-  ini_file:
-    path: /etc/keystone/keystone.conf
-    section: cache
-    option: backend_argument
-    value: url:127.0.0.1:11211
-  notify: restart keystone    
-
+#- name: ensure cache is enabled in keystone
+#  ini_file:
+#    path: /etc/keystone/keystone.conf
+#    section: cache
+#    option: enabled
+#    value: 'true'
+#  notify: restart keystone    
+#
+#- name: ensure dogfile.cache.memcached is configured as backend for cache
+#  ini_file:
+#    path: /etc/keystone/keystone.conf
+#    section: cache
+#    option: backend
+#    value: dogpile.cache.memcached
+#  notify: restart keystone    
+#
+#- name: ensure memcached url is set for dogfile
+#  ini_file:
+#    path: /etc/keystone/keystone.conf
+#    section: cache
+#    option: backend_argument
+#    value: url:127.0.0.1:11211
+#  notify: restart keystone    
+#
 - name: ensure keystone is configured to use template catalog
   ini_file:
     path: /etc/keystone/keystone.conf
