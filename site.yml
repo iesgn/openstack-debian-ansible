@@ -33,35 +33,36 @@
 #    - role: 044_chrony
 ##
 
-- hosts: controller_nodes
-  become: true
-  gather_facts: no
-  roles:
-    - role: 045_etcd
-
-- hosts: controller_nodes
-  become: true
-  gather_facts: no
-  roles:
-    - role: 05_memcached
-
-- hosts: all
-  become: true
-  gather_facts: no
-  roles:
-    - role: 06_openstackclient
-
 #- hosts: controller_nodes
 #  become: true
 #  gather_facts: no
 #  roles:
-#    - role: 07_keystoneserver
-#     
+#    - role: 045_etcd
+#
 #- hosts: controller_nodes
 #  become: true
 #  gather_facts: no
 #  roles:
-#    - role: 08_keystone_population
+#    - role: 05_memcached
+#
+#- hosts: all
+#  become: true
+#  gather_facts: no
+#  roles:
+#    - role: 06_openstackclient
+
+- hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles:
+    - role: 07_keystoneserver
+     
+- hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles:
+    - role: 08_keystone_population
+
 #- hosts: storage_nodes
 #  become: true
 #  gather_facts: no
