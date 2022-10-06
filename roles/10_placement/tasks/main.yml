@@ -42,15 +42,15 @@
   notify:
   - restart placement
 
-- name: ensure placement_authtoken is cleared
-  ini_file:
-    path: /etc/placement/placement.conf
-    section: keystone_authtoken
-    option: region_name
-    value: regionOne
-    state: absent
-  notify:
-  - restart placement
+#- name: ensure placement_authtoken is cleared
+#  ini_file:
+#    path: /etc/placement/placement.conf
+#    section: keystone_authtoken
+#    option: region_name
+#    value: regionOne
+#    state: absent
+#  notify:
+#  - restart placement
 
 - name: ensure placement db is initialized
   command: /usr/bin/placement-manage db sync
