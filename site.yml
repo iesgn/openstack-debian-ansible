@@ -17,8 +17,8 @@
 - hosts: controller_nodes
   become: true
   gather_facts: no
-  roles:
-   - role: 03_dbserver_population
+#  roles:
+#   - role: 03_dbserver_population
 #
 #- hosts: controller_nodes
 #  become: true
@@ -51,23 +51,23 @@
 #  roles:
 #    - role: 06_openstackclient
 
-- hosts: controller_nodes
-  become: true
-  gather_facts: no
-  roles:
-    - role: 07_keystoneserver
-     
-- hosts: controller_nodes
-  become: true
-  gather_facts: no
-  roles:
-    - role: 08_keystone_population
-
-#- hosts: storage_nodes
+#- hosts: controller_nodes
 #  become: true
 #  gather_facts: no
-#  roles: 
-#    - role: 09_glanceserver
+#  roles:
+#    - role: 07_keystoneserver
+#     
+#- hosts: controller_nodes
+#  become: true
+#  gather_facts: no
+#  roles:
+#    - role: 08_keystone_population
+#
+- hosts: storage_nodes
+  become: true
+  gather_facts: no
+  roles: 
+    - role: 09_glanceserver
 #
 #- hosts: controller_nodes
 #  become: true
