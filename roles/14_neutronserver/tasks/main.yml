@@ -1,3 +1,10 @@
+# Configurar ubuntu para que funcione /etc/network/interfaces
+# Para configurar el no de red como se indica en https://docs.openstack.org/neutron/yoga/install/environment-networking-controller-ubuntu.html
+# Dos referencias:
+# https://linuxconfig.org/how-to-switch-back-networking-to-etc-network-interfaces-on-ubuntu-22-04-jammy-jellyfish-linux
+# https://juliorestrepo.wordpress.com/2021/07/15/netplan-remove-uninstall-disable-ubuntu/
+
+
 - name: ensure neutron server and neutron-plugin-ml2 are installed
   apt: name={{ item }}
   loop:
@@ -24,8 +31,7 @@
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   loop:
-    - { option: "transport_url",
-    value: 'rabbit://{{ rabbit_user }}:{{ rabbit_password }}@{{ internal_ip }}:5672/'}
+    - { option: "transport_url", value: 'rabbit://{{ rabbit_user }}:{{ rabbit_password }}@{{ internal_ip }}:5672/'}
     - { option: "core_plugin", value: ml2 }
     - { option: "service_plugins", value: router }
     - { option: "allow_overlapping_ips", value: "true" }
