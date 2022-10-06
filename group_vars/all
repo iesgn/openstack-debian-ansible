@@ -57,7 +57,7 @@ log_debug: False
 
 # # Neutron
 shared_secret: "asdasd"
-external_interface: "eth2"
+external_interface: "eth0"
 
 # Cinder
 cinder_physical_device: vdb
