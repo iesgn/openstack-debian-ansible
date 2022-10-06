@@ -63,17 +63,17 @@
 #  roles:
 #    - role: 08_keystone_population
 #
-- hosts: storage_nodes
-  become: true
-  gather_facts: no
-  roles: 
-    - role: 09_glanceserver
-#
-#- hosts: controller_nodes
+#- hosts: storage_nodes
 #  become: true
 #  gather_facts: no
 #  roles: 
-#    - role: 10_placement
+#    - role: 09_glanceserver
+#
+- hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles: 
+    - role: 10_placement
 #
 #- hosts: controller_nodes
 #  become: true

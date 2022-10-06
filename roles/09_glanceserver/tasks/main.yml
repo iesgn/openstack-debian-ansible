@@ -29,15 +29,15 @@
   notify:
   - restart glance-api
 
-- name: ensure glance_authtoken is cleared
-  ini_file:
-    path: /etc/glance/glance-api.conf
-    section: keystone_authtoken
-    option: region_name
-    value: regionOne
-    state: absent
-  notify:
-  - restart glance-api
+#- name: ensure glance_authtoken is cleared
+#  ini_file:
+#    path: /etc/glance/glance-api.conf
+#    section: keystone_authtoken
+#    option: region_name
+#    value: regionOne
+#    state: absent
+#  notify:
+#  - restart glance-api
 
 - name: ensure paste_deploy is set to glance
   ini_file:
