@@ -1,10 +1,10 @@
 ---
 
-#- hosts: all
-#  become: true
-#  gather_facts: no
-#  roles:
-#    - role: 01_common
+- hosts: all
+  become: true
+  gather_facts: no
+  roles:
+    - role: 01_common
 
 #- hosts: controller_nodes
 #  become: true
@@ -68,17 +68,17 @@
 #  roles: 
 #    - role: 11_novaserver
 ##
-- hosts: compute_nodes
-  become: true
-  gather_facts: no
-  roles:
-    - role: 12_novacompute
+#- hosts: compute_nodes
+#  become: true
+#  gather_facts: no
+#  roles:
+#    - role: 12_novacompute
 
-- hosts: controller_nodes
-  become: true
-  gather_facts: no
-  roles: 
-    - role: 13_novadiscover
+#- hosts: controller_nodes
+#  become: true
+#  gather_facts: no
+#  roles: 
+#    - role: 13_novadiscover
 #
 #- hosts: controller_nodes
 #  become: true
