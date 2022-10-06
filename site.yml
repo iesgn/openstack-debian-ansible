@@ -92,25 +92,25 @@
   roles: 
     - role: 13_novadiscover
 
-#- hosts: controller_nodes
-#  become: true
-#  gather_facts: no
-#  roles:
-#   - role: 14_neutronserver
-#  
+- hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles:
+   - role: 14_neutronserver
+  
+
+- hosts: network_nodes
+  become: true
+  gather_facts: no
+  roles:
+   - role: 15_neutronnetwork
 #
-#- hosts: network_nodes
-#  become: true
-#  gather_facts: no
-#  roles:
-#   - role: 15_neutronnetwork
-##
-##
-#- hosts: compute_nodes
-#  become: true
-#  gather_facts: no
-#  roles:
-#    - role: 16_neutroncompute
+#
+- hosts: compute_nodes
+  become: true
+  gather_facts: no
+  roles:
+    - role: 16_neutroncompute
 #
 #- hosts: controller_nodes
 #  become: true
