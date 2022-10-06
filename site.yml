@@ -26,30 +26,30 @@
 #  roles:
 #   - role: 04_rabbitserver
 #
-- hosts: all
-  become: true
-  gather_facts: no
-  roles:
-    - role: 044_chrony
-#
-
-#- hosts: controller_nodes
-#  become: true
-#  gather_facts: no
-#  roles:
-#    - role: 045_etcd
-#
-#- hosts: controller_nodes
-#  become: true
-#  gather_facts: no
-#  roles:
-#    - role: 05_memcached
-#
 #- hosts: all
 #  become: true
 #  gather_facts: no
 #  roles:
-#    - role: 06_openstackclient
+#    - role: 044_chrony
+##
+
+- hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles:
+    - role: 045_etcd
+
+- hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles:
+    - role: 05_memcached
+
+- hosts: all
+  become: true
+  gather_facts: no
+  roles:
+    - role: 06_openstackclient
 
 #- hosts: controller_nodes
 #  become: true
