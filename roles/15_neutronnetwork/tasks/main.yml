@@ -35,6 +35,15 @@
   notify: 
   - restart neutron-services
 
+- name: configure oslo_concurrency section
+  ini_file:
+    path: /etc/neutron/neutron.conf
+    section: oslo_concurrency
+    option: lock_path
+    value: /var/lib/neutron/tmp
+  notify:
+  - restart neutron-services
+
 - name: unset interface_driver option
   ini_file:
     path: /etc/neutron/neutron.conf
