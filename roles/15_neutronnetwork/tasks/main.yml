@@ -60,7 +60,7 @@
     - { option: "project_name", value: service}
     - { option: "username", value: neutron}
     - { option: "password", value: "{{ neutron_identity_password }}" }
-    - { option: "region", value: "{{ region }}" }    
+    #- { option: "region", value: "{{ region }}" }    
     - { option: "region_name", value: "{{ region }}" }
     #- { option: "service_token_roles_required", value: "true" }
   notify: 
@@ -118,3 +118,20 @@
   notify:
   - restart neutron-services
     
+# Needed when /proc/sys/net/bridge is missing
+- name: load br_netfilter kernel module
+  modprobe:
+    name: br_netfilter
+    state: present
+    
+- name: set net.bridge.bridge-nf-call-iptables
+  sysctl:
+    name: net.bridge.bridge-nf-call-iptables
+    value: '1'
+    reload: yes
+
+- name: set net.bridge.bridge-nf-call-ip6tables
+  sysctl:
+    name: net.bridge.bridge-nf-call-ip6tables
+    value: '1'
+    reload: yes

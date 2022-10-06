@@ -104,7 +104,7 @@ CACHES = {
 # SESSION_ENGINE to django.contrib.sessions.backends.signed_cookies
 # as shown below:
 #SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
-SESSION_ENGINE = 'django.contrib.sessions.backends.file'
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 
 
 # Send email to the console by default

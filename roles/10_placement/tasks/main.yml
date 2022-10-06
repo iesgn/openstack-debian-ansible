@@ -42,9 +42,9 @@
   notify:
   - restart placement
 
-- name: ensure glance_authtoken is cleared
+- name: ensure placement_authtoken is cleared
   ini_file:
-    path: /etc/glance/glance-api.conf
+    path: /etc/placement/placement.conf
     section: keystone_authtoken
     option: region_name
     value: regionOne

@@ -55,7 +55,7 @@
     - { option: "project_name", value: service}
     - { option: "username", value: neutron}
     - { option: "password", value: "{{ neutron_identity_password }}" }
-    - { option: "region", value: "{{ region }}" }    
+    #- { option: "region", value: "{{ region }}" }    
     - { option: "region_name", value: "{{ region }}" }    
   notify: 
   - restart neutron-services

@@ -1,7 +1,8 @@
-- name: ensure keystone and memcached are installed
+- name: ensure keystone are installed
   apt: name={{ item }}
   loop:
     - keystone
+    - apache2
 
 - name: ensure keystone database connections is configured
   ini_file:

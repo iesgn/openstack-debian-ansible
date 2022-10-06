@@ -1,6 +1,7 @@
 - name: restart neutron-services
   service: name={{ item }} state=restarted
   loop:
-    - neutron-api
+    - neutron-server
+    - nova-api
     #- neutron-metadata-agent
     #- neutron-l3-agent

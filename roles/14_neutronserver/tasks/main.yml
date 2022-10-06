@@ -61,10 +61,20 @@
     - { option: "username", value: neutron}
     - { option: "password", value: "{{ neutron_identity_password }}" }
     - { option: "region", value: "{{ region }}" }    
-    - { option: "region_name", value: "{{ region }}" }
+    #- { option: "region_name", value: "{{ region }}" }
     #- { option: "service_token_roles_required", value: "true" }
   notify: 
   - restart neutron-services
+
+- name: ensure neutron_authtoken is cleared
+  ini_file:
+    path: /etc/neutron/neutron.conf
+    section: keystone_authtoken
+    option: region_name
+    value: regionOne
+    state: absent
+  notify:
+  - restart placement
 
 - name: configure oslo_concurrency section
   ini_file:
@@ -86,11 +96,12 @@
     - { option: "auth_type", value: password }
     - { option: "project_domain_name", value: Default}
     - { option: "user_domain_name", value: Default}
+    - { option: "region_name", value: "{{ region }}" }    
     - { option: "project_name", value: service}
     - { option: "username", value: nova}
     - { option: "password", value: "{{ nova_identity_password }}" }
-    - { option: "region", value: "{{ region }}" }    
-    - { option: "region_name", value: "{{ region }}" }    
+    #- { option: "region", value: "{{ region }}" }    
+    
   notify: 
   - restart neutron-services
 
@@ -105,7 +116,7 @@
     - { option: "tenant_network_types", value: vxlan }
     - { option: "mechanism_drivers", value: "linuxbridge,l2population" }
     - { option: "extension_drivers", value: port_security }
-    - { option: "flat_networks", value: provider }
+    #- { option: "flat_networks", value: provider }
   notify:
   - restart neutron-services
 
@@ -134,7 +145,7 @@
     path: /etc/neutron/plugins/ml2/ml2_conf.ini
     section: securitygroup
     option: enable_ipset
-    value: 'True'
+    value: 'true'
   notify:
   - restart neutron-services
 

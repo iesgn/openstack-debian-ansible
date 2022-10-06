@@ -1,22 +1,20 @@
-- name: set openstack-dashboard-apache to be activated
-  shell: echo openstack-dashboard-apache horizon/activate_vhost boolean true |debconf-set-selections
-  
-- name: set openstack-dashboard-apache-ssl to be activated
-  shell: echo openstack-dashboard-apache horizon/use_ssl boolean true |debconf-set-selections
+#- name: set openstack-dashboard-apache to be activated
+#  shell: echo openstack-dashboard-apache horizon/activate_vhost boolean true |debconf-set-selections
+#  
+#- name: set openstack-dashboard-apache-ssl to be activated
+#  shell: echo openstack-dashboard-apache horizon/use_ssl boolean true |debconf-set-selections
 
 - name: ensure horizon packages are installed
   apt: name={{ item }}
   loop:
-    - apache2
-    - libapache2-mod-wsgi-py3
-    - openstack-dashboard-apache
+    - openstack-dashboard
 
-- name: ensure default virtualhost is disabled
-  command: a2dissite {{ item }}
-  loop:
-    - 000-default
-    - default-ssl
-  notify: restart web services
+#- name: ensure default virtualhost is disabled
+#  command: a2dissite {{ item }}
+#  loop:
+#    - 000-default
+#    - default-ssl
+#  notify: restart web services
 
 - name: configure local_settings.py
   template:
@@ -27,22 +25,22 @@
     mode: 0644
   notify: restart web services
 
-- name: ensure openstack-dashboard-ssl virtualhost is enabled
-  command: a2ensite {{ item }}
-  loop:
-    - openstack-dashboard-ssl
-    - openstack-dashboard-ssl-redirect
-  notify: restart web services
-  
-- name: Deelete debian's configuration of cache
-  file: path=/etc/openstack-dashboard/local_settings.d/_0006_debian_cache.py state=absent
-
-
-- name: ensure ssl, wsgi and rewrite modules are enabled
-  apache2_module: name={{ item }} state=present
-  loop:
-    - wsgi
-    - ssl
-    - rewrite
-  notify: restart web services
-
+#- name: ensure openstack-dashboard-ssl virtualhost is enabled
+#  command: a2ensite {{ item }}
+#  loop:
+#    - openstack-dashboard-ssl
+#    - openstack-dashboard-ssl-redirect
+#  notify: restart web services
+#  
+#- name: Deelete debian's configuration of cache
+#  file: path=/etc/openstack-dashboard/local_settings.d/_0006_debian_cache.py state=absent
+#
+#
+#- name: ensure ssl, wsgi and rewrite modules are enabled
+#  apache2_module: name={{ item }} state=present
+#  loop:
+#    - wsgi
+#    - ssl
+#    - rewrite
+#  notify: restart web services
+#

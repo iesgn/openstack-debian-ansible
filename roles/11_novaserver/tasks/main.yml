@@ -4,7 +4,7 @@
     - nova-api
     - nova-conductor
     - nova-scheduler
-    - nova-consoleproxy
+    - nova-novncproxy
          
 
 - name: ensure nova_api database connections is configured
@@ -70,23 +70,36 @@
   notify:
   - restart nova-services
 
-
-- name: configure spice section 
+- name: configure vnc section 
   ini_file:
     path: /etc/nova/nova.conf
-    section: spice
+    section: vnc
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   loop:
     - { option: "enabled", value: "true" }
     - { option: "server_listen", value: '$my_ip' }
     - { option: "server_proxyclient_address", value: '$my_ip' }
-    - { option: "html5proxy_base_url", value: "https://{{ controller_fqdn }}:6082/spice_auto.html" }
-    #- { option: "html5proxy_base_url", value: "http://172.22.121.1:6082/spice_auto.html" }
-    - { option: "html5proxy_host", value: "0.0.0.0" }
-    - { option: "html5proxy_port", value: "6082" }
+
   notify:
   - restart nova-services
+
+#- name: configure spice section 
+#  ini_file:
+#    path: /etc/nova/nova.conf
+#    section: spice
+#    option: "{{ item.option }}"
+#    value: "{{ item.value }}"
+#  loop:
+#    - { option: "enabled", value: "true" }
+#    - { option: "server_listen", value: '$my_ip' }
+#    - { option: "server_proxyclient_address", value: '$my_ip' }
+#    - { option: "html5proxy_base_url", value: "https://{{ controller_fqdn }}:6082/spice_auto.html" }
+#    #- { option: "html5proxy_base_url", value: "http://172.22.121.1:6082/spice_auto.html" }
+#    - { option: "html5proxy_host", value: "0.0.0.0" }
+#    - { option: "html5proxy_port", value: "6082" }
+#  notify:
+#  - restart nova-services
 
 - name: configure glance section
   ini_file:

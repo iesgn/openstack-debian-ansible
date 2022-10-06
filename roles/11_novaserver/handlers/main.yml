@@ -4,6 +4,5 @@
     - nova-api
     - nova-scheduler
     - nova-conductor
-    - nova-spicehtml5proxy
-    - nova-serialproxy
+    - nova-novncproxy
 

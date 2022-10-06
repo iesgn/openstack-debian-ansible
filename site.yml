@@ -5,7 +5,6 @@
 #  gather_facts: no
 #  roles:
 #    - role: 01_common
-
 #- hosts: controller_nodes
 #  become: true
 #  gather_facts: no
@@ -26,6 +25,13 @@
 
 #
 #
+
+#- hosts: controller_nodes
+#  become: true
+#  gather_facts: no
+#  roles:
+#    - role: 045_etcd
+#
 #- hosts: controller_nodes
 #  become: true
 #  gather_facts: no
@@ -37,19 +43,18 @@
 #  gather_facts: no
 #  roles:
 #    - role: 06_openstackclient
-#
+
 #- hosts: controller_nodes
 #  become: true
 #  gather_facts: no
 #  roles:
 #    - role: 07_keystoneserver
-     
+#     
 #- hosts: controller_nodes
 #  become: true
 #  gather_facts: no
 #  roles:
 #    - role: 08_keystone_population
-
 #- hosts: storage_nodes
 #  become: true
 #  gather_facts: no
@@ -68,17 +73,17 @@
 #  roles: 
 #    - role: 11_novaserver
 ##
-- hosts: compute_nodes
-  become: true
-  gather_facts: no
-  roles:
-    - role: 12_novacompute
-
-- hosts: controller_nodes
-  become: true
-  gather_facts: no
-  roles: 
-    - role: 13_novadiscover
+#- hosts: compute_nodes
+#  become: true
+#  gather_facts: no
+#  roles:
+#    - role: 12_novacompute
+#
+#- hosts: controller_nodes
+#  become: true
+#  gather_facts: no
+#  roles: 
+#    - role: 13_novadiscover
 #
 #- hosts: controller_nodes
 #  become: true
@@ -100,11 +105,11 @@
 #  roles:
 #    - role: 16_neutroncompute
 #
-#- hosts: controller_nodes
-#  become: true
-#  gather_facts: no
-#  roles:
-#    - role: 17_horizon
+- hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles:
+    - role: 17_horizon
 #
 #- hosts: controller_nodes
 #  become: true

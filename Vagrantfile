@@ -3,7 +3,7 @@
 
 Vagrant.configure("2") do |config|  
   config.vm.define :controller do |controller|
-    controller.vm.box = "debian/bullseye64"
+    controller.vm.box = "generic/ubuntu2204"
     controller.vm.hostname = "controller"
     controller.vm.network :private_network, ip: "192.168.98.101"
     controller.vm.network :private_network, ip: "192.168.98.103" 
@@ -16,7 +16,7 @@ Vagrant.configure("2") do |config|
     end
   end
   config.vm.define :compute do |compute|
-    compute.vm.box = "debian/bullseye64"
+    compute.vm.box = "generic/ubuntu2204"
     compute.vm.hostname = "compute1"
     compute.vm.network :private_network, ip: "192.168.98.102"
     compute.vm.network :private_network, ip: "192.168.99.102"

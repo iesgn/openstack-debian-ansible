@@ -1,30 +1,30 @@
 - name: Ensure apt info is updated
   apt: update_cache=yes
 
-- name: Ensure gnupg is installed
-  apt:
-    pkg:
-    - gnupg
-    
-- name: Add openstack repository into sources list
-  ansible.builtin.apt_repository:
-    repo: 'deb http://osbpo.debian.net/osbpo bullseye-yoga-backports main'
-    update_cache: no
-    state: present
-
-- name: Add openstack repository into sources list
-  ansible.builtin.apt_repository:
-    repo: 'deb http://osbpo.debian.net/osbpo bullseye-yoga-backports-nochange main'
-    update_cache: no
-    state: present
-
-
-- name: Ensure osbpo GPG key is added
-  apt_key: url=http://osbpo.debian.net/osbpo/dists/pubkey.gpg state=present
-    
- 
-- name: Ensure system is updated and upgraded
-  apt: update_cache=yes upgrade=yes
+#- name: Ensure gnupg is installed
+#  apt:
+#    pkg:
+#    - gnupg
+#    
+#- name: Add openstack repository into sources list
+#  ansible.builtin.apt_repository:
+#    repo: 'deb http://osbpo.debian.net/osbpo bullseye-yoga-backports main'
+#    update_cache: no
+#    state: present
+#
+#- name: Add openstack repository into sources list
+#  ansible.builtin.apt_repository:
+#    repo: 'deb http://osbpo.debian.net/osbpo bullseye-yoga-backports-nochange main'
+#    update_cache: no
+#    state: present
+#
+#
+#- name: Ensure osbpo GPG key is added
+#  apt_key: url=http://osbpo.debian.net/osbpo/dists/pubkey.gpg state=present
+#    
+# 
+#- name: Ensure system is updated and upgraded
+#  apt: update_cache=yes upgrade=yes
 
   
 - name: "Build hosts file"
