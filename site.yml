@@ -1,32 +1,36 @@
 ---
 
 
+#- hosts: all
+#  become: true
+#  gather_facts: no
+#  roles:
+#    - role: 01_common
+#
+#
+#- hosts: controller_nodes
+#  become: true
+#  gather_facts: no
+#  roles:
+#   - role: 02_dbserver
+#
+#- hosts: controller_nodes
+#  become: true
+#  gather_facts: no
+#  roles:
+#   - role: 03_dbserver_population
+#
+#- hosts: controller_nodes
+#  become: true
+#  gather_facts: no
+#  roles:
+#   - role: 04_rabbitserver
+#
 - hosts: all
   become: true
   gather_facts: no
   roles:
-    - role: 01_common
-
-
-- hosts: controller_nodes
-  become: true
-  gather_facts: no
-  roles:
-   - role: 02_dbserver
-
-- hosts: controller_nodes
-  become: true
-  gather_facts: no
-  roles:
-   - role: 03_dbserver_population
-
-- hosts: controller_nodes
-  become: true
-  gather_facts: no
-  roles:
-   - role: 04_rabbitserver
-
-#
+    - role: 044_chrony
 #
 
 #- hosts: controller_nodes

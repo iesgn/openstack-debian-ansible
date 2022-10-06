@@ -1,0 +1,3 @@
+- name: Ensure chrony is installed
+  apt: name=chrony
+
