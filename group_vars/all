@@ -2,7 +2,7 @@
 timezone: Europe/Madrid
 
 # Controller 
-controller_fqdn: controller
+controller_fqdn: jupiter
 
 
 # KEYSTONE_3

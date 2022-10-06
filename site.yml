@@ -14,11 +14,11 @@
 #  roles:
 #   - role: 02_dbserver
 #
-#- hosts: controller_nodes
-#  become: true
-#  gather_facts: no
-#  roles:
-#   - role: 03_dbserver_population
+- hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles:
+   - role: 03_dbserver_population
 #
 #- hosts: controller_nodes
 #  become: true
@@ -51,12 +51,12 @@
 #  roles:
 #    - role: 06_openstackclient
 
-- hosts: controller_nodes
-  become: true
-  gather_facts: no
-  roles:
-    - role: 07_keystoneserver
-     
+#- hosts: controller_nodes
+#  become: true
+#  gather_facts: no
+#  roles:
+#    - role: 07_keystoneserver
+#     
 - hosts: controller_nodes
   become: true
   gather_facts: no
