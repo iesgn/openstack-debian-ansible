@@ -2,7 +2,7 @@
 
 # ----------------------------------------------------------------------
 # NOTE: The default values of the settings are defined in
-# openstack_dashboard/defaults.py. Prevously most available settings
+# openstack_dashboard/defaults.py. Previously most available settings
 # were listed in this example file, but it is no longer true.
 # For available settings, see openstack_dashboard/defaults.py and
 # the horizon setting reference found at
@@ -14,7 +14,7 @@
 
 import os
 
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from horizon.utils import secret_key
 
@@ -25,7 +25,7 @@ DEBUG = False
 # This setting controls whether or not compression is enabled. Disabling
 # compression makes Horizon considerably slower, but makes it much easier
 # to debug JS and CSS changes
-COMPRESS_ENABLED = not DEBUG
+#COMPRESS_ENABLED = not DEBUG
 
 # This setting controls whether compression happens on the fly, or offline
 # with `python manage.py compress`
@@ -37,7 +37,7 @@ COMPRESS_ENABLED = not DEBUG
 # with the list of host/domain names that the application can serve.
 # For more information see:
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = [ '*' ]
+#ALLOWED_HOSTS = ['horizon.example.com', ]
 
 # Set SSL proxy settings:
 # Pass this header from the proxy after terminating the SSL,
@@ -85,27 +85,33 @@ LOCAL_PATH = os.path.dirname(os.path.abspath(__file__))
 # (usually behind a load-balancer). Either you have to make sure that a session
 # gets all requests routed to the same dashboard instance or you set the same
 # SECRET_KEY for all of them.
-SECRET_KEY = secret_key.generate_or_read_from_file(
-    os.path.join("/","var","lib","openstack-dashboard","secret-key", '.secret_key_store'))
+SECRET_KEY = secret_key.generate_or_read_from_file('/var/lib/openstack-dashboard/secret_key')
 
 # We recommend you use memcached for development; otherwise after every reload
 # of the django development server, you will have to login again. To use
 # memcached set CACHES to something like below.
 # For more information, see
 # https://docs.djangoproject.com/en/1.11/topics/http/sessions/.
+
+OPENSTACK_HOST = {{ internal_ip }}
 CACHES = {
     'default': {
-       'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-       'LOCATION': '127.0.0.1:11211',
-   },
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': OPENSTACK_HOST + ':11211',
+    },
 }
+
+#CACHES = {
+#    'default': {
+#        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+#    }
+#}
 
 # If you use ``tox -e runserver`` for developments,then configure
 # SESSION_ENGINE to django.contrib.sessions.backends.signed_cookies
 # as shown below:
-#SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+#SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
-
 
 # Send email to the console by default
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -118,49 +124,11 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 #EMAIL_HOST_USER = 'djangomail'
 #EMAIL_HOST_PASSWORD = 'top-secret!'
 
-OPENSTACK_HOST = "{{ external_ip }}"
-
 OPENSTACK_KEYSTONE_URL = "http://%s:5000/v3" % OPENSTACK_HOST
-
-OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT = True
-
-OPENSTACK_API_VERSIONS = {
-    "identity": 3,
-    "image": 2,
-    "volume": 3,
-}
-
-OPENSTACK_KEYSTONE_DEFAULT_DOMAIN = "Default"
-
-OPENSTACK_KEYSTONE_DEFAULT_ROLE = "user"
-
-# The OPENSTACK_NEUTRON_NETWORK settings can be used to enable optional
-# services provided by neutron. Options currently available are load
-# balancer service, security groups, quotas, VPN service.
-OPENSTACK_NEUTRON_NETWORK = {
-    'enable_auto_allocated_network': True,
-    'enable_distributed_router': True,
-    'enable_fip_topology_check': True,
-    'enable_ha_router': True,
-    'enable_ipv6': True,
-    # TODO(amotoki): Drop OPENSTACK_NEUTRON_NETWORK completely from here.
-    # enable_quotas has the different default value here.
-    'enable_quotas': True,
-    'enable_rbac_policy': True,
-    'enable_router': True,
-
-    'default_dns_nameservers': [],
-    'supported_provider_types': ['*'],
-    'segmentation_id_range': {},
-    'extra_provider_types': {},
-    'supported_vnic_types': ['*'],
-    'physical_networks': [],
-
-}
 
 # The timezone of the server. This should correspond with the timezone
 # of your entire OpenStack installation, and hopefully be in UTC.
-TIME_ZONE = "{{ timezone }}"
+TIME_ZONE = "UTC"
 
 # Change this patch to the appropriate list of tuples containing
 # a key, label and static directory containing two files:
@@ -414,3 +382,31 @@ SECURITY_GROUP_RULES = {
 # Help URL can be made available for the client. To provide a help URL, edit the
 # following attribute to the URL of your choice.
 #HORIZON_CONFIG["help_url"] = "http://openstack.mycompany.org"
+
+###############################################################################
+# Ubuntu Settings
+###############################################################################
+
+# The default theme if no cookie is present
+DEFAULT_THEME = 'default'
+OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT = True
+# Default Ubuntu apache configuration uses /horizon as the application root.
+WEBROOT='/horizon/'
+
+# By default, validation of the HTTP Host header is disabled.  Production
+# installations should have this set accordingly.  For more information
+# see https://docs.djangoproject.com/en/dev/ref/settings/.
+ALLOWED_HOSTS = '*'
+
+# Compress all assets offline as part of packaging installation
+COMPRESS_OFFLINE = True
+
+OPENSTACK_API_VERSIONS = {
+    "identity": 3,
+    "image": 2,
+    "volume": 3,
+}
+
+
+OPENSTACK_KEYSTONE_DEFAULT_DOMAIN = "Default"
+OPENSTACK_KEYSTONE_DEFAULT_ROLE = "user"
