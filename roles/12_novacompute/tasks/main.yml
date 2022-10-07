@@ -145,12 +145,12 @@
   notify:
   - restart nova-compute
 #
-#- name: configure cinder section
-#  ini_file:
-#    path: /etc/nova/nova.conf
-#    section: cinder
-#    option: "os_region_name"
-#    value: "{{ region }}"
-#  notify:
-#  - restart nova-compute
+- name: configure cinder section
+  ini_file:
+    path: /etc/nova/nova.conf
+    section: cinder
+    option: "os_region_name"
+    value: "{{ region }}"
+  notify:
+  - restart nova-compute
 #
