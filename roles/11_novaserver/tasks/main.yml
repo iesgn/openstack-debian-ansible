@@ -9,7 +9,8 @@
     - nova-api
     - nova-conductor
     - nova-scheduler
-    - nova-novncproxy
+    #- nova-novncproxy
+    - nova-spiceproxy
          
 
 - name: ensure nova_api database connections is configured
