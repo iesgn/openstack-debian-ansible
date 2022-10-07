@@ -75,17 +75,17 @@
 #  roles: 
 #    - role: 10_placement
 
-- hosts: controller_nodes
-  become: true
-  gather_facts: no
-  roles: 
-    - role: 11_novaserver
-
-- hosts: compute_nodes
-  become: true
-  gather_facts: no
-  roles:
-    - role: 12_novacompute
+#- hosts: controller_nodes
+#  become: true
+#  gather_facts: no
+#  roles: 
+#    - role: 11_novaserver
+#
+#- hosts: compute_nodes
+#  become: true
+#  gather_facts: no
+#  roles:
+#    - role: 12_novacompute
 #- hosts: controller_nodes
 #  become: true
 #  gather_facts: no
