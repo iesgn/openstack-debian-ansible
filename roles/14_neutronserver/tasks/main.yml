@@ -35,8 +35,8 @@
     - { option: "core_plugin", value: ml2 }
     - { option: "service_plugins", value: router }
     - { option: "allow_overlapping_ips", value: "true" }
-    - { option: "notify_nova_on_port_status_changes", value: "true" } # No se hay que ponerlo
-    - { option: "notify_nova_on_port_data_changes", value: "true" } # No se hay que ponerlo
+    - { option: "notify_nova_on_port_status_changes", value: "true" } 
+    - { option: "notify_nova_on_port_data_changes", value: "true" } 
     - { option: "auth_strategy", value: keystone }
   notify: 
   - restart neutron-services
@@ -80,7 +80,7 @@
     value: regionOne
     state: absent
   notify:
-  - restart placement
+  - restart neutron-services
 
 - name: configure oslo_concurrency section
   ini_file:
