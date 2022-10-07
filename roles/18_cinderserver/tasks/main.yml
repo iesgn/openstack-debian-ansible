@@ -20,11 +20,10 @@
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   loop:
-    - { option: "transport_url",
-    value: 'rabbit://{{ rabbit_user }}:{{ rabbit_password }}@{{ internal_ip }}:5672/'}
+    - { option: "transport_url", value: 'rabbit://{{ rabbit_user }}:{{ rabbit_password }}@{{ internal_ip }}:5672/'}
     - { option: "my_ip", value: '{{ internal_ip }}' }
     - { option: "auth_strategy", value: keystone }
-    - { option: "glance_api_servers", value: 'http://{{ hostvars[groups["storage_nodes"][0]]["internal_ip"] }}:9292' }
+    #- { option: "glance_api_servers", value: 'http://{{ hostvars[groups["storage_nodes"][0]]["internal_ip"] }}:9292' }
   notify: 
   - restart cinder-services
 
@@ -44,8 +43,8 @@
     - { option: "project_name", value: service}
     - { option: "username", value: cinder}
     - { option: "password", value: "{{ cinder_identity_password }}" }
-    - { option: "region", value: "{{ region }}" }    
-    - { option: "region_name", value: "{{ region }}" }    
+    #- { option: "region", value: "{{ region }}" }    
+    #- { option: "region_name", value: "{{ region }}" }    
   notify: 
   - restart cinder-services
 
