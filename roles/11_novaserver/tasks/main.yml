@@ -160,6 +160,7 @@
     - { option: "username", value: neutron}
     - { option: "password", value: "{{ neutron_identity_password }}" }
     #- { option: "region", value: "{{ region }}" }    
+    - { option: "service_metadata_proxy", value: "true"}
     - { option: "metadata_proxy_shared_secret", value: "{{ shared_secret }}" }
   notify: 
   - restart nova-services
