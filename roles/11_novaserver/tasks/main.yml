@@ -85,7 +85,7 @@
     - { option: "enabled", value: "true" }
     - { option: "server_listen", value: '$my_ip' }
     - { option: "server_proxyclient_address", value: '$my_ip' }
-
+    - { option: "vncproxy_base_url", value: 'http://{{ hostvars[groups["controller_nodes"][0]]["external_ip"] }}:6080/vnc_auto.html' }
   notify:
   - restart nova-services
 
