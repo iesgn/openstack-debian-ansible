@@ -80,3 +80,7 @@
   notify:
   - restart heat-services
 
+- name: ensure heat plugin horizon packages is installed
+  apt: name=python3-heat-dashboard
+  notify:
+  - restart apache2
