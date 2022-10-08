@@ -21,14 +21,11 @@
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   loop:
-    - { option: "transport_url",
-    value: 'rabbit://{{ rabbit_user }}:{{ rabbit_password }}@{{ internal_ip }}:5672/'}
+    - { option: "transport_url", value: 'rabbit://{{ rabbit_user }}:{{ rabbit_password }}@{{ internal_ip }}:5672/'}
     - { option: "heat_metadata_server_url", value: 'http://{{ internal_ip }}:8000' }
-    - { option: "heat_waitcondition_server_url",
-    value: 'http://{{ internal_ip }}:8000/v1/waitcondition' }
+    - { option: "heat_waitcondition_server_url", value: 'http://{{ internal_ip }}:8000/v1/waitcondition' }
     - { option: "stack_domain_admin", value: "heat_domain_admin" }
-    - { option: "stack_domain_admin_password",
-    value: "{{ heat_domain_admin_identity_password }}" }
+    - { option: "stack_domain_admin_password", value: "{{ heat_domain_admin_identity_password }}" }
     - { option: "stack_user_domain_name", value: "heat" }
   notify:
   - restart heat-services
@@ -49,8 +46,8 @@
     - { option: "project_name", value: service}
     - { option: "username", value: heat}
     - { option: "password", value: "{{ heat_identity_password }}" }
-    - { option: "region", value: "{{ region }}" }
-    - { option: "region_name", value: "{{ region }}" }
+    #- { option: "region", value: "{{ region }}" }
+    #- { option: "region_name", value: "{{ region }}" }
   notify:
   - restart heat-services
 
@@ -69,12 +66,17 @@
   notify:
   - restart heat-services
 
+  - name: configure clients_keystone section
+  ini_file:
+    path: /etc/heat/heat.conf
+    section: clients_keystone
+    option: "auth_url"
+    value: 'http://{{ internal_ip }}:5000'
+  notify:
+  - restart heat-services
+
 - name: ensure heat db is initialized
   command: /usr/bin/heat-manage db_sync
   notify:
   - restart heat-services
 
-- name: ensure heat plugin horizon packages is installed
-  apt: name=python3-heat-dashboard
-  notify:
-  - restart apache2
