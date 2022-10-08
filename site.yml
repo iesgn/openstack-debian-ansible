@@ -75,17 +75,17 @@
 #  roles: 
 #    - role: 10_placement
 
-#- hosts: controller_nodes
-#  become: true
-#  gather_facts: no
-#  roles: 
-#    - role: 11_novaserver
-#
-#- hosts: compute_nodes
-#  become: true
-#  gather_facts: no
-#  roles:
-#    - role: 12_novacompute
+- hosts: controller_nodes
+  become: true
+  gather_facts: no
+  roles: 
+    - role: 11_novaserver
+
+- hosts: compute_nodes
+  become: true
+  gather_facts: no
+  roles:
+    - role: 12_novacompute
 #- hosts: controller_nodes
 #  become: true
 #  gather_facts: no
@@ -118,23 +118,23 @@
 #  roles:
 #    - role: 17_horizon
 #
-- hosts: controller_nodes
-  become: true
-  gather_facts: no
-  roles:
-    - role: 18_cinderserver
-
-- hosts: storage_nodes
-  become: true
-  gather_facts: no
-  roles:
-    - role: 19_cindervolume
-
-- hosts: compute_nodes
-  become: true
-  gather_facts: no
-  roles:
-    - role: 195_cindercompute
+#- hosts: controller_nodes
+#  become: true
+#  gather_facts: no
+#  roles:
+#    - role: 18_cinderserver
+#
+#- hosts: storage_nodes
+#  become: true
+#  gather_facts: no
+#  roles:
+#    - role: 19_cindervolume
+#
+#- hosts: compute_nodes
+#  become: true
+#  gather_facts: no
+#  roles:
+#    - role: 195_cindercompute
 #
 ##- hosts: controller_nodes
 ##  become: true
