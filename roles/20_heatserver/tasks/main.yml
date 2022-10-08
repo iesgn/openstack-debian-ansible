@@ -66,7 +66,7 @@
   notify:
   - restart heat-services
 
-  - name: configure clients_keystone section
+- name: configure clients_keystone section
   ini_file:
     path: /etc/heat/heat.conf
     section: clients_keystone
