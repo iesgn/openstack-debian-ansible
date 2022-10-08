@@ -81,7 +81,7 @@
 - name: Configure line `include /var/lib/cinder/volumes` in file /etc/tgt/targets.conf
   lineinfile:
     path: /etc/tgt/targets.conf
-    line: 'include /var/lib/cinder/volumes'
+    line: 'include /var/lib/cinder/volumes/*'
   notify:
   - restart cinder-services
 
