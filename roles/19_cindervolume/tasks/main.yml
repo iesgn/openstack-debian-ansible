@@ -60,7 +60,7 @@
     - { option: "username", value: cinder}
     - { option: "password", value: "{{ cinder_identity_password }}" }
     #- { option: "region", value: "{{ region }}" }    
-    #- { option: "region_name", value: "{{ region }}" }    
+    - { option: "region_name", value: "{{ region }}" }    
   notify: 
   - restart cinder-services
 
