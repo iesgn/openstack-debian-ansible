@@ -60,7 +60,7 @@
     - { option: "username", value: cinder}
     - { option: "password", value: "{{ cinder_identity_password }}" }
     #- { option: "region", value: "{{ region }}" }    
-    - { option: "region_name", value: "{{ region }}" }    
+    #- { option: "region_name", value: "{{ region }}" }    
   notify: 
   - restart cinder-services
 
@@ -76,6 +76,13 @@
     - { option: "target_protocol", value: iscsi }
     - { option: "target_helper", value: tgtadm }
   notify: 
+  - restart cinder-services
+
+- name: Configure line `include /var/lib/cinder/volumes` in file /etc/tgt/targets.conf
+  lineinfile:
+    path: /etc/tgt/targets.conf
+    line: 'include /var/lib/cinder/volumes'
+  notify:
   - restart cinder-services
 
 - name: configure oslo_concurrency section

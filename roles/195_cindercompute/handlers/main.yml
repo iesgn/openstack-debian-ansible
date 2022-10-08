@@ -1,0 +1,5 @@
+- name: restart iscsid
+  service: name={{ item }} state=restarted
+  loop:
+    - iscsid
+  

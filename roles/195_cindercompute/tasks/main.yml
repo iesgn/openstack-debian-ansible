@@ -1,0 +1,7 @@
+- name: Enable service iscsid in compute node
+  ansible.builtin.systemd:
+    name: iscsid
+    enabled: yes
+    masked: no
+  notify:
+    restart iscsid

@@ -129,6 +129,12 @@
   gather_facts: no
   roles:
     - role: 19_cindervolume
+
+- hosts: compute_nodes
+  become: true
+  gather_facts: no
+  roles:
+    - role: 195_cindercompute
 #
 ##- hosts: controller_nodes
 ##  become: true
